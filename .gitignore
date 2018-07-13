@@ -1,0 +1,16 @@
+# avoid hidden files and folders (.settings, .classpath, .project, ...)
+GestionBilicence/.*
+
+# avoid bin folder
+GestionBilicence/bin*
+
+# avoid csv files:
+*.csv
+/bin/
+
+
+# avoid .project file
+.project
+
+# avoid .classpath file
+.classpath
