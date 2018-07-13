@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.commons.lang3.StringUtils;
-
-import org.centenaire.edition.Exams;
 import org.centenaire.edition.ExtraInfoStudent;
-import org.centenaire.edition.Mark;
-import org.centenaire.edition.Student;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.GeneralController;
 
 public class SimpleImportReader extends AbstractImportReader {
@@ -45,7 +44,7 @@ public class SimpleImportReader extends AbstractImportReader {
                 // use comma as separator
                 String[] elements = line.split(cvsSplitBy);
                 
-                Student stud = new Student(
+                Individuals stud = new Individuals(
                 		StringUtils.capitalize(elements[2].toLowerCase()), //first_name
                 		StringUtils.capitalize(elements[1].toLowerCase())  //last_name
                 		);

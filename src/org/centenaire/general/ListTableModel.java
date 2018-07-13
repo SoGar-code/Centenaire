@@ -1,4 +1,4 @@
-package gestionBilicence.general;
+package org.centenaire.general;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,13 +8,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-import gestionBilicence.edition.EditStudentDialog;
-import gestionBilicence.edition.ExtraInfoStudent;
-import gestionBilicence.edition.Mark;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.observer.Observer;
-import gestionBilicence.statistics.Average;
+import org.centenaire.edition.EditStudentDialog;
+import org.centenaire.edition.ExtraInfoStudent;
+import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.observer.Observer;
+import org.centenaire.statistics.Average;
 
 public class ListTableModel extends AbstractTableModel implements Observer{
 	  /*
@@ -103,7 +103,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	}
 	
 	public void editRow(int row){
-		Student stud = (Student)data.get(row);
+		Individuals stud = (Individuals)data.get(row);
 		EditStudentDialog studDialog = new EditStudentDialog(stud);
 		if (studDialog.showEditStudentDialog()){
 			ExtraInfoStudent info = studDialog.getInfoOutput();
@@ -129,10 +129,10 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	class StudentAction implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
-			JList<Student> westList = (JList<Student>)event.getSource();
+			JList<Individuals> westList = (JList<Individuals>)event.getSource();
 			// deals with the case of an empty selection
 			try{
-				Student currentStudent = westList.getSelectedValue();
+				Individuals currentStudent = westList.getSelectedValue();
 				System.out.println("ListTableModel.StudentAction - current Student = "+currentStudent.toString());
 				LinkedList<Mark> listMark = gc.getMarkDao().getDataOnStudent(currentStudent);
 				
@@ -156,8 +156,8 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	class SemesterAction implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
-			JList<Semester> westList = (JList<Semester>)event.getSource();
-			List<Semester> listCurrentSemester = westList.getSelectedValuesList();
+			JList<TagLike> westList = (JList<TagLike>)event.getSource();
+			List<TagLike> listCurrentSemester = westList.getSelectedValuesList();
 			
 			System.out.println("GC.SemesterAction - current Semesters contains "+listCurrentSemester.size()+" elements.");
 			

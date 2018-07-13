@@ -1,4 +1,4 @@
-package gestionBilicence.general.editorsRenderers;
+package org.centenaire.general.editorsRenderers;
 
 import java.awt.Component;
 import java.text.NumberFormat;

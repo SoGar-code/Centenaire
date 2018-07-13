@@ -1,15 +1,14 @@
-package gestionBilicence.dao.abstractDao;
+package org.centenaire.dao.abstractDao;
 
 import javax.swing.JOptionPane;
 
-import gestionBilicence.dao.Dao;
-import gestionBilicence.dao.MySQLFactory;
-import gestionBilicence.dao.postgreSqlDao.PostgreSQLFactory;
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.Mark;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.ConnectionDialog;
+import org.centenaire.dao.Dao;
+import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.ConnectionDialog;
 
 public abstract class AbstractDaoFactory {
 	/*
@@ -21,7 +20,7 @@ public abstract class AbstractDaoFactory {
 	
 	public abstract AbstractExamsDao getExamsDao();
 	
-	public abstract Dao<Semester> getSemesterDao();
+	public abstract Dao<TagLike> getSemesterDao();
 	
 	public abstract AbstractMarkDao getMarkDao();
 	

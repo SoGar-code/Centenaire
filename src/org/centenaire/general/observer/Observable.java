@@ -1,8 +1,8 @@
-package gestionBilicence.general.observer;
+package org.centenaire.general.observer;
 
 import java.util.LinkedList;
 
-import gestionBilicence.general.Entity;
+import org.centenaire.general.Entity;
 
 public interface Observable{
 	/*

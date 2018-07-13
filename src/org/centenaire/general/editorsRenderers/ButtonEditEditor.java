@@ -1,4 +1,4 @@
-package gestionBilicence.general.editorsRenderers;
+package org.centenaire.general.editorsRenderers;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
-import gestionBilicence.general.GeneralController;
-import gestionBilicence.general.ListTableModel;
+import org.centenaire.general.GeneralController;
+import org.centenaire.general.ListTableModel;
 
 public class ButtonEditEditor extends DefaultCellEditor {
 	/*

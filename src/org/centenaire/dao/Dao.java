@@ -1,11 +1,12 @@
-package gestionBilicence.dao;
+package org.centenaire.dao;
 
 import java.sql.Connection;
 import java.util.LinkedList;
 
-import gestionBilicence.general.Entity;
-
 public abstract class Dao<T>{
+	/**
+	 * Abstract class including the different possible actions on POJOs.
+	 */
 	protected static Connection conn;
 
 	abstract public boolean create(T obj);

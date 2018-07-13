@@ -1,4 +1,4 @@
-package gestionBilicence.statistics;
+package org.centenaire.statistics;
 
 import java.awt.BorderLayout;
 import java.awt.Panel;
@@ -12,10 +12,10 @@ import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-import gestionBilicence.general.Entity;
-import gestionBilicence.general.GTable;
-import gestionBilicence.general.GeneralController;
-import gestionBilicence.general.ListTableModel;
+import org.centenaire.general.Entity;
+import org.centenaire.general.GTable;
+import org.centenaire.general.GeneralController;
+import org.centenaire.general.ListTableModel;
 
 	/**
 	 * 

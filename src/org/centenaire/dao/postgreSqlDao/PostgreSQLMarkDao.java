@@ -1,4 +1,4 @@
-package gestionBilicence.dao.postgreSqlDao;
+package org.centenaire.dao.postgreSqlDao;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -11,13 +11,13 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import gestionBilicence.dao.abstractDao.AbstractMarkDao;
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.Mark;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.GeneralController;
-import gestionBilicence.statistics.Average;
+import org.centenaire.dao.abstractDao.AbstractMarkDao;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.GeneralController;
+import org.centenaire.statistics.Average;
 
 public class PostgreSQLMarkDao extends AbstractMarkDao {
 	
@@ -104,7 +104,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			res.first();
 			Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-			Student stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+			Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 			Mark mark = new Mark(
 					index,
 					res.getFloat("mark"),
@@ -141,7 +141,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			while(res.next()){
 				Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-				Student stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 				Mark mark = new Mark(
 						res.getInt("id_mark"),
 						res.getFloat("mark"),
@@ -190,7 +190,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 	}
 
 	@Override
-	public LinkedList<Mark> getDataOnStudent(Student stud) {
+	public LinkedList<Mark> getDataOnStudent(Individuals stud) {
 		LinkedList<Mark> data = new LinkedList<Mark>();
 		try{
 			String query="SELECT id_mark, id_exam, mark FROM marks WHERE id_stud = ? ORDER BY id_exam";
@@ -222,7 +222,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 	}
 
 	@Override
-	public LinkedList<Average> getAverage(List<Semester> listCurrentSemester) {
+	public LinkedList<Average> getAverage(List<TagLike> listCurrentSemester) {
 		float totalWeight = GeneralController.getInstance().getExamsDao().getTotalWeight(listCurrentSemester);
 		LinkedList<Average> data = new LinkedList<Average>();
 		try{
@@ -237,7 +237,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			int nb = listCurrentSemester.size();
 			Object[] listInt = new Object[nb];
 			int i = 0;
-			for (Semester semester:listCurrentSemester){
+			for (TagLike semester:listCurrentSemester){
 				listInt[i] = semester.getIndex();
 				i++;
 			}
@@ -248,7 +248,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			state.setArray(2, array);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Student stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 				Average average = new Average(
 						stud,
 						res.getFloat("average")

@@ -1,4 +1,4 @@
-package gestionBilicence.general;
+package org.centenaire.general;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,15 +9,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import gestionBilicence.dao.Dao;
-import gestionBilicence.dao.abstractDao.AbstractDaoFactory;
-import gestionBilicence.dao.abstractDao.AbstractExamsDao;
-import gestionBilicence.dao.abstractDao.AbstractMarkDao;
-import gestionBilicence.dao.abstractDao.AbstractStudentDao;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.observer.Observable;
-import gestionBilicence.general.observer.Observer;
+import org.centenaire.dao.Dao;
+import org.centenaire.dao.abstractDao.AbstractDaoFactory;
+import org.centenaire.dao.abstractDao.AbstractExamsDao;
+import org.centenaire.dao.abstractDao.AbstractMarkDao;
+import org.centenaire.dao.abstractDao.AbstractStudentDao;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.observer.Observable;
+import org.centenaire.general.observer.Observer;
 
 	/**
 	 * A class used to store data regarding the current state of the interface
@@ -113,7 +113,7 @@ public class GeneralController implements Observable, ChangeListener{
 		return df.getStudentDao();
 	}
 
-	public Dao<Semester> getSemesterDao(){
+	public Dao<TagLike> getSemesterDao(){
 		return df.getSemesterDao();
 	}
 	

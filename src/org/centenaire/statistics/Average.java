@@ -1,7 +1,7 @@
-package gestionBilicence.statistics;
+package org.centenaire.statistics;
 
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.Entity;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.Entity;
 
 /**
  * 
@@ -11,16 +11,16 @@ import gestionBilicence.general.Entity;
  */
 
 public class Average extends Entity {
-	private Student stud;
+	private Individuals stud;
 	private float average;
 
-	public Average(Student stud, float average) {
+	public Average(Individuals stud, float average) {
 		super();
 		this.stud = stud;
 		this.average = average;
 	}
 
-	public Average(int index, Student stud, float average) {
+	public Average(int index, Individuals stud, float average) {
 		super(index);
 		this.stud = stud;
 		this.average = average;

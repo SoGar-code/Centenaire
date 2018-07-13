@@ -1,4 +1,4 @@
-package gestionBilicence.dao.postgreSqlDao;
+package org.centenaire.dao.postgreSqlDao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 
 import org.postgresql.util.PSQLException;
 
-import gestionBilicence.dao.Dao;
-import gestionBilicence.dao.abstractDao.AbstractDaoFactory;
-import gestionBilicence.dao.abstractDao.AbstractExamsDao;
-import gestionBilicence.dao.abstractDao.AbstractMarkDao;
-import gestionBilicence.dao.abstractDao.AbstractStudentDao;
-import gestionBilicence.edition.Semester;
+import org.centenaire.dao.Dao;
+import org.centenaire.dao.abstractDao.AbstractDaoFactory;
+import org.centenaire.dao.abstractDao.AbstractExamsDao;
+import org.centenaire.dao.abstractDao.AbstractMarkDao;
+import org.centenaire.dao.abstractDao.AbstractStudentDao;
+import org.centenaire.edition.entities.TagLike;
 
 public class PostgreSQLFactory extends AbstractDaoFactory {
 	/*
@@ -56,7 +56,7 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	}
 	
 	@Override
-	public Dao<Semester> getSemesterDao() {
+	public Dao<TagLike> getSemesterDao() {
 		return new PostgreSQLSemesterDao(conn);
 	}
 	

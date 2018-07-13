@@ -1,4 +1,4 @@
-package gestionBilicence.dao.postgreSqlDao;
+package org.centenaire.dao.postgreSqlDao;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -11,10 +11,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import gestionBilicence.dao.abstractDao.AbstractExamsDao;
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.general.GeneralController;
+import org.centenaire.dao.abstractDao.AbstractExamsDao;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.general.GeneralController;
 
 public class PostgreSQLExamDao extends AbstractExamsDao {
 	
@@ -100,7 +100,7 @@ public class PostgreSQLExamDao extends AbstractExamsDao {
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Semester semester = GeneralController.getInstance().getSemesterDao().find(res.getInt("id_semester"));
+			TagLike semester = GeneralController.getInstance().getSemesterDao().find(res.getInt("id_semester"));
 			Exams exam = new Exams(
 					res.getInt("id_exam"),
 					res.getString("name"),
@@ -162,7 +162,7 @@ public class PostgreSQLExamDao extends AbstractExamsDao {
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Semester semester = GeneralController.getInstance().getSemesterDao().find(res.getInt("id_semester"));
+				TagLike semester = GeneralController.getInstance().getSemesterDao().find(res.getInt("id_semester"));
 				Exams exam = new Exams(
 						res.getInt("id_exam"),
 						res.getString("name"),
@@ -186,7 +186,7 @@ public class PostgreSQLExamDao extends AbstractExamsDao {
 	}
 
 	@Override
-	public float getTotalWeight(List<Semester> listCurrentSemester) {
+	public float getTotalWeight(List<TagLike> listCurrentSemester) {
 		float totalWeight;
 		try{
 			String query="SELECT SUM(coefficient) AS totalweight FROM exams "
@@ -195,7 +195,7 @@ public class PostgreSQLExamDao extends AbstractExamsDao {
 			int nb = listCurrentSemester.size();
 			Object[] listInt = new Object[nb];
 			int i = 0;
-			for (Semester semester:listCurrentSemester){
+			for (TagLike semester:listCurrentSemester){
 				listInt[i] = semester.getIndex();
 				i++;
 			}

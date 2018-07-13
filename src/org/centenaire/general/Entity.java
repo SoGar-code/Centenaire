@@ -1,12 +1,12 @@
-package gestionBilicence.general;
+package org.centenaire.general;
 
+/**
+ * Superclass of the POJO used for DAO
+ * 
+ * @author Olivier GABRIEL
+ */
 public abstract class Entity {
 	protected int index;
-
-	/*
-	 * Superclass for the POJO used for DAO
-	 * 
-	 */
 	
 	// Initialization of index, 
 	// to be set by associated DAO class
@@ -14,8 +14,15 @@ public abstract class Entity {
 		index = 0;
 	}
 	
-	// With initialization of index,
+	// With ,
 	// used by getData
+	/**
+	 * Constructor with initialization of index, used by getData.
+	 * 
+	 * @param index
+	 * 			the index of the entity we create.
+	 * 
+	 */
 	public Entity(int index){
 		this.index = index;
 	}

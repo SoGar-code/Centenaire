@@ -1,4 +1,4 @@
-package gestionBilicence.csvImport;
+package org.centenaire.csvImport;
 
 public abstract class AbstractImportReader {
 

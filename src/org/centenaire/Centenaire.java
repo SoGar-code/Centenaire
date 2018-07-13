@@ -1,4 +1,4 @@
-package gestionBilicence;
+package org.centenaire;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -15,18 +15,23 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import gestionBilicence.csvImport.CsvImport;
-import gestionBilicence.edition.EditionWindow;
-import gestionBilicence.general.GeneralController;
-import gestionBilicence.general.GeneralWindow;
-import gestionBilicence.statistics.StatisticsWindow;
+import org.centenaire.csvImport.CsvImport;
+import org.centenaire.edition.EditionWindow;
+import org.centenaire.general.GeneralController;
+import org.centenaire.general.GeneralWindow;
+import org.centenaire.statistics.StatisticsWindow;
 
-public class GestionBilicence extends JFrame{
+public class Centenaire extends JFrame{
 	private GeneralWindow[] vectWindows;
 
-	public GestionBilicence() {
+	public Centenaire() {
+		/**
+		 * Main class of the system
+		 * 
+		 */
+		
 		super();
-		this.setTitle("Gestion bilicence");
+		this.setTitle("BdD Centenaire");
 		this.setSize(700, 600);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,14 +47,14 @@ public class GestionBilicence extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		JMenu filesMenu = new JMenu("File");
 		JMenuItem item1 = new JMenuItem("Import...");
-		JMenuItem item2 = new JMenuItem("About: v0.9, 2017 by O. Gabriel.");
+		JMenuItem item2 = new JMenuItem("About: © SoGaR! 2018.");
 		menuBar.add(filesMenu);
 		filesMenu.add(item1);
 		filesMenu.add(item2);
 
 		item1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("GestionBilicence: 'Import' of MenuBar activated!");
+				System.out.println("Centenaire: 'Import' of MenuBar activated!");
 				CsvImport csvImport = new CsvImport();
 				csvImport.importCsv();
 			}
@@ -108,7 +113,7 @@ public class GestionBilicence extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		new GestionBilicence();
+		new Centenaire();
 	}
 
 }

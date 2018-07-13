@@ -1,4 +1,4 @@
-package gestionBilicence.statistics;
+package org.centenaire.statistics;
 
 import java.awt.BorderLayout;
 import java.util.LinkedList;
@@ -8,22 +8,22 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
-import gestionBilicence.general.Entity;
-import gestionBilicence.general.GeneralController;
-import gestionBilicence.general.GeneralWindow;
-import gestionBilicence.general.ListTableModel;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.Entity;
+import org.centenaire.general.GeneralController;
+import org.centenaire.general.GeneralWindow;
+import org.centenaire.general.ListTableModel;
 
 public class StatisticsWindow extends GeneralWindow {
 	/*
 	 * Window to display statistics
 	 */
 	private GeneralController gc = GeneralController.getInstance();
-	private DefaultListModel<Student> listStudent;
-	private DefaultListModel<Semester> listSemester1;
-	private DefaultListModel<Semester> listSemester2;
+	private DefaultListModel<Individuals> listStudent;
+	private DefaultListModel<TagLike> listSemester1;
+	private DefaultListModel<TagLike> listSemester2;
 	private ListTableModel[] tableModelVect = new ListTableModel[3];
 	
 	private JTabbedPane tabbedPane;
@@ -43,7 +43,7 @@ public class StatisticsWindow extends GeneralWindow {
         		new String[] {"Exam","Mark"},
         		new LinkedList<Entity>()
         		);
-        listStudent = new DefaultListModel<Student>();
+        listStudent = new DefaultListModel<Individuals>();
         updateListStudent();
 		StatisticsPanel tabEvolution = new StatisticsPanel(listStudent, tableModelVect[0]);
 		// add listener on currentStudent (NB: listener in ListTableModel!)
@@ -53,11 +53,11 @@ public class StatisticsWindow extends GeneralWindow {
 		// ====================================
 		// tabAverage: average per student (on selected semesters)
         tableModelVect[1] = new ListTableModel(
-        		new Class[] {Student.class,float.class},
+        		new Class[] {Individuals.class,float.class},
         		new String[] {"Student","Average"},
         		new LinkedList<Entity>()
         		);
-		listSemester1 = new DefaultListModel<Semester>();
+		listSemester1 = new DefaultListModel<TagLike>();
 		StatisticsPanel tabAverage = new StatisticsPanel(listSemester1, tableModelVect[1]);
 		tabAverage.getWestList().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		WeightPanel weightPan = new WeightPanel();
@@ -69,11 +69,11 @@ public class StatisticsWindow extends GeneralWindow {
 		// ====================================
 		// tabRate: success rate (on selected semesters?)
         tableModelVect[2] = new ListTableModel(
-        		new Class[] {Semester.class,float.class},
+        		new Class[] {TagLike.class,float.class},
         		new String[] {"Semester","Average"},
         		new LinkedList<Entity>()
         		);
-		listSemester2 = new DefaultListModel<Semester>();
+		listSemester2 = new DefaultListModel<TagLike>();
 		StatisticsPanel tabRate = new StatisticsPanel(listSemester2, tableModelVect[2]);
 		tabRate.getWestList().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		// add listener on currentSemester
@@ -100,8 +100,8 @@ public class StatisticsWindow extends GeneralWindow {
 		listSemester1.removeAllElements();
 		listSemester2.removeAllElements();
 		
-        LinkedList<Semester> dataSemester = gc.getSemesterDao().getData();
-        for(Semester semester:dataSemester){
+        LinkedList<TagLike> dataSemester = gc.getSemesterDao().getData();
+        for(TagLike semester:dataSemester){
         	listSemester1.addElement(semester);
         	listSemester2.addElement(semester);
         }
@@ -109,8 +109,8 @@ public class StatisticsWindow extends GeneralWindow {
 	
 	public void updateListStudent(){
 		listStudent.removeAllElements();
-        LinkedList<Student> dataStudent = gc.getStudentDao().getData();
-        for(Student stud:dataStudent){
+        LinkedList<Individuals> dataStudent = gc.getStudentDao().getData();
+        for(Individuals stud:dataStudent){
         	listStudent.addElement(stud);
         }
 	}

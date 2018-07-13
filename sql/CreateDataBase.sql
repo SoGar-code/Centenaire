@@ -1,71 +1,138 @@
--- Define database for project GestionBilicence
--- UTF-8 encoding
+-- PostgreSQL database dump
 
--- with PostgreSQL:
--- create database testdb;
--- \c testdb (to connect to testdb)
--- \i path\to\folder\CreateDataBase.sql
+SET client_encoding = 'UTF8';
 
-------------------------------
--- part 1, minimum working model
-------------------------------
+-- Personne
+CREATE TABLE Individuals(
+  id SERIAL PRIMARY KEY,
+  first_name text,
+  last_name text,
+  birth_year integer
+);
 
-create table students(
-	id_stud serial primary key
-	, stud_firstname text
-	, stud_lastname text
-    	);
+-- types de productions
+CREATE TABLE Item_Types(
+  id SERIAL PRIMARY KEY,
+  name text
+);
 
--- semesters, including academic year, like 'L1S1 2017-2018', 'L2S3 2016-2017', 'APB', ...
-create table semesters(
-	id_semester serial primary key
-	, semester_name text
-    	);
+-- Productions
+CREATE TABLE Items(
+  id SERIAL PRIMARY KEY,
+  title text,
+  type integer references Item_types,
+  start_date date,
+  end_date date
+);
 
-create table exams(
-	id_exam serial primary key
-	, name text
-	, id_semester integer references semesters
-	, coefficient integer default 1
-    	);
+CREATE TABLE Event_Types(
+  id SERIAL PRIMARY KEY,
+  name text,
+  start_date date,
+  end_date date
+);
 
-create table marks(
-	id_mark serial primary key
-	, id_exam integer references exams
-	, id_stud integer references students
-	, mark integer
-	);
+CREATE TABLE Events(
+  id SERIAL PRIMARY KEY,
+  name text,
+  place text,
+  type integer references Event_types
+);
 
-------------------------------
--- part 2, additional info
-------------------------------
+CREATE TABLE Institution_Types(
+  id SERIAL PRIMARY KEY,
+  name text
+);
 
-create table stud_num(
-	id_stud_num serial primary key
-	, id_stud integer references students
-	, stud_number integer
-	);
+CREATE TABLE Institutions(
+  id SERIAL PRIMARY KEY,
+  name text,
+  place text,
+  type integer references Institution_types
+);
 
--- subjects like English, History, ...
-create table subjects(
-	id_subject serial primary key
-	, subject_name text
-	);
+CREATE TABLE Tags(
+  id SERIAL PRIMARY KEY,
+  name text
+);
 
-create table exam_subject(
-	id_e_subject serial primary key
-	, id_exam integer references exams
-	, id_subject integer references subjects
-	);
+CREATE TABLE Disciplines(
+  id SERIAL PRIMARY KEY,
+  name text
+);
 
--- academic years like 2017-2018, 2015-2016, ...
-create table acad_years(
-	id_ay serial primary key
-	, ay_name text
-    	);
+-- primary key given by the two ids
+-- so at most one such link per person and institution
+CREATE TABLE Individuals_Institutions(
+ indiv_id integer REFERENCES Individuals, --FK
+ instit_id integer REFERENCES Institutions,--FK
+ PRIMARY KEY (indiv_id, instit_id)
+);
 
-create table semester_ay(
-	id_semester_ay serial primary key
-	, id_semester integer references semesters
-	, id_ay integer references acad_years
-	);
+CREATE TABLE Individuals_Disciplines(
+ indiv_id integer REFERENCES Individuals, --FK
+ disc_id integer REFERENCES Disciplines,--FK
+ PRIMARY KEY (indiv_id, disc_id)
+);
+
+CREATE TABLE Individuals_Tags(
+ indiv_id integer REFERENCES Individuals, --FK
+ tag_id integer REFERENCES Tags,--FK
+ PRIMARY KEY (indiv_id, tag_id)
+);
+
+CREATE TABLE Items_Tags(
+ item_id integer REFERENCES Items, --FK
+ tag_id integer REFERENCES Tags, --FK
+ PRIMARY KEY (item_id, tag_id)
+);
+
+CREATE TABLE Events_Tags(
+ event_id integer REFERENCES Events,
+ tag_id integer REFERENCES Tags,
+ PRIMARY KEY (event_id, tag_id)
+);
+
+CREATE TABLE Author(
+  indiv_id integer REFERENCES Individuals, --FK
+  item_id integer REFERENCES Items, --FK
+  PRIMARY KEY (indiv_id, item_id)
+);
+
+CREATE TABLE Direction(
+  item_id integer REFERENCES Items, --FK
+  indiv_id integer REFERENCES Individuals, --FK
+  PRIMARY KEY (indiv_id, item_id)
+);
+
+CREATE TABLE Organizer(
+  event_id integer REFERENCES Events,
+  indiv_id integer REFERENCES Individuals,
+  PRIMARY KEY (event_id, indiv_id)
+);
+
+CREATE TABLE Participant(
+  event_id integer REFERENCES Events,
+  indiv_id integer REFERENCES Individuals,
+  PRIMARY KEY (event_id, indiv_id)
+);
+
+CREATE TABLE Affliation(
+  item_id integer REFERENCES Items,
+  instit_id integer REFERENCES Institutions,
+  PRIMARY KEY (event_id, indiv_id)
+);
+
+-- two possible values: "financement", "soutien institutionnel"
+CREATE TABLE Localisation_Types(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- "Localisation"
+CREATE TABLE Localisations(
+  event_id integer REFERENCES Events,
+  instit_id integer REFERENCES Institutions,
+  loc_type integer references Localisation_Types,
+  PRIMARY KEY (event_id, instit_id)
+);

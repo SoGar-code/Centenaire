@@ -1,4 +1,4 @@
-package gestionBilicence.edition;
+package org.centenaire.edition;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import gestionBilicence.general.GeneralController;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.GeneralController;
 
 /**
  * 
@@ -24,7 +25,7 @@ public class EditStudentDialog extends JDialog {
 	private ExtraInfoStudent infoOutput;
 	private boolean updated = false;
 
-	public EditStudentDialog(Student stud){
+	public EditStudentDialog(Individuals stud){
 		super();
 		this.setTitle("Edition dialog — student "+stud.toString());
 		this.setModal(true);

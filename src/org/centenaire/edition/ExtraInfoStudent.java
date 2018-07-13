@@ -1,4 +1,4 @@
-package gestionBilicence.edition;
+package org.centenaire.edition;
 
 public class ExtraInfoStudent {
 	private boolean hasApbNum;

@@ -1,4 +1,4 @@
-package gestionBilicence.edition;
+package org.centenaire.edition;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -13,12 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import gestionBilicence.general.Entity;
-import gestionBilicence.general.GTable;
-import gestionBilicence.general.GeneralWindow;
-import gestionBilicence.general.ListTableModel;
-import gestionBilicence.general.editorsRenderers.Delete;
-import gestionBilicence.general.editorsRenderers.Edit;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
+import org.centenaire.general.Entity;
+import org.centenaire.general.GTable;
+import org.centenaire.general.GeneralWindow;
+import org.centenaire.general.ListTableModel;
+import org.centenaire.general.editorsRenderers.Delete;
+import org.centenaire.general.editorsRenderers.Edit;
 
 /**
  * Window to edit elements in the database
@@ -68,7 +71,7 @@ public class EditionWindow extends GeneralWindow {
 		
 		// Creation of exams tab:
 		listTableModelVect[2] = new ListTableModel(
-				new Class[] {String.class, Semester.class, Integer.class,Delete.class},
+				new Class[] {String.class, TagLike.class, Integer.class,Delete.class},
 				new String[] {"Name","Semester","Coefficient", "Delete"},
 				new LinkedList<Entity>()
 				);
@@ -77,7 +80,7 @@ public class EditionWindow extends GeneralWindow {
 		
 		// Creation of marks tab:
 		listTableModelVect[3] = new ListTableModel(
-				new Class[] {Exams.class, Student.class, float.class, Delete.class},
+				new Class[] {Exams.class, Individuals.class, float.class, Delete.class},
 				new String[] {"Exam","Student","Mark","Delete"},
 				new LinkedList<Entity>()
 				);

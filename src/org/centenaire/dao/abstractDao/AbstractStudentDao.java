@@ -2,17 +2,17 @@ package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.edition.ExtraInfoStudent;
-import org.centenaire.edition.Student;
+import org.centenaire.edition.entities.Individuals;
 
-public abstract class AbstractStudentDao extends Dao<Student> {
+public abstract class AbstractStudentDao extends Dao<Individuals> {
 	
 	// Returns an element of type Semester
 	// either an already existing one or
 	// we create and initialize a new one in the database
-	public abstract Student anyElement();
+	public abstract Individuals anyElement();
 	
-	public abstract ExtraInfoStudent getInfo(Student stud);
+	public abstract ExtraInfoStudent getInfo(Individuals stud);
 	
-	public abstract void updateInfo(Student stud, ExtraInfoStudent info);
+	public abstract void updateInfo(Individuals stud, ExtraInfoStudent info);
 	
 }

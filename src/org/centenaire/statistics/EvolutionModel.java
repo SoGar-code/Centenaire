@@ -1,9 +1,9 @@
-package gestionBilicence.statistics;
+package org.centenaire.statistics;
 
 import java.util.LinkedList;
 
-import gestionBilicence.general.Entity;
-import gestionBilicence.general.ListTableModel;
+import org.centenaire.general.Entity;
+import org.centenaire.general.ListTableModel;
 
 public class EvolutionModel extends ListTableModel {
 

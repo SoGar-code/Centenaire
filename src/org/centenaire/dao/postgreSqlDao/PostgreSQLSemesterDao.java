@@ -1,4 +1,4 @@
-package gestionBilicence.dao.postgreSqlDao;
+package org.centenaire.dao.postgreSqlDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import gestionBilicence.dao.abstractDao.AbstractSemesterDao;
-import gestionBilicence.edition.Semester;
-import gestionBilicence.edition.Student;
+import org.centenaire.dao.abstractDao.AbstractSemesterDao;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
 
 public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	
@@ -21,7 +21,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	}
 
 	@Override
-	public boolean create(Semester obj) {
+	public boolean create(TagLike obj) {
 		try{
 			String query="INSERT INTO semesters(semester_name) VALUES(?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -46,7 +46,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	}
 
 	@Override
-	public boolean update(Semester obj) {
+	public boolean update(TagLike obj) {
 		try{
 			String query="UPDATE semesters SET semester_name = ? WHERE id_semester = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -66,7 +66,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	}
 
 	@Override
-	public boolean delete(Semester obj) {
+	public boolean delete(TagLike obj) {
 		try{
 			String query="DELETE FROM semesters WHERE id_semester = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -86,14 +86,14 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	}
 
 	@Override
-	public Semester find(int index) {
+	public TagLike find(int index) {
 		try{
 			String query="SELECT id_semester, semester_name FROM semesters WHERE id_semester = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Semester semester = new Semester(res.getInt("id_semester"),res.getString("semester_name"));
+			TagLike semester = new TagLike(res.getInt("id_semester"),res.getString("semester_name"));
 			res.close();
 			state.close();
 			return semester;
@@ -109,8 +109,8 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	
 	// Code to create a new element.
 	// NB: create updates the index
-	public Semester newElement(){
-		Semester semester = Semester.defaultElement();
+	public TagLike newElement(){
+		TagLike semester = TagLike.defaultElement();
 		this.create(semester);
 		return semester;
 	}
@@ -118,12 +118,12 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	// Returns an element of type Semester
 	// either an already existing one or
 	// we create and initialize a new one in the database
-	public Semester anyElement(){
+	public TagLike anyElement(){
 		try{
 			String query="SELECT id_semester, semester_name FROM semesters ORDER BY id_semester LIMIT 1";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
-			Semester semester;
+			TagLike semester;
 			if (res.first()){
 				semester = this.find(res.getInt("id_semester"));
 			} else {
@@ -142,14 +142,14 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 		}
 	}
 	
-	public LinkedList<Semester> getData() {
-		LinkedList<Semester> data = new LinkedList<Semester>();
+	public LinkedList<TagLike> getData() {
+		LinkedList<TagLike> data = new LinkedList<TagLike>();
 		try{
 			String query="SELECT id_semester, semester_name FROM semesters ORDER BY id_semester";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Semester semester = new Semester(
+				TagLike semester = new TagLike(
 						res.getInt("id_semester"),
 						res.getString("semester_name")
 						);

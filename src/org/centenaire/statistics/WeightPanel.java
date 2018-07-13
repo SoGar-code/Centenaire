@@ -1,4 +1,4 @@
-package gestionBilicence.statistics;
+package org.centenaire.statistics;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import gestionBilicence.edition.Semester;
-import gestionBilicence.general.GeneralController;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.general.GeneralController;
 
 public class WeightPanel extends JPanel implements ListSelectionListener{
 	private JLabel totalWeight;
@@ -26,8 +26,8 @@ public class WeightPanel extends JPanel implements ListSelectionListener{
 
 	@Override
 	public void valueChanged(ListSelectionEvent event) {
-		JList<Semester> westList = (JList<Semester>)event.getSource();
-		List<Semester> listCurrentSemester = westList.getSelectedValuesList();
+		JList<TagLike> westList = (JList<TagLike>)event.getSource();
+		List<TagLike> listCurrentSemester = westList.getSelectedValuesList();
 		
 		float weight = GeneralController.getInstance().getExamsDao().getTotalWeight(listCurrentSemester);
 		totalWeight.setText(Float.toString(weight));

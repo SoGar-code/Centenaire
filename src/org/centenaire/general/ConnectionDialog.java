@@ -1,4 +1,4 @@
-package gestionBilicence.general;
+package org.centenaire.general;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

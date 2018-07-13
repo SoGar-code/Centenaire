@@ -1,4 +1,4 @@
-package gestionBilicence.dao.postgreSqlDao;
+package org.centenaire.dao.postgreSqlDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +9,10 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import gestionBilicence.dao.abstractDao.AbstractStudentDao;
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.ExtraInfoStudent;
-import gestionBilicence.edition.Student;
+import org.centenaire.dao.abstractDao.AbstractStudentDao;
+import org.centenaire.edition.ExtraInfoStudent;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.Individuals;
 
 public class PostgreSQLStudentDao extends AbstractStudentDao {
 	
@@ -22,7 +22,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public boolean create(Student obj) {
+	public boolean create(Individuals obj) {
 		try{
 			String query="INSERT INTO students(stud_firstname, stud_lastname) VALUES(?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -48,7 +48,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public boolean update(Student obj) {
+	public boolean update(Individuals obj) {
 		try{
 			String query="UPDATE students SET stud_firstname = ?, stud_lastname = ? WHERE id_stud = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -69,7 +69,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public boolean delete(Student obj) {
+	public boolean delete(Individuals obj) {
 		try{
 			String query="DELETE FROM students WHERE id_stud = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -89,14 +89,14 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public Student find(int index) {
+	public Individuals find(int index) {
 		try{
 			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students WHERE id_stud = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Student stud = new Student(res.getInt("id_stud"),res.getString("stud_firstname"),res.getString("stud_lastname"));
+			Individuals stud = new Individuals(res.getInt("id_stud"),res.getString("stud_firstname"),res.getString("stud_lastname"));
 			res.close();
 			state.close();
 			return stud;
@@ -112,21 +112,21 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	
 	// Code to create a new element.
 	// NB: create updates the index
-	public Student newElement(){
-		Student stud = Student.defaultElement();
+	public Individuals newElement(){
+		Individuals stud = Individuals.defaultElement();
 		this.create(stud);
 		return stud;
 	}
 
 	
-	public LinkedList<Student> getData() {
-		LinkedList<Student> data = new LinkedList<Student>();
+	public LinkedList<Individuals> getData() {
+		LinkedList<Individuals> data = new LinkedList<Individuals>();
 		try{
 			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY stud_lastname";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Student stud = new Student(
+				Individuals stud = new Individuals(
 						res.getInt("id_stud"),
 						res.getString("stud_firstname"),
 						res.getString("stud_lastname")
@@ -148,12 +148,12 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public Student anyElement(){
+	public Individuals anyElement(){
 		try{
 			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY id_stud LIMIT 1";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
-			Student stud;
+			Individuals stud;
 			if (res.first()){
 				stud = this.find(res.getInt("id_stud"));
 			} else {
@@ -172,8 +172,8 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 		}
 	}
 	
-	public LinkedList<Student> getData(boolean inverseSort) {
-		LinkedList<Student> data = new LinkedList<Student>();
+	public LinkedList<Individuals> getData(boolean inverseSort) {
+		LinkedList<Individuals> data = new LinkedList<Individuals>();
 		try{
 			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY stud_lastname";
 					if (inverseSort)
@@ -181,7 +181,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Student stud = new Student(
+				Individuals stud = new Individuals(
 						res.getInt("id_stud"),
 						res.getString("stud_firstname"),
 						res.getString("stud_lastname")
@@ -203,7 +203,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 	}
 
 	@Override
-	public ExtraInfoStudent getInfo(Student stud) {
+	public ExtraInfoStudent getInfo(Individuals stud) {
 		ExtraInfoStudent info = new ExtraInfoStudent();
 
 		try{
@@ -259,7 +259,7 @@ public class PostgreSQLStudentDao extends AbstractStudentDao {
 
 	// updates when possible, deletes when needed.
 	@Override
-	public void updateInfo(Student stud, ExtraInfoStudent info) {
+	public void updateInfo(Individuals stud, ExtraInfoStudent info) {
 		try{
 			// First part: apb
 			// delete everything and create again when needed

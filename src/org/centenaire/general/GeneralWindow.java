@@ -1,4 +1,4 @@
-package gestionBilicence.general;
+package org.centenaire.general;
 
 import javax.swing.JPanel;
 

@@ -1,13 +1,13 @@
-package gestionBilicence.dao.abstractDao;
+package org.centenaire.dao.abstractDao;
 
 import java.util.List;
 
-import gestionBilicence.dao.Dao;
-import gestionBilicence.edition.Exams;
-import gestionBilicence.edition.Semester;
+import org.centenaire.dao.Dao;
+import org.centenaire.edition.entities.Exams;
+import org.centenaire.edition.entities.TagLike;
 
 public abstract class AbstractExamsDao extends Dao<Exams> {
 
-	public abstract float getTotalWeight(List<Semester> listCurrentSemester);
+	public abstract float getTotalWeight(List<TagLike> listCurrentSemester);
 	
 }

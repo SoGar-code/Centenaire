@@ -10,13 +10,13 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.edition.Semester;
-import org.centenaire.edition.Student;
+import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.Individuals;
 
-public abstract class AbstractSemesterDao extends Dao<Semester> {
+public abstract class AbstractSemesterDao extends Dao<TagLike> {
 	
 	// Returns an element of type Semester
 	// either an already existing one or
 	// we create and initialize a new one in the database
-	public abstract Semester anyElement();
+	public abstract TagLike anyElement();
 }

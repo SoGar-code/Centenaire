@@ -1,4 +1,4 @@
-package gestionBilicence.edition;
+package org.centenaire.edition;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
