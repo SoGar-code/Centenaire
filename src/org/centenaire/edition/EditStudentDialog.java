@@ -3,9 +3,6 @@ package org.centenaire.edition;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,11 +13,11 @@ import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.GeneralController;
 
 /**
+ * A class to update the additional elements linked to Students
  * 
  * @author Trivy
- * A class to update the additional elements linked to Students
+ * 
  */
-
 public class EditStudentDialog extends JDialog {
 	private ExtraInfoStudent infoOutput;
 	private boolean updated = false;

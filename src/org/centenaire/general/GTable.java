@@ -19,16 +19,20 @@ import org.centenaire.general.editorsRenderers.Edit;
 import org.centenaire.general.editorsRenderers.FloatEditor;
 import org.centenaire.general.editorsRenderers.FloatRenderer;
 
+/**
+ * A table adapted to our needs!
+ * 
+ * <p> added functionalities include:
+ * <ul>
+ * <li> scrolling </li>
+ * <li> a copy of the general controller </li>
+ * <li> a cast on the TableModel we use </li>
+ * <li> suitable editors and renderers.</li>
+ * <p>
+ *  
+ * NB: the delete function is implemented in ButtonDeleteEditor.
+ */
 public class GTable extends JScrollPane{
-	/*
-	 * A table adapted to our needs, with:
-	 * _ scrolling
-	 * _ a copy of the general controller
-	 * _ a cast on the TableModel we use.
-	 * _ suitable editors and renderers.
-	 *  
-	 * NB: the delete function is implemented in ButtonDeleteEditor
-	 */
 	private GeneralController gc = GeneralController.getInstance();
 	private JTable table;
 

@@ -19,12 +19,15 @@ import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.observer.Observable;
 import org.centenaire.general.observer.Observer;
 
-	/**
-	 * A class used to store data regarding the current state of the interface
-	 * (e.g. currentEntity).
-	 * Doubles as a singleton class giving access to the different Dao classes.
-	 */
-
+/**
+ * Class used to store data regarding the current state of the interface.
+ * 
+ * <p>
+ * For instance, it stores the variable "currentEntity".
+ * It doubles as a singleton class giving access to the different Dao classes.
+ * <p>
+ * 
+ */
 public class GeneralController implements Observable, ChangeListener{
 
 	

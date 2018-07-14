@@ -10,12 +10,13 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.TagLike;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralWindow;
@@ -30,7 +31,6 @@ import org.centenaire.general.editorsRenderers.Edit;
  * 
  * NB: GeneralWindow provides a copy of gc (GeneralController)
  */
-
 public class EditionWindow extends GeneralWindow {
 	
 	private JPanel pan;
@@ -42,60 +42,15 @@ public class EditionWindow extends GeneralWindow {
 	public EditionWindow(){
 		super();
 		
-		//======================
-		// Creation of the different tabs
-		//======================
-		
-		LinkedList<Entity>[] dataVect = (LinkedList<Entity>[]) new LinkedList<?>[4];
-		ListTableModel[] listTableModelVect = new ListTableModel[4];
-		GTable[] tabEntityVect = new GTable[4];
-		
-		// Creation of student tab (already initialized):
-		listTableModelVect[0] = new ListTableModel(
-				new Class[] {String.class, String.class, Edit.class, Delete.class},
-				new String[] {"First name","Family Name","Edit","Delete"},
-				gc.getCurrentData() // at that point, we should have currentEntity=0
-				);
-		// include listTableModel as observer of gc (changes in the data).
-		gc.addObserver(listTableModelVect[0]);
-		tabEntityVect[0] = new GTable(listTableModelVect[0]);
-		
-		// Creation of semester tab:
-		listTableModelVect[1] = new ListTableModel(
-				new Class[] {String.class, Delete.class},
-				new String[] {"Name","Delete"},
-				new LinkedList<Entity>()
-				);
-		gc.addObserver(listTableModelVect[1]);
-		tabEntityVect[1] = new GTable(listTableModelVect[1]);
-		
-		// Creation of exams tab:
-		listTableModelVect[2] = new ListTableModel(
-				new Class[] {String.class, TagLike.class, Integer.class,Delete.class},
-				new String[] {"Name","Semester","Coefficient", "Delete"},
-				new LinkedList<Entity>()
-				);
-		gc.addObserver(listTableModelVect[2]);
-		tabEntityVect[2] = new GTable(listTableModelVect[2]);
-		
-		// Creation of marks tab:
-		listTableModelVect[3] = new ListTableModel(
-				new Class[] {Exams.class, Individuals.class, float.class, Delete.class},
-				new String[] {"Exam","Student","Mark","Delete"},
-				new LinkedList<Entity>()
-				);
-		gc.addObserver(listTableModelVect[3]);
-		tabEntityVect[3] = new GTable(listTableModelVect[3]);
-		
 		// Final assembly into a tabbed panel.
 		tabbedPane = new JTabbedPane();
-		String[] listTabs = {"Students","Semesters","Exams","Marks"};
-		for (int i = 0; i <= 3; i++){
-			tabbedPane.addTab(listTabs[i],tabEntityVect[i]);
+		String[] listTabs = {"Personnes","Institutions","Evénements"};
+		String name;
+		for (int i = 0; i <= 2; i++){
+			name = listTabs[i];
+			JTabbedPane aux = this.createTabbedView(name);
+			tabbedPane.addTab(name,aux);
 		}
-		
-		// Listeners of the tabbedPane
-		tabbedPane.addChangeListener(gc);
 		
 		//======================
 		// Buttons and listeners
@@ -157,17 +112,31 @@ public class EditionWindow extends GeneralWindow {
 		//======================
 		// Final assembly
 		//======================
-		
-		// Assembling pan (with buttons)
-	    GridLayout gl = new GridLayout(1,2);
-	    gl.setHgap(5);
-	    pan = new JPanel(gl);
-	    pan.add(newLineButton);
-	    //pan.add(editButton);
-	    pan.add(saveButton);
-		
 		this.setLayout(new BorderLayout());
 		this.add(tabbedPane, BorderLayout.CENTER);
-	    this.add(pan, BorderLayout.SOUTH);
+	}
+	
+	public JTabbedPane createTabbedView(String name) {
+		JTabbedPane tabbedView = new JTabbedPane(JTabbedPane.LEFT);
+		
+		// Creates 3 tabs with suitable characteristics
+		// ============================================
+		
+		// Tab with list
+		String content = String.format("Fenêtre 'liste' de %s", name);
+		JLabel listTab = new JLabel(content);
+		tabbedView.add("Liste", listTab);
+		
+		// Tab with edit
+		content = String.format("Fenêtre 'modifier' de %s", name);
+		JLabel editTab = new JLabel(content);
+		tabbedView.add("Modifier", editTab);
+		
+		// Tab with create
+		content = String.format("Fenêtre 'nouveau' de %s", name);
+		JLabel createTab = new JLabel(content);
+		tabbedView.add("Nouveau", createTab);
+		
+		return tabbedView;
 	}
 }

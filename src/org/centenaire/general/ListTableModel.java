@@ -16,14 +16,17 @@ import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.observer.Observer;
 import org.centenaire.statistics.Average;
 
+/**
+ * A superclass for the table models of the project
+ * 
+ * Includes methods for:
+ * _ adding and deleting data (in the table)
+ * _ converting String into Date and Float
+ * _ updating data
+ * 
+ */
 public class ListTableModel extends AbstractTableModel implements Observer{
-	  /*
-	   * A superclass for the table models of the GestionBilicence project
-	   * Includes methods for:
-	   * _ adding and deleting data (in the table)
-	   * _ converting String into Date and Float
-	   * _ updating data
-	   */
+
 	private LinkedList<Entity> data;
 
 	protected Class[] listClass;
