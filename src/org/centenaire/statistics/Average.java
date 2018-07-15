@@ -1,26 +1,25 @@
 package org.centenaire.statistics;
 
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.general.Entity;
 
 /**
+ * Average class, an Entity class used for display only.
  * 
- * @author Trivy
- * Average class, an Entity class used for display only
- * so no setters.
+ * <p>so no setters.
  */
 
 public class Average extends Entity {
-	private Individuals stud;
+	private Individual stud;
 	private float average;
 
-	public Average(Individuals stud, float average) {
+	public Average(Individual stud, float average) {
 		super();
 		this.stud = stud;
 		this.average = average;
 	}
 
-	public Average(int index, Individuals stud, float average) {
+	public Average(int index, Individual stud, float average) {
 		super(index);
 		this.stud = stud;
 		this.average = average;

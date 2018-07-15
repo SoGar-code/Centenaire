@@ -13,7 +13,7 @@ import javax.swing.table.TableCellRenderer;
  * Renderer for floats (in a table cell).
  * 
  * <p>
- * a number of decimals specified in the constructor.
+ * a number of decimals is specified in the constructor.
  */
 public class FloatRenderer extends JLabel implements TableCellRenderer {
 	protected int nbDecimals;

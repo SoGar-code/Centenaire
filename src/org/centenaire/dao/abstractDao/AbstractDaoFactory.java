@@ -7,8 +7,8 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
-import org.centenaire.edition.entities.Individuals;
 
 /**
  * Factory class for Dao classes

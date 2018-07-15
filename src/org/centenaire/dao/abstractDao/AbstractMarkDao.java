@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
-import org.centenaire.edition.entities.Individuals;
 import org.centenaire.statistics.Average;
 
 public abstract class AbstractMarkDao extends Dao<Mark> {
@@ -16,7 +16,7 @@ public abstract class AbstractMarkDao extends Dao<Mark> {
 	// we create and initialize a new one in the database
 	public abstract Mark anyElement();
 	
-	public abstract LinkedList<Mark> getDataOnStudent(Individuals stud);
+	public abstract LinkedList<Mark> getDataOnStudent(Individual stud);
 	
 	public abstract LinkedList<Average> getAverage(List<TagLike> listCurrentSemester);
 	

@@ -10,6 +10,12 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
+/**
+ * Editor for floats (in a table cell).
+ * 
+ * <p>
+ * a number of decimals is specified in the constructor.
+ */
 public class FloatEditor extends DefaultCellEditor {
 	protected int nbDecimals;
 	

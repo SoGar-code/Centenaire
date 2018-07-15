@@ -1,7 +1,5 @@
 package org.centenaire.general;
 
-import javax.swing.JComponent;
-
 /**
  * Superclass of the POJO used for DAO
  * 
@@ -12,6 +10,10 @@ import javax.swing.JComponent;
  * <li> have a <it>static</li> defaultElement method</li>
  * </ul>
  * in order to use the generic EntityDialog.
+ * 
+ * <p>For more convenience, these concrete classes should 
+ * also provide a tractable toString method, used as the 
+ * standard "display form" of the entity.
  * 
  * @see WithEditor
  * 
@@ -57,12 +59,4 @@ public abstract class Entity{
 	
 	public abstract void setEntry(int i, Object obj);
 	
-	/**
-	 * Provide the 'display form' of the Entity
-	 * 
-	 * <p>This is the form is the one used when a simple display of the entity is needed.</p>
-	 * 
-	 * @return Edition form of the Entity
-	 */
-	public abstract JComponent displayForm();
 }

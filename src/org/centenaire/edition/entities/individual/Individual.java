@@ -1,28 +1,30 @@
-package org.centenaire.edition.entities;
+package org.centenaire.edition.entities.individual;
 
 import org.centenaire.general.Entity;
+import org.centenaire.general.EntityEditor;
+import org.centenaire.general.WithEditor;
 
 /**
  * POJO for the 'Individuals' table in the database.
  */
-public class Individuals extends Entity {
+public class Individual extends Entity implements WithEditor<Individual>{
 	protected String first_name;
 	protected String last_name;
 	protected int birth_year;
 
-	public Individuals(String first_name, String last_name) {
+	public Individual(String first_name, String last_name) {
 		super();
 		this.first_name = first_name;
 		this.last_name = last_name;
 	}
 	
-	public Individuals(int index, String first_name, String last_name) {
+	public Individual(int index, String first_name, String last_name) {
 		super(index);
 		this.first_name = first_name;
 		this.last_name = last_name;
 	}
 	
-	public Individuals(String first_name, String last_name, int birth_year) {
+	public Individual(String first_name, String last_name, int birth_year) {
 		super();
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -82,11 +84,18 @@ public class Individuals extends Entity {
 		}
 	}
 	
-	public static Individuals defaultElement(){
-		return new Individuals("Jean","Défaut", 1901);
+	public static Individual defaultElement(){
+		return new Individual("Jean","Défaut", 1901);
 	}
 
 	public String toString(){
 		return last_name+" "+first_name;
 	}
+
+	@Override
+	public EntityEditor<Individual> editionForm() {
+		IndividualEditor ie = new IndividualEditor(this);
+		return ie;
+	}
+
 }

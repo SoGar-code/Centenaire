@@ -6,23 +6,24 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GeneralController;
 
 public class Mark extends Entity {
 	protected float mark;
-	protected Individuals student;
+	protected Individual student;
 	protected Exams exam;
 	
 	
-	public Mark(float mark, Individuals student, Exams exam) {
+	public Mark(float mark, Individual student, Exams exam) {
 		super();
 		this.mark = mark;
 		this.student = student;
 		this.exam = exam;
 	}
 	
-	public Mark(int index,float mark, Individuals student, Exams exam) {
+	public Mark(int index,float mark, Individual student, Exams exam) {
 		super(index);
 		this.mark = mark;
 		this.student = student;
@@ -38,11 +39,11 @@ public class Mark extends Entity {
 		this.mark = mark;
 	}
 
-	public Individuals getStudent() {
+	public Individual getStudent() {
 		return student;
 	}
 
-	public void setStudent(Individuals student) {
+	public void setStudent(Individual student) {
 		this.student = student;
 	}
 
@@ -75,7 +76,7 @@ public class Mark extends Entity {
 			this.exam=(Exams)obj;
 			break;
 		case 1:
-			this.student=(Individuals)obj;
+			this.student=(Individual)obj;
 			break;
 		case 2:
 			this.mark=convertStringToFloat((String)obj);

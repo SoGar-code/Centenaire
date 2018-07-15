@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GTable;

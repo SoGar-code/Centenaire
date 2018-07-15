@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.general.editorsRenderers.ButtonEditEditor;
@@ -70,9 +70,9 @@ public class GTable extends JScrollPane{
 	    table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
 
 	    // Student CellEditor
-	    LinkedList<Individuals> listStudent = gc.getStudentDao().getData();
-	    JComboBox<Individuals> comboStudent = new JComboBox<Individuals>(listStudent.toArray(new Individuals[listStudent.size()]));
-	    table.setDefaultEditor(Individuals.class, new DefaultCellEditor(comboStudent));
+	    LinkedList<Individual> listStudent = gc.getStudentDao().getData();
+	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
+	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	    
 	    // Exams CellEditor
 	    LinkedList<Exams> listExams = gc.getExamsDao().getData();
@@ -96,9 +96,9 @@ public class GTable extends JScrollPane{
 		// Method called by GeneralPanel when currentEntity==0 (Students)
 		// when "Save/update" button is pushed.
 		// Only for the Mark tab
-	    LinkedList<Individuals> listStudent = gc.getStudentDao().getData();
-	    JComboBox<Individuals> comboStudent = new JComboBox<Individuals>(listStudent.toArray(new Individuals[listStudent.size()]));
-	    table.setDefaultEditor(Individuals.class, new DefaultCellEditor(comboStudent));
+	    LinkedList<Individual> listStudent = gc.getStudentDao().getData();
+	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
+	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	}
 	
 	public void updateComboExams(){

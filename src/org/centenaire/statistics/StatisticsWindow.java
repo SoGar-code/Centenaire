@@ -9,7 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GeneralController;
@@ -21,7 +21,7 @@ public class StatisticsWindow extends GeneralWindow {
 	 * Window to display statistics
 	 */
 	private GeneralController gc = GeneralController.getInstance();
-	private DefaultListModel<Individuals> listStudent;
+	private DefaultListModel<Individual> listStudent;
 	private DefaultListModel<TagLike> listSemester1;
 	private DefaultListModel<TagLike> listSemester2;
 	private ListTableModel[] tableModelVect = new ListTableModel[3];
@@ -43,7 +43,7 @@ public class StatisticsWindow extends GeneralWindow {
         		new String[] {"Exam","Mark"},
         		new LinkedList<Entity>()
         		);
-        listStudent = new DefaultListModel<Individuals>();
+        listStudent = new DefaultListModel<Individual>();
         updateListStudent();
 		StatisticsPanel tabEvolution = new StatisticsPanel(listStudent, tableModelVect[0]);
 		// add listener on currentStudent (NB: listener in ListTableModel!)
@@ -53,7 +53,7 @@ public class StatisticsWindow extends GeneralWindow {
 		// ====================================
 		// tabAverage: average per student (on selected semesters)
         tableModelVect[1] = new ListTableModel(
-        		new Class[] {Individuals.class,float.class},
+        		new Class[] {Individual.class,float.class},
         		new String[] {"Student","Average"},
         		new LinkedList<Entity>()
         		);
@@ -109,8 +109,8 @@ public class StatisticsWindow extends GeneralWindow {
 	
 	public void updateListStudent(){
 		listStudent.removeAllElements();
-        LinkedList<Individuals> dataStudent = gc.getStudentDao().getData();
-        for(Individuals stud:dataStudent){
+        LinkedList<Individual> dataStudent = gc.getStudentDao().getData();
+        for(Individual stud:dataStudent){
         	listStudent.addElement(stud);
         }
 	}

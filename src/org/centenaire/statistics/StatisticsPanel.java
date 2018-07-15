@@ -18,9 +18,9 @@ import org.centenaire.general.GeneralController;
 import org.centenaire.general.ListTableModel;
 
 	/**
+	 * Basic class for the statistic panel.
 	 * 
-	 * @author Trivy
-	 * Basic class for the statistic panel, including:
+	 *  It includes:
 	 * _ a small panel on the west, including a JLabel and a JList
 	 * _ a large JTable in the center
 	 * Models for list and table are initialized elsewhere

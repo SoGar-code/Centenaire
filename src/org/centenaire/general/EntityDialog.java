@@ -14,10 +14,12 @@ import javax.swing.JPanel;
 /**
  * Dialog box to create a new Entity
  * 
+ * <p>The input class is required to 'extend' WithEditor<T>,
+ * but it really means to 'implement' this interface class.
+ * 
  * @param <T> Entity class associated to the editor.
- * @param <U> should be EntityEditor<T> class associated to the editor.
  */
-public class EntityDialog<T, U> extends JDialog {
+public class EntityDialog<T extends WithEditor<T>> extends JDialog {
 	T currentObject;
 
 	/**
@@ -36,12 +38,14 @@ public class EntityDialog<T, U> extends JDialog {
 	 * 			Entity object whose values are going to be
 	 * 			used by the EntityEditor.
 	 */
-	public EntityDialog(T entity, U entityEditor) {
+	public EntityDialog(T entity) {
 		super();
 		this.setTitle("Création d'un nouvel objet");
 		this.setModal(true);
 		this.setSize(400,250);
 		this.setLocationRelativeTo(null);
+		
+		EntityEditor<T> entityEditor = entity.editionForm();
 		
 		// Control panel, with buttons
 		JPanel controlPan = new JPanel();
@@ -49,8 +53,8 @@ public class EntityDialog<T, U> extends JDialog {
 	    JButton cancelBouton = new JButton("Cancel");
 	    cancelBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
-	    	// ends the dialog and stops the program:
-	    	System.exit(ABORT);
+	    	  // ends dialog by making the box invisible
+	    	  setVisible(false);
 	      }      
 	    });
 	    
@@ -58,7 +62,7 @@ public class EntityDialog<T, U> extends JDialog {
 	    okBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0){
 	    	  // recover elements:
-	    	  currentObject = (T) (((EntityEditor<T>) entityEditor).getObject());
+	    	  currentObject = entityEditor.getObject();
 	    		    	
 	    	  // ends dialog by making the box invisible
 	    	  setVisible(false);

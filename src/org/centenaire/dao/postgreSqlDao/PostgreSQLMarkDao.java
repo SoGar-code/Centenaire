@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
-import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.GeneralController;
 import org.centenaire.statistics.Average;
 
@@ -104,7 +104,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			res.first();
 			Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-			Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+			Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 			Mark mark = new Mark(
 					index,
 					res.getFloat("mark"),
@@ -141,7 +141,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			while(res.next()){
 				Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-				Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 				Mark mark = new Mark(
 						res.getInt("id_mark"),
 						res.getFloat("mark"),
@@ -190,7 +190,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 	}
 
 	@Override
-	public LinkedList<Mark> getDataOnStudent(Individuals stud) {
+	public LinkedList<Mark> getDataOnStudent(Individual stud) {
 		LinkedList<Mark> data = new LinkedList<Mark>();
 		try{
 			String query="SELECT id_mark, id_exam, mark FROM marks WHERE id_stud = ? ORDER BY id_exam";
@@ -248,7 +248,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			state.setArray(2, array);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Individuals stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
 				Average average = new Average(
 						stud,
 						res.getFloat("average")

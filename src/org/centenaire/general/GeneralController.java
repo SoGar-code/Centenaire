@@ -14,7 +14,7 @@ import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.observer.Observable;
 import org.centenaire.general.observer.Observer;

@@ -9,10 +9,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.centenaire.edition.entities.Mark;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.editor.EditStudentDialog;
 import org.centenaire.editor.ExtraInfoStudent;
-import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.observer.Observer;
 import org.centenaire.statistics.Average;
 
@@ -121,7 +121,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	}
 	
 	public void editRow(int row){
-		Individuals stud = (Individuals)data.get(row);
+		Individual stud = (Individual)data.get(row);
 		EditStudentDialog studDialog = new EditStudentDialog(stud);
 		if (studDialog.showEditStudentDialog()){
 			ExtraInfoStudent info = studDialog.getInfoOutput();
@@ -157,10 +157,10 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	class StudentAction implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
-			JList<Individuals> westList = (JList<Individuals>)event.getSource();
+			JList<Individual> westList = (JList<Individual>)event.getSource();
 			// deals with the case of an empty selection
 			try{
-				Individuals currentStudent = westList.getSelectedValue();
+				Individual currentStudent = westList.getSelectedValue();
 				System.out.println("ListTableModel.StudentAction - current Student = "+currentStudent.toString());
 				LinkedList<Mark> listMark = gc.getMarkDao().getDataOnStudent(currentStudent);
 				

@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.general.GeneralController;
 
 /**
@@ -22,7 +22,7 @@ public class EditStudentDialog extends JDialog {
 	private ExtraInfoStudent infoOutput;
 	private boolean updated = false;
 
-	public EditStudentDialog(Individuals stud){
+	public EditStudentDialog(Individual stud){
 		super();
 		this.setTitle("Edition dialog — student "+stud.toString());
 		this.setModal(true);

@@ -13,11 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import org.centenaire.edition.entities.ItemTypes;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.editor.EditionWindow;
 import org.centenaire.general.EntityDialog;
-import org.centenaire.general.EntityEditor;
 import org.centenaire.questionnaire.Questionnaire;
 
 
@@ -58,19 +57,31 @@ public class Centenaire extends JFrame{
 		filesMenu.add(item1);
 		filesMenu.add(item2);
 		
+		// Action associated to the "item1" button
 		item1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("BdD centenaire: 'Trying stuff...' of MenuBar activated!");
 				
 				// Thing we are currently trying...
-				ItemTypes tl = ItemTypes.defaultElement();
-				EntityEditor<TagLike> editorTL = tl.editionForm();
+				// =================================
 				
-				EntityDialog<ItemTypes, EntityEditor<TagLike>> ed = new EntityDialog<ItemTypes, EntityEditor<TagLike>>(tl, editorTL);
-				TagLike finalElt = ed.showEntityDialog();
+				Individual tl = Individual.defaultElement();
+
+				EntityDialog<Individual> ed = new EntityDialog<Individual>(tl);
 				
-				String aux = String.format("==> contenu finalElt: %s", finalElt.getName());
-				System.out.println(aux);
+				// Try to get a value from the dialog...
+				try {
+					Individual finalElt = ed.showEntityDialog();
+					
+					String aux = String.format("==> contenu finalElt: %s", finalElt.toString());
+					System.out.println(aux);
+					
+					System.out.println(String.format("==> âge : %d", finalElt.getBirth_year()));
+				} catch (NullPointerException e) {
+					// but perhaps the edition was cancelled before completion...
+					System.out.println("Edition of the element cancelled.");
+				}
+				
 			}
 		});
 		
@@ -100,7 +111,7 @@ public class Centenaire extends JFrame{
 
 	public static void main(String[] args) {
 		new Centenaire();
-		new Questionnaire();
+		//new Questionnaire();
 	}
 
 }

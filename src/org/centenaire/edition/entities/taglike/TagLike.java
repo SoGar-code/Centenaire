@@ -83,8 +83,4 @@ public class TagLike extends Entity implements WithEditor<TagLike>{
 		return editor;
 	}
 
-	@Override
-	public JComponent displayForm() {
-		return new JLabel(name);
-	}
 }

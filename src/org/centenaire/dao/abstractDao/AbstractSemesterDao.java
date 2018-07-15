@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.edition.entities.taglike.TagLike;
 
 public abstract class AbstractSemesterDao extends Dao<TagLike> {
