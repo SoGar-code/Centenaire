@@ -17,7 +17,10 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 		super(tl);
 		
 		JLabel description = new JLabel("Name: ");
-		name = new JTextField(tl.getName());
+		
+		// Active text area...
+		name = new JTextField(20);
+		name.setText(tl.getName());
 		
 		this.add(description);
 		this.add(name);

@@ -22,5 +22,9 @@ public class Tag extends TagLike {
 		super(index, name);
 	}
 	
+	public static Tag defaultElement() {
+		return new Tag("default tag value");
+	}
+	
 }
 

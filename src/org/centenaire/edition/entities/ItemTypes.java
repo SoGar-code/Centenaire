@@ -24,5 +24,9 @@ public class ItemTypes extends TagLike {
 	public ItemTypes(int index, String name) {
 		super(index, name);
 	}
+	
+	public static ItemTypes defaultElement() {
+		return new ItemTypes("default item types value");
+	}
 
 }

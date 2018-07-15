@@ -13,6 +13,8 @@ package org.centenaire.general;
  * </ul>
  * 
  *  @param <T> associated entity class.
+ *  
+ *  @see Entity
  *
  */
 public interface WithEditor<T> {

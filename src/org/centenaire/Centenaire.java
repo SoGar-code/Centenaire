@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import org.centenaire.edition.entities.ItemTypes;
 import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.editor.EditionWindow;
 import org.centenaire.general.EntityDialog;
@@ -62,10 +63,10 @@ public class Centenaire extends JFrame{
 				System.out.println("BdD centenaire: 'Trying stuff...' of MenuBar activated!");
 				
 				// Thing we are currently trying...
-				TagLike tl = TagLike.defaultElement();
+				ItemTypes tl = ItemTypes.defaultElement();
 				EntityEditor<TagLike> editorTL = tl.editionForm();
 				
-				EntityDialog<TagLike, EntityEditor<TagLike>> ed = new EntityDialog<TagLike, EntityEditor<TagLike>>(tl, editorTL);
+				EntityDialog<ItemTypes, EntityEditor<TagLike>> ed = new EntityDialog<ItemTypes, EntityEditor<TagLike>>(tl, editorTL);
 				TagLike finalElt = ed.showEntityDialog();
 				
 				String aux = String.format("==> contenu finalElt: %s", finalElt.getName());

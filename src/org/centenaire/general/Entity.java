@@ -5,7 +5,16 @@ import javax.swing.JComponent;
 /**
  * Superclass of the POJO used for DAO
  * 
- * @author Olivier GABRIEL
+ * <p>A concrete Entity class T should both
+ * <ul>
+ * <li> inherit from this abstract Entity class</li>
+ * <li> implement the interface WithEditor<T> </li>
+ * <li> have a <it>static</li> defaultElement method</li>
+ * </ul>
+ * in order to use the generic EntityDialog.
+ * 
+ * @see WithEditor
+ * 
  */
 public abstract class Entity{
 	protected int index;

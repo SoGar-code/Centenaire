@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Dialog box to create a new Entity
  * 
  * @param <T> Entity class associated to the editor.
- * @param <U> EntityEditor<T> class associated to the editor.
+ * @param <U> should be EntityEditor<T> class associated to the editor.
  */
 public class EntityDialog<T, U> extends JDialog {
 	T currentObject;
