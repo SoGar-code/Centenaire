@@ -12,7 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.centenaire.editor.individual.IndividualTab;
+import org.centenaire.editor.entities.IndividualTab;
+import org.centenaire.editor.entities.TagLikeTab;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralWindow;
 
@@ -37,10 +38,16 @@ public class EditionWindow extends GeneralWindow {
 	public EditionWindow(){
 		super();
 		
-		// Final assembly into a tabbed panel.
+		// Initialize basic content
 		tabbedPane = new JTabbedPane();
+		
+		// Final assembly into a tabbed panel.
 		IndividualTab indivTab = new IndividualTab();
 		tabbedPane.addTab("Personnes",indivTab);
+		
+		// Final assembly into a tabbed panel.
+		TagLikeTab tagLikeTab = new TagLikeTab(4);
+		tabbedPane.addTab("Tags",tagLikeTab);
 		
 		String[] listTabs = {"Institutions","Evénements"};
 		String name;

@@ -124,7 +124,7 @@ public class GeneralController implements Observable, ChangeListener{
 	}
 
 	public Dao<TagLike> getSemesterDao(){
-		return df.getSemesterDao();
+		return df.getTagDao();
 	}
 	
 	public AbstractExamsDao getExamsDao(){

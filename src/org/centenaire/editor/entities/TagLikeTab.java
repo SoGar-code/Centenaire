@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.editor.individual;
+package org.centenaire.editor.entities;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -19,16 +19,22 @@ import org.centenaire.general.ListTableModel;
 import org.centenaire.general.UpdateEntityPanel;
 import org.centenaire.general.editorsRenderers.Delete;
 import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 
 /**
- * Class generating the tab related to the <it>Individual</it> Entity
+ * Class generating the tabs related to <it>TagLike</it> Entity elements
  * 
  * <p>In the current design, it contains a tabbed pane itself!
  *
  */
-public class IndividualTab extends JPanel {
+public class TagLikeTab extends JPanel {
 	
-	public IndividualTab() {
+	/**
+	 * The constructor takes a parameter, since several Entity classes are similar.
+	 * 
+	 * @param i classIndex of the TagLike under consideration
+	 */
+	public TagLikeTab(int i) {
 		super();
 		
 		// Get GeneralController
@@ -36,25 +42,21 @@ public class IndividualTab extends JPanel {
 
 		// *New entity* button
 		// ====================
-		JButton newEntity = new JButton("Nouvel individu");
+		JButton newEntity = new JButton("Nouvelle étiquette");
 		
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("IndividualTab.newEntity activated!");
+				System.out.println("TagLikeTab.newEntity activated!");
 				
-				Individual tl = Individual.defaultElement();
+				TagLike tl = TagLike.defaultElement();
 
-				EntityDialog<Individual> ed = new EntityDialog<Individual>(tl);
+				EntityDialog<TagLike> ed = new EntityDialog<TagLike>(tl);
 				
 				// Try to get a value from the dialog...
 				try {
-					Individual finalElt = ed.showEntityDialog();
+					TagLike finalElt = ed.showEntityDialog();
 					
-					String aux = String.format("==> contenu finalElt: %s", finalElt.toString());
-					System.out.println(aux);
-					
-					System.out.println(String.format("==> année de naissance : %d", finalElt.getBirth_year()));
 				} catch (NullPointerException e) {
 					// edition was cancelled before completion...
 					System.out.println("Edition of the element cancelled.");
@@ -71,9 +73,9 @@ public class IndividualTab extends JPanel {
 		
 		// starting from standard ListTableModel.
 		ListTableModel entityListTableModel = new ListTableModel(
-				new Class[] {String.class, String.class, Delete.class},
-				new String[] {"Prénom", "Nom"},
-				gc.getCurrentData() // at that point, we should have currentEntity=0
+				new Class[] {String.class},
+				new String[] {"Etiquette"},
+				gc.getDao(i).findAll() // at that point, we should have currentEntity=0
 				);
 		// include listTableModel as observer of gc (changes in the data).
 		gc.addObserver(entityListTableModel);
@@ -81,7 +83,7 @@ public class IndividualTab extends JPanel {
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<Individual> uep = new UpdateEntityPanel<Individual>(1);
+		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(i);
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);

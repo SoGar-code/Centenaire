@@ -24,7 +24,7 @@ public abstract class AbstractDaoFactory {
 	
 	public abstract AbstractExamsDao getExamsDao();
 	
-	public abstract Dao<TagLike> getSemesterDao();
+	public abstract Dao<TagLike> getTagDao();
 	
 	public abstract AbstractMarkDao getMarkDao();
 	
@@ -52,7 +52,7 @@ public abstract class AbstractDaoFactory {
 			case 3:
 				return getMarkDao();
 			case 4:
-				return getSemesterDao();
+				return getTagDao();
 			default:
 				System.out.println("AbstractDaoFactory.getDao -- type not found!");
 				return null;

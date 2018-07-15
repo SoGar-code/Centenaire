@@ -13,7 +13,7 @@ import org.centenaire.dao.Dao;
 import org.centenaire.general.entities.individual.Individual;
 import org.centenaire.general.entities.taglike.TagLike;
 
-public abstract class AbstractSemesterDao extends Dao<TagLike> {
+public abstract class AbstractTagDao extends Dao<TagLike> {
 	
 	// Returns an element of type Semester
 	// either an already existing one or

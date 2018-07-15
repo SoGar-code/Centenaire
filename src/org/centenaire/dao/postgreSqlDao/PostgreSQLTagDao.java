@@ -9,13 +9,13 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import org.centenaire.dao.abstractDao.AbstractSemesterDao;
+import org.centenaire.dao.abstractDao.AbstractTagDao;
 import org.centenaire.general.entities.individual.Individual;
 import org.centenaire.general.entities.taglike.TagLike;
 
-public class PostgreSQLSemesterDao extends AbstractSemesterDao {
+public class PostgreSQLTagDao extends AbstractTagDao {
 	
-	public PostgreSQLSemesterDao(Connection conn){
+	public PostgreSQLTagDao(Connection conn){
 		super();
 		this.conn = conn;
 	}
@@ -37,7 +37,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.create -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.create -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.update -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.update -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -72,12 +72,12 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, obj.getIndex());
 			int nb_rows = state.executeUpdate();
-			System.out.println("PostgreSQLSemesterDao.delete: deleted "+nb_rows+" lines");
+			System.out.println("PostgreSQLTagDao.delete: deleted "+nb_rows+" lines");
 			state.close();
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.delete -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.delete -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -99,7 +99,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 			return semester;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 			return semester;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -156,13 +156,13 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 						);
 				data.add(semester);
 			}
-			System.out.println("PostgreSQLSemesterDao.getData(): found "+data.size()+" lines.");
+			System.out.println("PostgreSQLTagDao.getData(): found "+data.size()+" lines.");
 			res.close();
 			state.close();
 			return data;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLSemesterDao.getData -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.getData -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();

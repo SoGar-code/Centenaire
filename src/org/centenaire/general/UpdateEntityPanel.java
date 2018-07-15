@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.general.entities.individual.Individual;
 
 /**
  * Generic Entity update panel
@@ -80,8 +79,15 @@ public class UpdateEntityPanel<T> extends JPanel {
 		
 		// Save button and its action
 		JButton svgButton = new JButton("Sauvegarder");
-			// il suffit de mettre à jour l'élément courant, s'il y en a...
-			// ... mais il faut notifier gc...
+		
+		svgButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				System.out.println("Calling save button");
+				// À terme, il suffit de mettre à jour l'élément courant, s'il y en a...
+				// ... mais il faut notifier gc...
+			}
+		});
+
 		
 		// Create bottom panel
 		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -103,10 +109,10 @@ public class UpdateEntityPanel<T> extends JPanel {
 	public void setUpdatePanel(T entity) {
 		// peut-être que ça pourrait être une pure histoire interne au composant ?
 		// => lorsqu'il y a une mise à jour, il faut notifier gc... (peut-être automatiquement ?) 
-		System.out.println("Calling UpdatePanel...");
 		
 		updatePanel.removeAll();
 		updatePanel.add(((WithEditor<T>) entity).editionForm());
+		// needed for the change to take effect
 		updatePanel.validate();
 	}
 	

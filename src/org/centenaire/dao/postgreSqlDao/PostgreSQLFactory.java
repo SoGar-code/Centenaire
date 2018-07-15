@@ -56,8 +56,8 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	}
 	
 	@Override
-	public Dao<TagLike> getSemesterDao() {
-		return new PostgreSQLSemesterDao(conn);
+	public Dao<TagLike> getTagDao() {
+		return new PostgreSQLTagDao(conn);
 	}
 	
 	@Override
