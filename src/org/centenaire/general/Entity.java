@@ -15,10 +15,23 @@ package org.centenaire.general;
  * also provide a tractable toString method, used as the 
  * standard "display form" of the entity.
  * 
+ * <p>This abstract class also provides support for the <it>classIndex</it>
+ * variable, used to get the correct DAO object.
+ * 
+ * 
  * @see WithEditor
+ * @see org.centenaire.dao.abstractDao.AbstractDaoFactory#getDao(int)
  * 
  */
 public abstract class Entity{
+	/**
+	 * Numbering of the different (concrete) Entity classes.
+	 * 
+	 * <p>Value 0 is for the abstract Entity class.
+	 */
+	protected static int classIndex = 0;
+	
+	
 	protected int index;
 	
 	// Initialization of index, 
@@ -44,6 +57,19 @@ public abstract class Entity{
 	
 	public int getIndex(){
 		return index;
+	}
+	
+	/**
+	 * To get the classIndex for this class.
+	 * 
+	 * No setters for this static variable!
+	 * 
+	 * @return classIndex, an integer.
+	 * 
+	 * @see Entity
+	 */
+	public static int getClassIndex() {
+		return classIndex;
 	}
 	
 	/**

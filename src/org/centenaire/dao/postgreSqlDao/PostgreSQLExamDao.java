@@ -12,9 +12,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.GeneralController;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.taglike.TagLike;
 
 public class PostgreSQLExamDao extends AbstractExamsDao {
 	
@@ -155,7 +155,10 @@ public class PostgreSQLExamDao extends AbstractExamsDao {
 		}
 	}
 	
-	public LinkedList<Exams> getData() {
+	/**
+	 * Recover all 'Exams' elements in the DB
+	 */
+	public LinkedList<Exams> findAll() {
 		LinkedList<Exams> data = new LinkedList<Exams>();
 		try{
 			String query="SELECT id_exam, name, id_semester, coefficient FROM exams ORDER BY id_exam";

@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.Mark;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 
 /**
  * Factory class for Dao classes
@@ -20,7 +20,7 @@ import org.centenaire.edition.entities.taglike.TagLike;
  */
 public abstract class AbstractDaoFactory {
 
-	public abstract AbstractStudentDao getStudentDao();
+	public abstract AbstractIndividualDao getStudentDao();
 	
 	public abstract AbstractExamsDao getExamsDao();
 	
@@ -28,17 +28,31 @@ public abstract class AbstractDaoFactory {
 	
 	public abstract AbstractMarkDao getMarkDao();
 	
-	// to get Dao class indexed by an integer
+	/**
+	 * To get a Dao class indexed by an integer
+	 * 
+	 * @param i
+	 * 			index of the class under consideration.
+	 * 
+	 * @return suitable requested DAO element.
+	 * 
+	 * @see org.centenaire.general.Entity#getClassIndex()
+	 */
 	public Dao getDao(int i){
 		switch (i){
 			case 0:
-				return getStudentDao();
+				String msg = "AbstractDaoFactory.getDao -- classIndex 0 is for "
+						+ "the abstract Entity class! So no DAO...";
+				System.out.println(msg);
+				return null;
 			case 1:
-				return getSemesterDao();
+				return getStudentDao();
 			case 2:
 				return getExamsDao();
 			case 3:
 				return getMarkDao();
+			case 4:
+				return getSemesterDao();
 			default:
 				System.out.println("AbstractDaoFactory.getDao -- type not found!");
 				return null;

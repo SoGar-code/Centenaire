@@ -13,11 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.editor.EditionWindow;
 import org.centenaire.general.EntityDialog;
-import org.centenaire.questionnaire.Questionnaire;
+import org.centenaire.general.GeneralController;
+import org.centenaire.general.entities.individual.Individual;
 
 
 /**
@@ -43,8 +42,8 @@ public class Centenaire extends JFrame{
 		
 		Color secondColor = Color.lightGray;
 		
-		// initialise the controller (triggers the request for password!) 
-		//GeneralController gc = GeneralController.getInstance();
+		// initialise the controller
+		GeneralController gc = GeneralController.getInstance();
 		
 		// ===============================
 		// Create the menu bar

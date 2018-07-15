@@ -8,13 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GeneralController;
 import org.centenaire.general.GeneralWindow;
 import org.centenaire.general.ListTableModel;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 
 public class StatisticsWindow extends GeneralWindow {
 	/*
@@ -100,7 +100,7 @@ public class StatisticsWindow extends GeneralWindow {
 		listSemester1.removeAllElements();
 		listSemester2.removeAllElements();
 		
-        LinkedList<TagLike> dataSemester = gc.getSemesterDao().getData();
+        LinkedList<TagLike> dataSemester = gc.getSemesterDao().findAll();
         for(TagLike semester:dataSemester){
         	listSemester1.addElement(semester);
         	listSemester2.addElement(semester);
@@ -109,7 +109,7 @@ public class StatisticsWindow extends GeneralWindow {
 	
 	public void updateListStudent(){
 		listStudent.removeAllElements();
-        LinkedList<Individual> dataStudent = gc.getStudentDao().getData();
+        LinkedList<Individual> dataStudent = gc.getStudentDao().findAll();
         for(Individual stud:dataStudent){
         	listStudent.addElement(stud);
         }

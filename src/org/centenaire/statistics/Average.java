@@ -1,7 +1,7 @@
 package org.centenaire.statistics;
 
-import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.general.Entity;
+import org.centenaire.general.entities.individual.Individual;
 
 /**
  * Average class, an Entity class used for display only.

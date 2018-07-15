@@ -17,13 +17,25 @@ public abstract class Dao<T>{
 	
 	abstract public T find(int index);
 	
-	// provides a fully initialized element (in terms of index)
+	/**
+	 * Provide a fully initialized element (in terms of index)
+	 * 
+	 * @return fully initialized element.
+	 */
 	abstract public T newElement();
 	
-	// returns either an existing element (of the database)
-	// or creates a new one.
+	/**
+	 * Return either an existing element (from DB) or creates a new one.
+	 * 
+	 * @return Entity object 
+	 */
 	abstract public T anyElement();
 	
-	abstract public LinkedList<T> getData();
+	/**
+	 * Recover all elements in the DB with chosen type.
+	 * 
+	 * @return list of elements in the DB with chosen type.
+	 */
+	abstract public LinkedList<T> findAll();
 
 }

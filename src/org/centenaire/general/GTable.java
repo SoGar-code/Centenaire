@@ -8,9 +8,6 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.general.editorsRenderers.ButtonEditEditor;
 import org.centenaire.general.editorsRenderers.ButtonRenderer;
@@ -18,6 +15,9 @@ import org.centenaire.general.editorsRenderers.Delete;
 import org.centenaire.general.editorsRenderers.Edit;
 import org.centenaire.general.editorsRenderers.FloatEditor;
 import org.centenaire.general.editorsRenderers.FloatRenderer;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 
 /**
  * A table adapted to our needs!
@@ -65,17 +65,17 @@ public class GTable extends JScrollPane{
 	    table.setDefaultRenderer(Edit.class, new ButtonRenderer());
 	    
 	    // Semester CellEditor
-	    LinkedList<TagLike> listSemester = gc.getSemesterDao().getData();
+	    LinkedList<TagLike> listSemester = gc.getSemesterDao().findAll();
 	    JComboBox<TagLike> comboSemester = new JComboBox<TagLike>(listSemester.toArray(new TagLike[listSemester.size()]));
 	    table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
 
 	    // Student CellEditor
-	    LinkedList<Individual> listStudent = gc.getStudentDao().getData();
+	    LinkedList<Individual> listStudent = gc.getStudentDao().findAll();
 	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
 	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	    
 	    // Exams CellEditor
-	    LinkedList<Exams> listExams = gc.getExamsDao().getData();
+	    LinkedList<Exams> listExams = gc.getExamsDao().findAll();
 	    JComboBox<Exams> comboExams = new JComboBox<Exams>(listExams.toArray(new Exams[listExams.size()]));
 	    table.setDefaultEditor(Exams.class, new DefaultCellEditor(comboExams));
 	    
@@ -96,7 +96,7 @@ public class GTable extends JScrollPane{
 		// Method called by GeneralPanel when currentEntity==0 (Students)
 		// when "Save/update" button is pushed.
 		// Only for the Mark tab
-	    LinkedList<Individual> listStudent = gc.getStudentDao().getData();
+	    LinkedList<Individual> listStudent = gc.getStudentDao().findAll();
 	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
 	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	}
@@ -105,7 +105,7 @@ public class GTable extends JScrollPane{
 		// Method called by GeneralPanel when currentEntity==1 (Exams)
 		// when "Save/update" button is pushed.
 		// Only for the Mark tab
-	    LinkedList<Exams> listExams = gc.getExamsDao().getData();
+	    LinkedList<Exams> listExams = gc.getExamsDao().findAll();
 	    JComboBox<Exams> comboExams = new JComboBox<Exams>(listExams.toArray(new Exams[listExams.size()]));
 	    table.setDefaultEditor(Exams.class, new DefaultCellEditor(comboExams));
 	}
@@ -114,7 +114,7 @@ public class GTable extends JScrollPane{
 		// Method called by GeneralPanel when currentEntity==2 (Semester)
 		// when "Save/update" button is pushed.
 		// Exams tab and Mark tab
-	    LinkedList<TagLike> listSemester = gc.getSemesterDao().getData();
+	    LinkedList<TagLike> listSemester = gc.getSemesterDao().findAll();
 	    JComboBox<TagLike> comboSemester = new JComboBox<TagLike>(listSemester.toArray(new TagLike[listSemester.size()]));
 	    this.table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
 	}

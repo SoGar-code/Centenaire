@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import org.centenaire.edition.entities.individual.Individual;
 import org.centenaire.general.GeneralController;
+import org.centenaire.general.entities.individual.Individual;
 
 /**
  * A class to update the additional elements linked to Students

@@ -8,11 +8,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.editor.EditStudentDialog;
 import org.centenaire.editor.ExtraInfoStudent;
+import org.centenaire.general.entities.Mark;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 import org.centenaire.general.observer.Observer;
 import org.centenaire.statistics.Average;
 
@@ -71,7 +71,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	 * Default implementation, to be changed depending on the specific table.
 	 */
 	public boolean isCellEditable(int row, int col){
-		return true;
+		return false;
 	}
 
 	public Object getValueAt(int row, int column){

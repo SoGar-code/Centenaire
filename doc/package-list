@@ -1,1 +1,14 @@
+org.centenaire
+org.centenaire.dao
+org.centenaire.dao.abstractDao
+org.centenaire.dao.postgreSqlDao
+org.centenaire.editor
+org.centenaire.editor.individual
 org.centenaire.general
+org.centenaire.general.editorsRenderers
+org.centenaire.general.entities
+org.centenaire.general.entities.individual
+org.centenaire.general.entities.taglike
+org.centenaire.general.observer
+org.centenaire.questionnaire
+org.centenaire.statistics

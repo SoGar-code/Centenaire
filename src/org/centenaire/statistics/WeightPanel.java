@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.GeneralController;
+import org.centenaire.general.entities.taglike.TagLike;
 
 public class WeightPanel extends JPanel implements ListSelectionListener{
 	private JLabel totalWeight;

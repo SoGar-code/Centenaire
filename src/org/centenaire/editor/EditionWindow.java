@@ -1,12 +1,10 @@
 package org.centenaire.editor;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -14,15 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
-import org.centenaire.general.Entity;
+import org.centenaire.editor.individual.IndividualTab;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralWindow;
-import org.centenaire.general.ListTableModel;
-import org.centenaire.general.editorsRenderers.Delete;
-import org.centenaire.general.editorsRenderers.Edit;
 
 /**
  * Window to edit elements in the database
@@ -47,9 +39,12 @@ public class EditionWindow extends GeneralWindow {
 		
 		// Final assembly into a tabbed panel.
 		tabbedPane = new JTabbedPane();
-		String[] listTabs = {"Personnes","Institutions","Evénements"};
+		IndividualTab indivTab = new IndividualTab();
+		tabbedPane.addTab("Personnes",indivTab);
+		
+		String[] listTabs = {"Institutions","Evénements"};
 		String name;
-		for (int i = 0; i <= 2; i++){
+		for (int i = 0; i < 2; i++){
 			name = listTabs[i];
 			JTabbedPane aux = this.createTabbedView(name);
 			tabbedPane.addTab(name,aux);

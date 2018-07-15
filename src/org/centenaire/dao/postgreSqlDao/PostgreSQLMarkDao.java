@@ -12,11 +12,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.GeneralController;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.Mark;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 import org.centenaire.statistics.Average;
 
 public class PostgreSQLMarkDao extends AbstractMarkDao {
@@ -124,16 +124,21 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 		}	
 	}
 	
-	// Code to create a new element.
-	// NB: create updates the index
+	/**
+	 * Code to create a new element.
+	 * 
+	 * <p>NB: create updates the index
+	 */
 	public Mark newElement(){
 		Mark mark = Mark.defaultElement();
 		this.create(mark);
 		return mark;
 	}
 
-	
-	public LinkedList<Mark> getData() {
+	/**
+	 * Recover all 'Mark' elements in the DB
+	 */
+	public LinkedList<Mark> findAll() {
 		LinkedList<Mark> data = new LinkedList<Mark>();
 		try{
 			String query="SELECT id_mark, id_exam, id_stud, mark FROM marks ORDER BY id_exam, id_stud";

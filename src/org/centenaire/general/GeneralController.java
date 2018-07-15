@@ -13,9 +13,9 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
-import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 import org.centenaire.general.observer.Observable;
 import org.centenaire.general.observer.Observer;
 
@@ -41,7 +41,7 @@ public class GeneralController implements Observable, ChangeListener{
 	 * The *currentEntity* variables encodes the kind of entity under consideration at the moment.
 	 * 
 	 */
-	private int currentEntity=0;
+	private int currentEntity=1;
 	
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
@@ -55,7 +55,7 @@ public class GeneralController implements Observable, ChangeListener{
 	}
 
 	public LinkedList<Entity> getCurrentData() {
-		return this.getDao(currentEntity).getData();
+		return this.getDao(currentEntity).findAll();
 	}
 	
 	public int getCurrentEntity() {
@@ -119,7 +119,7 @@ public class GeneralController implements Observable, ChangeListener{
 	// management of Dao
 	//===================================
 
-	public AbstractStudentDao getStudentDao(){
+	public AbstractIndividualDao getStudentDao(){
 		return df.getStudentDao();
 	}
 

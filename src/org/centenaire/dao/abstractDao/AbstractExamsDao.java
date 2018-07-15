@@ -3,8 +3,8 @@ package org.centenaire.dao.abstractDao;
 import java.util.List;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.general.entities.Exams;
+import org.centenaire.general.entities.taglike.TagLike;
 
 public abstract class AbstractExamsDao extends Dao<Exams> {
 

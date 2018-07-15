@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractSemesterDao;
-import org.centenaire.edition.entities.individual.Individual;
-import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.general.entities.taglike.TagLike;
 
 public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	
@@ -142,7 +142,8 @@ public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 		}
 	}
 	
-	public LinkedList<TagLike> getData() {
+	
+	public LinkedList<TagLike> findAll() {
 		LinkedList<TagLike> data = new LinkedList<TagLike>();
 		try{
 			String query="SELECT id_semester, semester_name FROM semesters ORDER BY id_semester";

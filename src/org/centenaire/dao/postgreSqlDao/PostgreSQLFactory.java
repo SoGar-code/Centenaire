@@ -12,13 +12,13 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
-import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.general.entities.taglike.TagLike;
 
+/**
+ * Create a connection to a PostgreSQL database
+ */
 public class PostgreSQLFactory extends AbstractDaoFactory {
-	/*
-	 * Create a connection to a PostgreSQL database
-	 */
 	private static Connection conn;
 
 	public PostgreSQLFactory(String[] infoConn) {
@@ -46,8 +46,8 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	}
 
 	@Override
-	public AbstractStudentDao getStudentDao() {
-		return new PostgreSQLStudentDao(conn);
+	public AbstractIndividualDao getStudentDao() {
+		return new PostgreSQLIndividualDao(conn);
 	}
 
 	@Override
