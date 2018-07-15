@@ -10,9 +10,9 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.ExtraInfoStudent;
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.editor.ExtraInfoStudent;
 
 public class PostgreSQLStudentDao extends AbstractStudentDao {
 	

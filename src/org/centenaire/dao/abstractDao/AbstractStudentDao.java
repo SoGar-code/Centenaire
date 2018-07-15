@@ -1,8 +1,8 @@
 package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.edition.ExtraInfoStudent;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.editor.ExtraInfoStudent;
 
 public abstract class AbstractStudentDao extends Dao<Individuals> {
 	

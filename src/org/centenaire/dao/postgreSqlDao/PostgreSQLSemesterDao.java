@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractSemesterDao;
-import org.centenaire.edition.entities.TagLike;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.taglike.TagLike;
 
 public class PostgreSQLSemesterDao extends AbstractSemesterDao {
 	

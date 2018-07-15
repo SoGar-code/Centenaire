@@ -10,12 +10,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
+ * Renderer for floats (in a table cell).
  * 
- * @author Trivy
- * A renderer for float
- * with number of decimals specified in the constructor.
+ * <p>
+ * a number of decimals specified in the constructor.
  */
-
 public class FloatRenderer extends JLabel implements TableCellRenderer {
 	protected int nbDecimals;
 	

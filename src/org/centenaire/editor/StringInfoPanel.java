@@ -1,4 +1,4 @@
-package org.centenaire.edition;
+package org.centenaire.editor;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

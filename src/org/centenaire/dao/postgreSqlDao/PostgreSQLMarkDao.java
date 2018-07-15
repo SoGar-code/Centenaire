@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.GeneralController;
 import org.centenaire.statistics.Average;

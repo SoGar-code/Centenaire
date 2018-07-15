@@ -2,10 +2,10 @@ package org.centenaire.edition.entities;
 
 import org.centenaire.general.Entity;
 
+/**
+ * POJO for the 'Individuals' table in the database.
+ */
 public class Individuals extends Entity {
-	/**
-	 * POJO for the 'Individuals' table in the database.
-	 */
 	protected String first_name;
 	protected String last_name;
 	protected int birth_year;

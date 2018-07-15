@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.GeneralController;
 
 public class WeightPanel extends JPanel implements ListSelectionListener{

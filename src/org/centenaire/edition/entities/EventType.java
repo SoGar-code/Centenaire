@@ -3,6 +3,8 @@
  */
 package org.centenaire.edition.entities;
 
+import org.centenaire.edition.entities.taglike.TagLike;
+
 /**
  * @author Olivier GABRIEL
  *

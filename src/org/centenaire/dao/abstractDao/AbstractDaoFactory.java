@@ -2,19 +2,23 @@ package org.centenaire.dao.abstractDao;
 
 import javax.swing.JOptionPane;
 
+import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.edition.entities.Individuals;
-import org.centenaire.general.ConnectionDialog;
 
+/**
+ * Factory class for Dao classes
+ *
+ * <p>
+ * Includes getDao(int i).
+ * <p>
+ *
+ */
 public abstract class AbstractDaoFactory {
-	/*
-	 * Factory class for Dao classes
-	 * Includes getDao(int i)
-	 */
 
 	public abstract AbstractStudentDao getStudentDao();
 	

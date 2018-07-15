@@ -1,4 +1,4 @@
-package org.centenaire.general;
+package org.centenaire.dao;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -15,23 +15,31 @@ import javax.swing.JTextField;
 
 
 /**
- * 
- * @author Trivy
  * Dialog box to parametrize DB connection 
- * Select among predefined elements: 
- * _ String host (localhost)
- * _ String dataBase (testbilicence, eventually basebilicence) 
- * Output:
- * _ String user
- * _ String passwd
+ * 
+ * <p>
+ * The user needs to select among predefined elements: 
+ * <ul>
+ * <li> host <li>
+ * <li> name of the database.</li>
+ * </ul>
+ * 
+ * The user also needs to provide:
+ * <ul>
+ * <li>the username (but a default value is provided),</li>
+ * <li>the associated password.</li>
+ * </ul>
+ * <p>
+ * 
+ * @author OG
+ * 
  */
-
 public class ConnectionDialog extends JDialog{
 	private String user, passwd, host, dataBase;
 	
 	public ConnectionDialog(){
 		super();
-		this.setTitle("Gestion Bilicence — connection parameters");
+		this.setTitle("BdD centenaire — paramètres de connexion");
 		this.setModal(true);
 		this.setSize(400,250);
 		this.setLocationRelativeTo(null);
@@ -40,19 +48,19 @@ public class ConnectionDialog extends JDialog{
 		JPanel controlPan = new JPanel();
 		
 		// Chosing host:
-		JLabel hostLabel = new JLabel("Host:");
+		JLabel hostLabel = new JLabel("Serveur :");
 		JComboBox<String> hostCombo = new JComboBox<String>(new String[]{"localhost:5432"});
 		
-		// Chosing databases:
-		JLabel dbLabel = new JLabel("Database:");
+		// Chosing database:
+		JLabel dbLabel = new JLabel("Base de données :");
 		JComboBox<String> dbCombo = new JComboBox<String>(new String[]{"testdb","livedb"});
 		
 		// User:
-		JLabel userLabel = new JLabel("User:");
+		JLabel userLabel = new JLabel("Utilisateur :");
 		JTextField userJtf = new JTextField("postgres");
 		
 		// Password:
-		JLabel passwdLabel = new JLabel("Password:");
+		JLabel passwdLabel = new JLabel("Mot de passe :");
 		JPasswordField passwdJtf = new JPasswordField();
 		
 		// type:

@@ -14,8 +14,8 @@ import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.entities.TagLike;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.observer.Observable;
 import org.centenaire.general.observer.Observer;
 
@@ -25,15 +25,22 @@ import org.centenaire.general.observer.Observer;
  * <p>
  * For instance, it stores the variable "currentEntity".
  * It doubles as a singleton class giving access to the different Dao classes.
- * <p>
  * 
  */
 public class GeneralController implements Observable, ChangeListener{
 
 	
 	private static GeneralController gc = new GeneralController();
-	// Implicitly, df encodes which type of Database we are using in this instance.
+	
+	/**
+	 * Implicitly, df encodes which type of Database we are using in this instance.
+	 */
 	private static AbstractDaoFactory df;
+	
+	/**
+	 * The *currentEntity* variables encodes the kind of entity under consideration at the moment.
+	 * 
+	 */
 	private int currentEntity=0;
 	
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.edition.entities.Individuals;
 import org.centenaire.statistics.Average;
 

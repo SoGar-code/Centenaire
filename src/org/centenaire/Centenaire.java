@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,8 +13,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import org.centenaire.edition.EditionWindow;
-import org.centenaire.general.GeneralController;
+import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.editor.EditionWindow;
+import org.centenaire.general.EntityDialog;
+import org.centenaire.general.EntityEditor;
 import org.centenaire.questionnaire.Questionnaire;
 
 
@@ -47,11 +51,27 @@ public class Centenaire extends JFrame{
 		// ===============================
 		JMenuBar menuBar = new JMenuBar();
 		JMenu filesMenu = new JMenu("File");
-		JMenuItem item1 = new JMenuItem("Import...");
+		JMenuItem item1 = new JMenuItem("Trying stuff...");
 		JMenuItem item2 = new JMenuItem("About: © 2018 SoGaR!");
 		menuBar.add(filesMenu);
 		filesMenu.add(item1);
 		filesMenu.add(item2);
+		
+		item1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0){
+				System.out.println("BdD centenaire: 'Trying stuff...' of MenuBar activated!");
+				
+				// Thing we are currently trying...
+				TagLike tl = TagLike.defaultElement();
+				EntityEditor<TagLike> editorTL = tl.editionForm();
+				
+				EntityDialog<TagLike, EntityEditor<TagLike>> ed = new EntityDialog<TagLike, EntityEditor<TagLike>>(tl, editorTL);
+				TagLike finalElt = ed.showEntityDialog();
+				
+				String aux = String.format("==> contenu finalElt: %s", finalElt.getName());
+				System.out.println(aux);
+			}
+		});
 		
 		// ===============================
 		// Edition frame

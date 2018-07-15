@@ -8,21 +8,24 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-import org.centenaire.edition.EditStudentDialog;
-import org.centenaire.edition.ExtraInfoStudent;
 import org.centenaire.edition.entities.Mark;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
+import org.centenaire.editor.EditStudentDialog;
+import org.centenaire.editor.ExtraInfoStudent;
 import org.centenaire.edition.entities.Individuals;
 import org.centenaire.general.observer.Observer;
 import org.centenaire.statistics.Average;
 
 /**
- * A superclass for the table models of the project
+ * A superclass for the table models of the project.
  * 
+ * <p>
  * Includes methods for:
- * _ adding and deleting data (in the table)
- * _ converting String into Date and Float
- * _ updating data
+ * <ul>
+ * <li> adding and deleting data (in the table)</li>
+ * <li> converting String into Date and Float</li>
+ * <li> updating data</li>
+ * </ul>
  * 
  */
 public class ListTableModel extends AbstractTableModel implements Observer{
@@ -64,7 +67,9 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		return listClass[col];
 	}
 
-	// Default implementation, to be changed in different cases
+	/**
+	 * Default implementation, to be changed depending on the specific table.
+	 */
 	public boolean isCellEditable(int row, int col){
 		return true;
 	}
@@ -82,13 +87,23 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		return this.data;
 	}
 
+	/**
+	 * Update of the table model (and notify observers). 
+	 * 
+	 * @param data
+	 * 			the new data to include in the table.
+	 */
 	public void setData(LinkedList<Entity> data) {
 		this.data = data;
 		this.fireTableDataChanged();
 	}
 	
-	// data update, provided by Observer pattern 
-	//(data flowing from gc to the model)
+	
+	/**
+	 * Data update, provided by Observer pattern.
+	 * 
+	 * <p> It corresponds to data flowing from gc to the model.
+	 */
 	public void updateObserver(LinkedList<Entity> currentData){
 		this.setData(currentData);
 	}
@@ -125,10 +140,20 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	public SemesterAction getSemesterAction(){
 		return this.semesterAction;
 	}
-	
-	// (see StatisticsWindow) When selection in westList changes
-	// StudentAction identifies currentStudent
-	// and update data accordingly
+	 
+	/**
+	 * A class to notify 'observers' about an update about the entity Student.
+	 * 
+	 * <p>
+	 * Several such classes are needed, for dealing with different types of Entities.
+	 * 
+	 * <p>
+	 * Here, when selection in westList changes
+	 * StudentAction identifies currentStudent
+	 * and update data accordingly.
+	 *
+	 * @see StatisticsWindow
+	 */
 	class StudentAction implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
@@ -156,6 +181,14 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		}
 	}
 	
+	/**
+	 * A class to notify 'observers' about an update about the entity Semester.
+	 * 
+	 * <p>
+	 * Several such classes are needed, for dealing with different types of Entities.
+	 *
+	 * @see StatisticsWindow
+	 */
 	class SemesterAction implements ListSelectionListener{
 		@Override
 		public void valueChanged(ListSelectionEvent event) {

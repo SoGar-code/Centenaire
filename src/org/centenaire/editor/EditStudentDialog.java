@@ -1,4 +1,4 @@
-package org.centenaire.edition;
+package org.centenaire.editor;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import org.centenaire.general.GeneralController;
 /**
  * A class to update the additional elements linked to Students
  * 
- * @author Trivy
+ * @author OG
  * 
  */
 public class EditStudentDialog extends JDialog {

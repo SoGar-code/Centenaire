@@ -1,4 +1,4 @@
-package org.centenaire.edition;
+package org.centenaire.editor;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
 
 import org.centenaire.edition.entities.Exams;
 import org.centenaire.edition.entities.Individuals;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralWindow;
@@ -26,10 +26,13 @@ import org.centenaire.general.editorsRenderers.Edit;
 
 /**
  * Window to edit elements in the database
+ * 
+ * <p>
  * contains "New line" and "Save/update" buttons,
  * together with their listeners.
  * 
  * NB: GeneralWindow provides a copy of gc (GeneralController)
+ * 
  */
 public class EditionWindow extends GeneralWindow {
 	

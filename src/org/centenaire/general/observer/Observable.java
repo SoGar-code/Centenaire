@@ -4,10 +4,11 @@ import java.util.LinkedList;
 
 import org.centenaire.general.Entity;
 
+/**
+ * An interface to implement the observer pattern, observable side
+ */
 public interface Observable{
-	/*
-	 * An interface to implement the observer pattern, observable side
-	 */
+
 	public void addObserver(Observer obs);
 	
 	public void updateObservable(LinkedList<Entity> currentData);

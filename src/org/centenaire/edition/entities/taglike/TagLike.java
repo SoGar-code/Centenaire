@@ -1,6 +1,12 @@
-package org.centenaire.edition.entities;
+package org.centenaire.edition.entities.taglike;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+
+import org.centenaire.edition.entities.Tag;
 import org.centenaire.general.Entity;
+import org.centenaire.general.EntityEditor;
+import org.centenaire.general.WithEditor;
 
 /**
  * POJO for the different entities which behave like a tag.
@@ -14,7 +20,7 @@ import org.centenaire.general.Entity;
  * 
  * @author Olivier GABRIEL
  */
-public class TagLike extends Entity {
+public class TagLike extends Entity implements WithEditor<TagLike>{
 	
 	/**
 	 * Name of the TagLike element. This is its only property.
@@ -59,16 +65,26 @@ public class TagLike extends Entity {
 				this.name = (String) obj;
 				break;
 			default:
-				System.out.println("Semester.setEntry - got int i="+i);
+				System.out.println("TagLike.setEntry - got int i="+i);
 		}
 
 	}
 
 	public static TagLike defaultElement() {
-		return new TagLike("default semester");
+		return new TagLike("default taglike value");
 	}
 
 	public String toString(){
 		return name;
+	}
+
+	public EntityEditor<TagLike> editionForm() {
+		EntityEditor<TagLike> editor = new TagLikeEditor(this);
+		return editor;
+	}
+
+	@Override
+	public JComponent displayForm() {
+		return new JLabel(name);
 	}
 }

@@ -1,11 +1,1 @@
-org.centenaire
-org.centenaire.csvImport
-org.centenaire.dao
-org.centenaire.dao.abstractDao
-org.centenaire.dao.postgreSqlDao
-org.centenaire.edition
-org.centenaire.edition.entities
 org.centenaire.general
-org.centenaire.general.editorsRenderers
-org.centenaire.general.observer
-org.centenaire.statistics

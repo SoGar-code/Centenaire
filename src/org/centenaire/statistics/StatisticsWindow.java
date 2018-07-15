@@ -9,8 +9,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.TagLike;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GeneralController;
 import org.centenaire.general.GeneralWindow;

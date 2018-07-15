@@ -13,7 +13,7 @@ import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.dao.abstractDao.AbstractStudentDao;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 
 public class PostgreSQLFactory extends AbstractDaoFactory {
 	/*

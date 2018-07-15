@@ -1,4 +1,4 @@
-package org.centenaire.edition;
+package org.centenaire.editor;
 
 public class ExtraInfoStudent {
 	private boolean hasApbNum;

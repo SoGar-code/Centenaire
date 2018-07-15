@@ -9,8 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.TagLike;
 import org.centenaire.edition.entities.Individuals;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.general.editorsRenderers.ButtonEditEditor;
 import org.centenaire.general.editorsRenderers.ButtonRenderer;
@@ -22,12 +22,13 @@ import org.centenaire.general.editorsRenderers.FloatRenderer;
 /**
  * A table adapted to our needs!
  * 
- * <p> added functionalities include:
+ * <p> Added functionalities include:
  * <ul>
  * <li> scrolling </li>
  * <li> a copy of the general controller </li>
- * <li> a cast on the TableModel we use </li>
+ * <li> a cast on the TableModel we use, </li>
  * <li> suitable editors and renderers.</li>
+ * </ul>
  * <p>
  *  
  * NB: the delete function is implemented in ButtonDeleteEditor.

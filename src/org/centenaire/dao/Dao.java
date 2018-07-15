@@ -3,10 +3,10 @@ package org.centenaire.dao;
 import java.sql.Connection;
 import java.util.LinkedList;
 
+/**
+ * Abstract class including the different possible actions on POJOs.
+ */
 public abstract class Dao<T>{
-	/**
-	 * Abstract class including the different possible actions on POJOs.
-	 */
 	protected static Connection conn;
 
 	abstract public boolean create(T obj);

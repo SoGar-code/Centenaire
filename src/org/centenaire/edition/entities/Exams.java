@@ -1,6 +1,7 @@
 package org.centenaire.edition.entities;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.edition.entities.taglike.TagLike;
 import org.centenaire.general.Entity;
 import org.centenaire.general.GeneralController;
 

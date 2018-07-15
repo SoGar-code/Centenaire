@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.edition.entities.Exams;
-import org.centenaire.edition.entities.TagLike;
+import org.centenaire.edition.entities.taglike.TagLike;
 
 public abstract class AbstractExamsDao extends Dao<Exams> {
 
