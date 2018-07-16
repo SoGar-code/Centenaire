@@ -21,6 +21,7 @@ package org.centenaire.general;
  * 
  * @see WithEditor
  * @see org.centenaire.dao.abstractDao.AbstractDaoFactory#getDao(int)
+ * @see EntityClassIndex
  * 
  */
 public abstract class Entity{

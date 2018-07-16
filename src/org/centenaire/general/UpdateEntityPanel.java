@@ -24,8 +24,9 @@ import org.centenaire.dao.Dao;
  *
  */
 public class UpdateEntityPanel<T> extends JPanel {
-	JPanel updatePanel;
+	private JPanel updatePanel;
 	private final int classIndex;
+	private JButton svgButton;
 
 	/**
 	 * Generate an update panel for the (Entity) type T.
@@ -79,6 +80,7 @@ public class UpdateEntityPanel<T> extends JPanel {
 		
 		// Save button and its action
 		JButton svgButton = new JButton("Sauvegarder");
+		svgButton.setEnabled(false);
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
@@ -106,9 +108,9 @@ public class UpdateEntityPanel<T> extends JPanel {
 	 * <p>This method is called by <it>gc</it> whenever the current entity
 	 * changes.
 	 */
-	public void setUpdatePanel(T entity) {
-		// peut-être que ça pourrait être une pure histoire interne au composant ?
-		// => lorsqu'il y a une mise à jour, il faut notifier gc... (peut-être automatiquement ?) 
+	public void setUpdatePanel(T entity) {	
+		// enable the save button
+		svgButton.setEnabled(true);
 		
 		updatePanel.removeAll();
 		updatePanel.add(((WithEditor<T>) entity).editionForm());
