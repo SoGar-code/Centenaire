@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractTagDao;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.TagLike;
 
 public class PostgreSQLTagDao extends AbstractTagDao {
 	

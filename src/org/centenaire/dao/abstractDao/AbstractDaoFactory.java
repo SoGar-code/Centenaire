@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
-import org.centenaire.general.entities.Exams;
-import org.centenaire.general.entities.Mark;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
+import org.centenaire.entity.Exams;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.Mark;
+import org.centenaire.entity.TagLike;
 
 /**
  * Factory class for Dao classes
@@ -36,7 +36,7 @@ public abstract class AbstractDaoFactory {
 	 * 
 	 * @return suitable requested DAO element.
 	 * 
-	 * @see org.centenaire.general.Entity#getClassIndex()
+	 * @see org.centenaire.entity.Entity#getClassIndex()
 	 */
 	public Dao getDao(int i){
 		switch (i){

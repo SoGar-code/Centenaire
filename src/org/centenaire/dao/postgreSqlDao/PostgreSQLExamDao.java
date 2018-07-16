@@ -12,9 +12,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
+import org.centenaire.entity.Exams;
+import org.centenaire.entity.TagLike;
 import org.centenaire.general.GeneralController;
-import org.centenaire.general.entities.Exams;
-import org.centenaire.general.entities.taglike.TagLike;
 
 public class PostgreSQLExamDao extends AbstractExamsDao {
 	

@@ -10,9 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
-import org.centenaire.editor.ExtraInfoStudent;
-import org.centenaire.general.entities.Exams;
-import org.centenaire.general.entities.individual.Individual;
+import org.centenaire.entity.Individual;
+import org.centenaire.main.editwindow.ExtraInfoStudent;
 
 public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	
@@ -202,7 +201,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		}
 	}
 
-	@Override
 	public ExtraInfoStudent getInfo(Individual stud) {
 		ExtraInfoStudent info = new ExtraInfoStudent();
 
@@ -258,7 +256,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	}
 
 	// updates when possible, deletes when needed.
-	@Override
 	public void updateInfo(Individual stud, ExtraInfoStudent info) {
 		try{
 			// First part: apb

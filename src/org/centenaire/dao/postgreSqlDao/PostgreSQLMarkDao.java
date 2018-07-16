@@ -12,12 +12,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
+import org.centenaire.entity.Exams;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.Mark;
+import org.centenaire.entity.TagLike;
 import org.centenaire.general.GeneralController;
-import org.centenaire.general.entities.Exams;
-import org.centenaire.general.entities.Mark;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
-import org.centenaire.statistics.Average;
+import org.centenaire.main.statistics.Average;
 
 public class PostgreSQLMarkDao extends AbstractMarkDao {
 	

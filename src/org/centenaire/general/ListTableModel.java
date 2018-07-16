@@ -8,13 +8,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
-import org.centenaire.editor.EditStudentDialog;
-import org.centenaire.editor.ExtraInfoStudent;
-import org.centenaire.general.entities.Mark;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
+import org.centenaire.entity.Entity;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.Mark;
+import org.centenaire.entity.TagLike;
 import org.centenaire.general.observer.Observer;
-import org.centenaire.statistics.Average;
+import org.centenaire.main.statistics.Average;
+import org.centenaire.main.statistics.StatisticsWindow;
 
 /**
  * A superclass for the table models of the project.
@@ -121,16 +121,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	}
 	
 	public void editRow(int row){
-		Individual stud = (Individual)data.get(row);
-		EditStudentDialog studDialog = new EditStudentDialog(stud);
-		if (studDialog.showEditStudentDialog()){
-			ExtraInfoStudent info = studDialog.getInfoOutput();
-			try{
-				gc.getStudentDao().updateInfo(stud, info);
-			} catch (NullPointerException e){
-				// case when studDialog exits with a "Cancel".
-			}
-		}
+
 	}
 	
 	public StudentAction getStudentAction(){

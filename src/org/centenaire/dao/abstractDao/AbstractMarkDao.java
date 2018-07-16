@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.general.entities.Mark;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
-import org.centenaire.statistics.Average;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.Mark;
+import org.centenaire.entity.TagLike;
+import org.centenaire.main.statistics.Average;
 
 public abstract class AbstractMarkDao extends Dao<Mark> {
 	

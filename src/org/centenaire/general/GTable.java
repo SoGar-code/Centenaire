@@ -8,6 +8,9 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.centenaire.entity.Exams;
+import org.centenaire.entity.Individual;
+import org.centenaire.entity.TagLike;
 import org.centenaire.general.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.general.editorsRenderers.ButtonEditEditor;
 import org.centenaire.general.editorsRenderers.ButtonRenderer;
@@ -15,9 +18,6 @@ import org.centenaire.general.editorsRenderers.Delete;
 import org.centenaire.general.editorsRenderers.Edit;
 import org.centenaire.general.editorsRenderers.FloatEditor;
 import org.centenaire.general.editorsRenderers.FloatRenderer;
-import org.centenaire.general.entities.Exams;
-import org.centenaire.general.entities.individual.Individual;
-import org.centenaire.general.entities.taglike.TagLike;
 
 /**
  * A table adapted to our needs!

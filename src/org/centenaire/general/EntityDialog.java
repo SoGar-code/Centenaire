@@ -11,15 +11,16 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import org.centenaire.entityeditor.EntityEditor;
+import org.centenaire.entityeditor.EntityEditorFactory;
+
 /**
  * Dialog box to create a new Entity
  * 
- * <p>The input class is required to 'extend' WithEditor<T>,
- * but it really means to 'implement' this interface class.
  * 
  * @param <T> Entity class associated to the editor.
  */
-public class EntityDialog<T extends WithEditor<T>> extends JDialog {
+public class EntityDialog<T> extends JDialog {
 	T currentObject;
 
 	/**
@@ -34,18 +35,17 @@ public class EntityDialog<T extends WithEditor<T>> extends JDialog {
 	 * it should be created without *id* (so no gap in index
 	 * if the object creation is finally cancelled).
 	 * 
-	 * @param entity
-	 * 			Entity object whose values are going to be
-	 * 			used by the EntityEditor.
+	 * @param classIndex
+	 * 			classIndex of the Entity class we are considering.
 	 */
-	public EntityDialog(T entity) {
+	public EntityDialog(int classIndex) {
 		super();
 		this.setTitle("Création d'un nouvel objet");
 		this.setModal(true);
 		this.setSize(400,250);
 		this.setLocationRelativeTo(null);
 		
-		EntityEditor<T> entityEditor = entity.editionForm();
+		EntityEditor<T> entityEditor = EntityEditorFactory.getEntityEditor(classIndex);
 		
 		// Control panel, with buttons
 		JPanel controlPan = new JPanel();

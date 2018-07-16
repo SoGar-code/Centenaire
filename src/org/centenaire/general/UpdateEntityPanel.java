@@ -16,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
+import org.centenaire.entityeditor.EntityEditor;
+import org.centenaire.entityeditor.EntityEditorFactory;
 
 /**
  * Generic Entity update panel
@@ -24,44 +27,49 @@ import org.centenaire.dao.Dao;
  *
  */
 public class UpdateEntityPanel<T> extends JPanel {
-	private JPanel updatePanel;
+	private EntityEditor<T> updatePanel;
 	private final int classIndex;
 	private JButton svgButton;
+	private Dao<T> dao;
 
 	/**
-	 * Generate an update panel for the (Entity) type T.
+	 * Generate an update panel for the Entity class T.
 	 * 
-	 * @param i classIndex of the (Entity) type T.
+	 * @param classIndex label of the Entity class T.
 	 */
-	public UpdateEntityPanel(int i) {
+	public UpdateEntityPanel(int classIndex) {
 		super();
-		this.classIndex = i;
+		this.classIndex = classIndex;
 		
 		// recover the GeneralController
 		GeneralController gc = GeneralController.getInstance();
 		
 		// recover the suitable Dao
-		Dao<?> dao = gc.getDao(i);
+		dao = (Dao<T>) gc.getDao(classIndex);
 		
-		// list of Entity elements
-		LinkedList<?> aux = dao.findAll();
-		
-		LinkedList<T> listEntity = (LinkedList<T>) aux;
+		// list of Entity elements		
+		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		
 		// Create combo to select Entity
 		T[] entityVect = (T[]) listEntity.toArray();
 		JComboBox<T> entityCombo = new JComboBox<T>(entityVect);
 		entityCombo.setPreferredSize(new Dimension(200,30));
 		
+		// Description label
 		JLabel selectedLabel = new JLabel("Elément sélectionné : ");
 		
 		// Processing combo selection
 		entityCombo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				try {
-				T entity = (T) entityCombo.getSelectedItem();
-				setUpdatePanel(entity);
+				try {		
+					// recover the currently selected object
+					T entity = (T) entityCombo.getSelectedItem();
+
+					// update the panel accordingly
+					updatePanel.setObject(entity);
 				
+					// enable the save button
+					svgButton.setEnabled(true);
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
 							+ "not updating the panel!";
@@ -76,17 +84,28 @@ public class UpdateEntityPanel<T> extends JPanel {
 		topPan.add(selectedLabel);
 		topPan.add(entityCombo);
 		
-		updatePanel = new JPanel();
+		// Create the update panel
+		updatePanel = EntityEditorFactory.getEntityEditor(classIndex);
 		
 		// Save button and its action
-		JButton svgButton = new JButton("Sauvegarder");
+		svgButton = new JButton("Sauvegarder");
 		svgButton.setEnabled(false);
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				System.out.println("Calling save button");
-				// À terme, il suffit de mettre à jour l'élément courant, s'il y en a...
-				// ... mais il faut notifier gc...
+				
+				T obj = updatePanel.getObject();
+				
+				String msg = String.format("Recovered object: %s", obj.toString());
+				System.out.println(msg);
+				
+				String msg2 = String.format("Obj index: %d", ((Entity) obj).getIndex());
+				System.out.println(msg2);
+				
+				dao.update(obj);
+				
+				// Notifier gc ?
 			}
 		});
 
@@ -102,20 +121,19 @@ public class UpdateEntityPanel<T> extends JPanel {
 		this.add(bottomPan, BorderLayout.SOUTH);
 	}
 	
-	/**
-	 * A method to update the 'updatePanel'.
-	 * 
-	 * <p>This method is called by <it>gc</it> whenever the current entity
-	 * changes.
-	 */
-	public void setUpdatePanel(T entity) {	
-		// enable the save button
-		svgButton.setEnabled(true);
-		
-		updatePanel.removeAll();
-		updatePanel.add(((WithEditor<T>) entity).editionForm());
-		// needed for the change to take effect
-		updatePanel.validate();
-	}
+//	/**
+//	 * A method to update the 'updatePanel'.
+//	 * 
+//	 * <p>This method is called by <it>gc</it> whenever the current entity
+//	 * changes.
+//	 */
+//	public void setUpdatePanel(T entity) {	
+//
+//		
+//		updatePanel.removeAll();
+//		updatePanel.add(((WithEditor<T>) entity).editionForm());
+//		// needed for the change to take effect
+//		updatePanel.validate();
+//	}
 	
 }

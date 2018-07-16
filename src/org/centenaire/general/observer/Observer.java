@@ -2,7 +2,7 @@ package org.centenaire.general.observer;
 
 import java.util.LinkedList;
 
-import org.centenaire.general.Entity;
+import org.centenaire.entity.Entity;
 
 /**
  * An interface to implement the observer pattern, observer side.
