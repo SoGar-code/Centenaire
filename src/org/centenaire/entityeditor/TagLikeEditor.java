@@ -33,9 +33,11 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 	 */
 	@Override
 	public TagLike getObject() {
+		int index = this.getIndexField();
 		String name = this.nameField.getText();
 
 		TagLike tl = new TagLike(name);
+		tl.setIndex(index);
 		return tl;
 	}
 
@@ -44,8 +46,8 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 	 */
 	@Override
 	public void setObject(TagLike obj) {
+		this.setIndexField(obj.getIndex());
 		nameField.setText(obj.getName());
-		
 	}
 
 }

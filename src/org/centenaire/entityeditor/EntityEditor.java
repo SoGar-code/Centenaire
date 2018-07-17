@@ -8,14 +8,23 @@ import javax.swing.JPanel;
  * @param <T> entity class associated to the editor.
  */
 public abstract class EntityEditor<T> extends JPanel {
+	/**
+	 * Index of the Entity object currently displayed.
+	 * 
+	 * <p>Initialized at 0.
+	 */
+	private int indexField;
 	
 	/**
 	 * Constructor for EntityEditor: should be possible to generate it from a T object.
+	 * 
+	 * <p>Initialize "indexField" with the value 0. Do not forget to update in implementations!
 	 * 
 	 * @param obj entity instance of the entity class associated to the editor.
 	 */
 	public EntityEditor(){
 		super();
+		setIndexField(0);
 	}
 	
 	/**
@@ -31,4 +40,12 @@ public abstract class EntityEditor<T> extends JPanel {
 	 * Change the fields of the editor to represent another T object.
 	 */
 	public abstract void setObject(T obj);
+
+	public int getIndexField() {
+		return indexField;
+	}
+
+	public void setIndexField(int indexField) {
+		this.indexField = indexField;
+	}
 }

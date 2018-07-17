@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import org.centenaire.dao.Dao;
 import org.centenaire.entityeditor.EntityEditor;
 import org.centenaire.entityeditor.EntityEditorFactory;
 
@@ -63,6 +64,12 @@ public class EntityDialog<T> extends JDialog {
 	      public void actionPerformed(ActionEvent arg0){
 	    	  // recover elements:
 	    	  currentObject = entityEditor.getObject();
+	    	  
+	    	  GeneralController gc = GeneralController.getInstance();
+	    	  Dao<T> dao = (Dao<T>) gc.getDao(classIndex);
+	    	  dao.create(currentObject);
+	    	  
+	    	  // Need to notify gc!
 	    		    	
 	    	  // ends dialog by making the box invisible
 	    	  setVisible(false);

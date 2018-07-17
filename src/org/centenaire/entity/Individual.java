@@ -96,7 +96,7 @@ public class Individual extends Entity{
 	}
 
 	public String toString(){
-		return last_name+" "+first_name;
+		return first_name+" "+last_name;
 	}
 
 }

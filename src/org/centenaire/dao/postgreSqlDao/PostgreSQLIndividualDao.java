@@ -20,6 +20,13 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		this.conn = conn;
 	}
 
+	/**
+	 * Method to create a new Individual.
+	 * 
+	 * <p>In this method, the individual (originally created with index = 0) 
+	 * is updated directly with a new index.
+	 * 
+	 */
 	@Override
 	public boolean create(Individual obj) {
 		try{
@@ -125,12 +132,12 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Individual stud = new Individual(
+				Individual individual = new Individual(
 						res.getInt("id_stud"),
 						res.getString("stud_firstname"),
 						res.getString("stud_lastname")
 						);
-				data.add(stud);
+				data.add(individual);
 			}
 			System.out.println("PostgreSQLStudentDao.getData(): found "+data.size()+" lines.");
 			res.close();

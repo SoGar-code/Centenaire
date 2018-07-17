@@ -72,19 +72,22 @@ public class IndividualEditor extends EntityEditor<Individual> {
 	 */
 	@Override
 	public Individual getObject() {
+		int index = this.getIndexField();
 		String firstName = this.firstNameField.getText();
 		String lastName = this.lastNameField.getText();
 		int birthYear = this.birthYearField.getIntegerValue();
 
 		Individual individual = new Individual(firstName, lastName, birthYear);
+		individual.setIndex(index);
 		return individual;
 	}
 
 	/**
-	 * Update the fields in the editor to represent another 'Individual' instance
+	 * Update the fields in the editor to represent another 'Individual' instance.
 	 */
 	@Override
 	public void setObject(Individual obj) {
+		this.setIndexField(obj.getIndex());
 		firstNameField.setText(obj.getFirst_name());
 		lastNameField.setText(obj.getLast_name());
 		birthYearField.setIntegerValue(obj.getBirth_year());
