@@ -2,7 +2,6 @@ package org.centenaire.general;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -12,13 +11,14 @@ import javax.swing.event.ChangeListener;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
-import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.general.observer.Observable;
 import org.centenaire.general.observer.Observer;
+import org.centenaire.general.pubsub.Channel;
+import org.centenaire.general.pubsub.Dispatcher;
 
 /**
  * Class used to store data regarding the current state of the interface.
@@ -26,10 +26,38 @@ import org.centenaire.general.observer.Observer;
  * <p>
  * For instance, it stores the variable "currentEntity".
  * It doubles as a singleton class giving access to the different Dao classes.
+ * </p>
+ * 
+ * <p>It also acts as 'Dispatcher' in the Publisher-Subscriber pattern. More details 
+ * about this pattern can be found in the interface implementing it here.</p>
+ * 
+ * <p>In our specific implementation, we apply the following guidelines:
+ * <ul>
+ * <li>publishers are created in the DAOs, notifying upon creation, update or deletion of elements</li>
+ * <li>subscribers are all suitable graphical elements.</li>
+ * </ul>
+ * Since our implementation of the pattern enables only one reaction of the subscriber, whatever the channel
+ * which is updated, we should not put the 'update functions' in components dealing with multiple types of 
+ * Entity classes.</p>
+ * 
+ * @see org.centenaire.general.pubsub
+ * @see org.centenaire.general.pubsub.Dispatcher
  * 
  */
-public class GeneralController implements Observable, ChangeListener{
-
+public class GeneralController implements Observable, ChangeListener, Dispatcher{
+	/**
+	 * Controls the number of channels in the Publisher-Subscriber pattern.
+	 * 
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 */
+	private int nbChannels = 5;
+	
+	/**
+	 * List of channels to use for the Publisher-Subscriber pattern.
+	 * 
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 */
+	private ArrayList<Channel> listChannels;
 	
 	private static GeneralController gc = new GeneralController();
 	
@@ -46,8 +74,19 @@ public class GeneralController implements Observable, ChangeListener{
 	
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
+	/**
+	 * Private constructor of the Singleton class GeneralController.
+	 */
 	private GeneralController(){
+		// Generate a suitable data factory
 		df = AbstractDaoFactory.getFactory();
+		
+		// Initialize 'listChannels'
+		listChannels = new ArrayList<Channel>();
+		for (int i=0; i<nbChannels; i++) {
+			Channel channel = new Channel();
+			listChannels.add(channel);
+		}
 	}
 	
 	
@@ -173,6 +212,28 @@ public class GeneralController implements Observable, ChangeListener{
 		for (Observer obs: listObserver){
 			obs.updateObserver(currentData);
 		}
+	}
+
+	/**
+	 * Implementation of Publisher-Subscriber pattern.
+	 * 
+	 * <p>In our specific case, publishers are going to be the 
+	 * methods 'create' and 'update' in the Dao pattern.
+	 * 
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.dao.Dao#create(Object)
+	 * @see org.centenaire.dao.Dao#update(Object)
+	 */
+	@Override
+	public Channel getChannel(int channelIndex) {
+		
+		System.out.println("getChannel called...");
+		String msg = String.format("==> available channels: %s", listChannels.size());
+		
+		System.out.println(msg);
+		
+		Channel channel = listChannels.get(channelIndex);
+		return channel;
 	}
 
 	// NB: listeners for WestList (in different tabs of "Statistics")

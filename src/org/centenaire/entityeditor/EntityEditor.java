@@ -2,8 +2,13 @@ package org.centenaire.entityeditor;
 
 import javax.swing.JPanel;
 
+import org.centenaire.general.pubsub.Subscriber;
+
 /**
  * Abstract class to represent the "editor forms" of entities.
+ * 
+ * <p>No link to the database, this is simply a graphical component, 
+ * with minimal non-graphical methods.</p>
  *
  * @param <T> entity class associated to the editor.
  */
@@ -48,4 +53,10 @@ public abstract class EntityEditor<T> extends JPanel {
 	public void setIndexField(int indexField) {
 		this.indexField = indexField;
 	}
+	
+	/**
+	 * Method to reset the EntityEditor to a neutral value.
+	 */
+	public abstract void reset();
+
 }

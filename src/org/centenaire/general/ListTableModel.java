@@ -88,7 +88,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	}
 
 	/**
-	 * Update of the table model (and notify observers). 
+	 * Update of the table model (and notify listeners). 
 	 * 
 	 * @param data
 	 * 			the new data to include in the table.

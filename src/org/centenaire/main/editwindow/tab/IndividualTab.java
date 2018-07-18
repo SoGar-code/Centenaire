@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.general.EntityDialog;
 import org.centenaire.general.GTable;
@@ -19,20 +20,22 @@ import org.centenaire.general.GeneralController;
 import org.centenaire.general.ListTableModel;
 import org.centenaire.general.UpdateEntityPanel;
 import org.centenaire.general.editorsRenderers.Delete;
+import org.centenaire.general.pubsub.Subscriber;
 
 /**
- * Class generating the tab related to the <it>Individual</it> Entity
+ * Class generating the tab related to the 'Individual' Entity.
  * 
- * <p>In the current design, it contains a tabbed pane itself!
+ * <p>In the current design, it contains a tabbed panel itself!</p>
  *
  */
-public class IndividualTab extends JPanel {
+public class IndividualTab extends JPanel implements Subscriber{
+	GeneralController gc = GeneralController.getInstance();
+	EntityDialog<Individual> ed;
+	ListTableModel entityListTableModel;
+	UpdateEntityPanel<Individual> uep;
 	
 	public IndividualTab() {
 		super();
-		
-		// Get GeneralController
-		GeneralController gc = GeneralController.getInstance();
 
 		// *New entity* button
 		// ====================
@@ -45,7 +48,7 @@ public class IndividualTab extends JPanel {
 				
 				Individual tl = Individual.defaultElement();
 
-				EntityDialog<Individual> ed = new EntityDialog<Individual>(1);
+				ed = new EntityDialog<Individual>(1);
 				
 				// Try to get a value from the dialog...
 				try {
@@ -70,18 +73,18 @@ public class IndividualTab extends JPanel {
 		//===================================================
 		
 		// starting from standard ListTableModel.
-		ListTableModel entityListTableModel = new ListTableModel(
+		entityListTableModel = new ListTableModel(
 				new Class[] {String.class, String.class, Delete.class},
 				new String[] {"Prénom", "Nom"},
-				gc.getCurrentData() // at that point, we should have currentEntity=0
+				gc.getCurrentData()
 				);
-		// include listTableModel as observer of gc (changes in the data).
-		gc.addObserver(entityListTableModel);
 		GTable entityList = new GTable(entityListTableModel);
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<Individual> uep = new UpdateEntityPanel<Individual>(1);
+		uep = new UpdateEntityPanel<Individual>(EntityEnum.INDIV.getValue());
+		// register uep as subscriber for suitable channel 
+		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(uep);
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -94,6 +97,28 @@ public class IndividualTab extends JPanel {
 		this.add(tabbedPane, BorderLayout.CENTER);
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
+	}
+
+	/**
+	 * Method called when a new piece of news is published on registered channel.
+	 * 
+	 * <p>The method updates the values of the current element, if any.</p>
+	 * 
+	 * @see org.centenaire.general.Subscriber
+	 */
+	public void updateSubscriber() {
+		// Need to update combo, ListTableModel and UpdateEntityPanel
+		
+		
+		
+		// include listTableModel as observer of gc (changes in the data).
+		gc.addObserver(entityListTableModel);
+		
+		// Check the index of the current object. If == 0, do nothing...
+//		if (this.getIndexField() != 0) {
+//			gc.getDao(i)
+//		}
+				
 	}
 
 }

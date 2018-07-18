@@ -92,7 +92,7 @@ public class GTable extends JScrollPane{
 		return ((ListTableModel)this.table.getModel());
 	}
 	
-	public void updateComboStudent(){
+	public void updateComboIndividual(){
 		// Method called by GeneralPanel when currentEntity==0 (Students)
 		// when "Save/update" button is pushed.
 		// Only for the Mark tab
@@ -122,7 +122,7 @@ public class GTable extends JScrollPane{
 	public void updateCombo(int index){
 		switch(index){
 			case 0:
-				updateComboStudent();
+				updateComboIndividual();
 				break;
 			case 1:
 				updateComboExams();

@@ -92,5 +92,15 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		lastNameField.setText(obj.getLast_name());
 		birthYearField.setIntegerValue(obj.getBirth_year());
 	}
+	
+	/**
+	 * Method to reset the EntityEditor to a neutral value.
+	 */
+	public void reset() {
+		this.setIndexField(0);
+		firstNameField.setText("-");
+		lastNameField.setText("-");
+		birthYearField.setIntegerValue(1901);
+	}
 
 }

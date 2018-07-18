@@ -15,7 +15,7 @@ import org.centenaire.entity.TagLike;
  *
  * <p>
  * Includes getDao(int i).
- * <p>
+ * </p>
  *
  */
 public abstract class AbstractDaoFactory {

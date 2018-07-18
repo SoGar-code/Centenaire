@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,19 +20,30 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entityeditor.EntityEditor;
 import org.centenaire.entityeditor.EntityEditorFactory;
+import org.centenaire.general.pubsub.Subscriber;
 
 /**
- * Generic Entity update panel
+ * Generic Entity update panel.
+ * 
+ * <p>It includes an implementation of the 'Subscriber' interface 
+ * of the Publisher-Subscriber pattern used to notify the component 
+ * about updates in the database.</p>
  *
  * @param <T> the Entity class under consideration
  *
+ * @see org.centenaire.general.pubsub.Subscriber
  */
-public class UpdateEntityPanel<T> extends JPanel {
-	private EntityEditor<T> updatePanel;
+public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	private final int classIndex;
-	private JButton svgButton;
 	private Dao<T> dao;
 
+	private EntityEditor<T> updatePanel;
+	private JComboBox<T> entityCombo;
+
+	private JButton svgButton;
+	
+	private ActionListener comboListener;
+	
 	/**
 	 * Generate an update panel for the Entity class T.
 	 * 
@@ -47,19 +59,8 @@ public class UpdateEntityPanel<T> extends JPanel {
 		// recover the suitable Dao
 		dao = (Dao<T>) gc.getDao(classIndex);
 		
-		// list of Entity elements		
-		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
-		
-		// Create combo to select Entity
-		T[] entityVect = (T[]) listEntity.toArray();
-		JComboBox<T> entityCombo = new JComboBox<T>(entityVect);
-		entityCombo.setPreferredSize(new Dimension(200,30));
-		
-		// Description label
-		JLabel selectedLabel = new JLabel("Elément sélectionné : ");
-		
-		// Processing combo selection
-		entityCombo.addActionListener(new ActionListener() {
+		// create action listener
+		comboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {		
 					// recover the currently selected object
@@ -76,7 +77,21 @@ public class UpdateEntityPanel<T> extends JPanel {
 					System.out.println(msg);
 				}
 			}
-		});
+		};
+		
+		// list of Entity elements		
+		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
+		
+		// Create combo to select Entity
+		T[] entityVect = (T[]) listEntity.toArray();
+		entityCombo = new JComboBox<T>(entityVect);
+		entityCombo.setPreferredSize(new Dimension(200,30));
+		
+		// Description label
+		JLabel selectedLabel = new JLabel("Elément sélectionné : ");
+		
+		// Processing combo selection
+		entityCombo.addActionListener(comboListener);
 		
 		// Create top panel
 		JPanel topPan = new JPanel();
@@ -119,6 +134,59 @@ public class UpdateEntityPanel<T> extends JPanel {
 		this.add(topPan, BorderLayout.NORTH);
 		this.add(updatePanel);
 		this.add(bottomPan, BorderLayout.SOUTH);
+	}
+
+	/**
+	 * Method to implement the 'Subscriber' interface of the Publisher-Subscriber pattern.
+	 * 
+	 * <p>It updates the combo as well as the EntityEditor panel.</p>
+	 * 
+	 * @see org.centenaire.general.Subscriber
+	 */
+	@Override
+	public void updateSubscriber() {
+		// Need to update svgButton, entityCombo and updatePanel.
+		
+		// Disabled svgButton
+		svgButton.setEnabled(false);
+		
+		// Update the combo
+		// =================
+		
+		// remove action listener
+		entityCombo.removeActionListener(comboListener);
+		
+		// Get index of currently selected elt
+		int indexSelectedEntity = ((Entity) entityCombo.getSelectedItem()).getIndex();
+		String msg0 = String.format("==> indexSelectedEntity: %s", indexSelectedEntity);
+		System.out.println(msg0);
+		
+		// Find new element for this value
+		T newCurrentObj = dao.find(indexSelectedEntity);
+		String msg = String.format("==> newCurrentObj: %s", newCurrentObj.toString());
+		System.out.println(msg);
+		
+		// list of Entity elements		
+		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
+		
+		// Create combo to select Entity
+		T[] entityVect = (T[]) listEntity.toArray();
+		entityCombo.removeAllItems();
+		entityCombo.setModel(new DefaultComboBoxModel<T>(entityVect));
+		
+		// Recover the formally selected element
+//		int indList = ((DefaultComboBoxModel<T>) entityCombo.getModel()).getIndexOf(newCurrentObj);
+//		String msg2 = String.format("==> indList: %s", indList);
+//		System.out.println(msg2);
+		
+		// Cancel selection
+		entityCombo.setSelectedIndex(-1);
+		
+		// add the action listener again
+		entityCombo.addActionListener(comboListener);
+		
+		// reset updatePanel
+		updatePanel.reset();
 	}
 	
 //	/**
