@@ -50,4 +50,14 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 		nameField.setText(obj.getName());
 	}
 
+	/**
+	 * Method to reset the EntityEditor to a neutral value.
+	 */
+	@Override
+	public void reset() {
+		// index = 0, this is not a real element
+		this.setIndexField(0);
+		this.nameField.setText("-");
+	}
+
 }

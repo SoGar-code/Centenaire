@@ -7,11 +7,15 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
 import org.centenaire.general.EntityDialog;
@@ -20,25 +24,31 @@ import org.centenaire.general.GeneralController;
 import org.centenaire.general.ListTableModel;
 import org.centenaire.general.UpdateEntityPanel;
 import org.centenaire.general.editorsRenderers.Delete;
+import org.centenaire.general.pubsub.Subscriber;
 
 /**
- * Class generating the tabs related to <it>TagLike</it> Entity elements
+ * Class generating the tabs related to <it>TagLike</it> Entity elements.
  * 
- * <p>In the current design, it contains a tabbed pane itself!
+ * <p>In the current design, it contains a tabbed pane itself!</p>
  *
  */
-public class TagLikeTab extends JPanel {
+public class TagLikeTab extends JPanel implements Subscriber{
+	ListTableModel entityListTableModel;
+	Dao<Entity> dao;
+	private int classIndex;
 	
 	/**
 	 * The constructor takes a parameter, since several Entity classes are similar.
 	 * 
 	 * @param i classIndex of the TagLike under consideration
 	 */
-	public TagLikeTab(int i) {
+	public TagLikeTab(int classIndex) {
 		super();
+		this.classIndex = classIndex;
 		
-		// Get GeneralController
+		// Get GeneralController and dao
 		GeneralController gc = GeneralController.getInstance();
+		dao = gc.getDao(classIndex);
 
 		// *New entity* button
 		// ====================
@@ -64,26 +74,27 @@ public class TagLikeTab extends JPanel {
 				
 			}
 		});
+		
 		// Include it in a bottomPan
 		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPan.add(newEntity);
 		
-		// Creation of Individual list (already initialized)
+		// Creation of Tag list (already initialized)
 		//===================================================
 		
 		// starting from standard ListTableModel.
-		ListTableModel entityListTableModel = new ListTableModel(
+		entityListTableModel = new ListTableModel(
 				new Class[] {String.class},
 				new String[] {"Etiquette"},
-				gc.getDao(i).findAll() // at that point, we should have currentEntity=0
+				dao.findAll()
 				);
-		// include listTableModel as observer of gc (changes in the data).
-		gc.addObserver(entityListTableModel);
 		GTable entityList = new GTable(entityListTableModel);
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(i);
+		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(classIndex);
+		// uep subscribes to suitable channel 
+		gc.getChannel(classIndex).addSubscriber(uep);
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -96,6 +107,20 @@ public class TagLikeTab extends JPanel {
 		this.add(tabbedPane, BorderLayout.CENTER);
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
+		// Let component subscribe to suitable channel
+		gc.getChannel(classIndex).addSubscriber(this);
+	}
+
+	/**
+	 * Method called when a new piece of news is published on registered channel.
+	 * 
+	 * @see org.centenaire.general.Subscriber
+	 */
+	@Override
+	public void updateSubscriber() {
+		// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
+		LinkedList<Entity> data = dao.findAll();
+		entityListTableModel.setData(data);
 	}
 
 }

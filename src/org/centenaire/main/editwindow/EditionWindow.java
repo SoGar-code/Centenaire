@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralWindow;
 import org.centenaire.main.editwindow.tab.IndividualTab;
@@ -46,7 +47,7 @@ public class EditionWindow extends GeneralWindow {
 		tabbedPane.addTab("Personnes",indivTab);
 		
 		// Final assembly into a tabbed panel.
-		TagLikeTab tagLikeTab = new TagLikeTab(4);
+		TagLikeTab tagLikeTab = new TagLikeTab(EntityEnum.TAG.getValue());
 		tabbedPane.addTab("Tags",tagLikeTab);
 		
 		String[] listTabs = {"Institutions","Evénements"};

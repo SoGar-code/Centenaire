@@ -17,10 +17,11 @@ import org.centenaire.main.editwindow.ExtraInfoStudent;
 /**
  * DAO for a PostgreSQL database, relative to 'Individual' Entity.
  * 
- * <p>This implementation also includes a notification system 
- * for the Publisher
+ * <p>This implementation also includes a notification system. 
+ * This component performs as Publisher.</p>
  * 
  * @see org.centenaire.entity.Entity
+ * @see org.centenaire.general.pubsub.Publisher
  */
 public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	

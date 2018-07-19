@@ -10,9 +10,19 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractTagDao;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
 
+/**
+ * DAO for a PostgreSQL database, relative to 'Tag' Entity.
+ * 
+ * <p>This implementation also includes a notification system. 
+ * This component performs as Publisher.</p>
+ * 
+ * @see org.centenaire.entity.Entity
+ * @see org.centenaire.general.pubsub.Publisher
+ */
 public class PostgreSQLTagDao extends AbstractTagDao {
 	
 	public PostgreSQLTagDao(Connection conn){
@@ -20,6 +30,19 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 		this.conn = conn;
 	}
 
+	/**
+	 * Method to create a new Tag.
+	 * 
+	 * <p>In this method, the tag (originally created with index = 0) 
+	 * is updated directly with a new index.</p>
+	 * 
+	 * <p>This method notifies the dispatcher on channel EntityEnum.TAG.getValue()
+	 * when a new element is successfully created, thus implementing the Publisher
+	 * interface of the Publisher-Subscriber pattern.</p>
+	 * 
+	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 */
 	@Override
 	public boolean create(TagLike obj) {
 		try{
@@ -34,6 +57,10 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 				obj.setIndex(genKey.getInt(1));
 			};
 			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.TAG.getValue());
+			
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
@@ -45,6 +72,16 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 		}
 	}
 
+	/**
+	 * Method to update a Tag object.
+	 * 
+	 * <p>This method notifies the dispatcher on channel EntityEnum.TAG.getValue()
+	 * when an element is successfully updated, thus implementing the Publisher
+	 * interface of the Publisher-Subscriber pattern.</p>
+	 * 
+	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 */
 	@Override
 	public boolean update(TagLike obj) {
 		try{
@@ -54,6 +91,10 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 			state.setInt(2, obj.getIndex());
 			int nb_rows = state.executeUpdate();
 			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.TAG.getValue());
+			
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
@@ -65,6 +106,16 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 		}
 	}
 
+	/**
+	 * Method to delete an Tag object.
+	 * 
+	 * <p>This method notifies the dispatcher on channel EntityEnum.TAG.getValue()
+	 * when an element is successfully deleted, thus implementing the Publisher
+	 * interface of the Publisher-Subscriber pattern.</p>
+	 * 
+	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.general.pubsub.Dispatcher
+	 */
 	@Override
 	public boolean delete(TagLike obj) {
 		try{
@@ -74,6 +125,10 @@ public class PostgreSQLTagDao extends AbstractTagDao {
 			int nb_rows = state.executeUpdate();
 			System.out.println("PostgreSQLTagDao.delete: deleted "+nb_rows+" lines");
 			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.TAG.getValue());
+			
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();

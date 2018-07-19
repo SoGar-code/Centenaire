@@ -147,7 +147,7 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	public void updateSubscriber() {
 		// Need to update svgButton, entityCombo and updatePanel.
 		
-		// Disabled svgButton
+		// Disable svgButton
 		svgButton.setEnabled(false);
 		
 		// Update the combo
@@ -156,16 +156,6 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		// remove action listener
 		entityCombo.removeActionListener(comboListener);
 		
-		// Get index of currently selected elt
-		int indexSelectedEntity = ((Entity) entityCombo.getSelectedItem()).getIndex();
-		String msg0 = String.format("==> indexSelectedEntity: %s", indexSelectedEntity);
-		System.out.println(msg0);
-		
-		// Find new element for this value
-		T newCurrentObj = dao.find(indexSelectedEntity);
-		String msg = String.format("==> newCurrentObj: %s", newCurrentObj.toString());
-		System.out.println(msg);
-		
 		// list of Entity elements		
 		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		
@@ -173,11 +163,6 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		T[] entityVect = (T[]) listEntity.toArray();
 		entityCombo.removeAllItems();
 		entityCombo.setModel(new DefaultComboBoxModel<T>(entityVect));
-		
-		// Recover the formally selected element
-//		int indList = ((DefaultComboBoxModel<T>) entityCombo.getModel()).getIndexOf(newCurrentObj);
-//		String msg2 = String.format("==> indList: %s", indList);
-//		System.out.println(msg2);
 		
 		// Cancel selection
 		entityCombo.setSelectedIndex(-1);

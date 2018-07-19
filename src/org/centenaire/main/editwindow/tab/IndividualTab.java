@@ -7,11 +7,14 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.general.EntityDialog;
@@ -29,14 +32,16 @@ import org.centenaire.general.pubsub.Subscriber;
  *
  */
 public class IndividualTab extends JPanel implements Subscriber{
-	GeneralController gc = GeneralController.getInstance();
+	Dao<Entity> dao;
 	EntityDialog<Individual> ed;
 	ListTableModel entityListTableModel;
-	UpdateEntityPanel<Individual> uep;
 	
 	public IndividualTab() {
 		super();
 
+		GeneralController gc = GeneralController.getInstance();
+		dao = gc.getDao(EntityEnum.INDIV.getValue());
+		
 		// *New entity* button
 		// ====================
 		JButton newEntity = new JButton("Nouvel individu");
@@ -48,16 +53,11 @@ public class IndividualTab extends JPanel implements Subscriber{
 				
 				Individual tl = Individual.defaultElement();
 
-				ed = new EntityDialog<Individual>(1);
+				ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
 				
 				// Try to get a value from the dialog...
 				try {
 					Individual finalElt = ed.showEntityDialog();
-					
-					String aux = String.format("==> contenu finalElt: %s", finalElt.toString());
-					System.out.println(aux);
-					
-					System.out.println(String.format("==> année de naissance : %d", finalElt.getBirth_year()));
 				} catch (NullPointerException e) {
 					// edition was cancelled before completion...
 					System.out.println("Edition of the element cancelled.");
@@ -76,14 +76,14 @@ public class IndividualTab extends JPanel implements Subscriber{
 		entityListTableModel = new ListTableModel(
 				new Class[] {String.class, String.class, Delete.class},
 				new String[] {"Prénom", "Nom"},
-				gc.getCurrentData()
+				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		uep = new UpdateEntityPanel<Individual>(EntityEnum.INDIV.getValue());
-		// register uep as subscriber for suitable channel 
+		UpdateEntityPanel<Individual> uep = new UpdateEntityPanel<Individual>(EntityEnum.INDIV.getValue());
+		// uep subscribes to suitable channel 
 		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(uep);
 		
 		// Include different elements in JTabbedPane
@@ -97,28 +97,19 @@ public class IndividualTab extends JPanel implements Subscriber{
 		this.add(tabbedPane, BorderLayout.CENTER);
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
+		// Let component subscribe to suitable channel
+		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(this);
 	}
 
 	/**
 	 * Method called when a new piece of news is published on registered channel.
 	 * 
-	 * <p>The method updates the values of the current element, if any.</p>
-	 * 
 	 * @see org.centenaire.general.Subscriber
 	 */
 	public void updateSubscriber() {
-		// Need to update combo, ListTableModel and UpdateEntityPanel
-		
-		
-		
-		// include listTableModel as observer of gc (changes in the data).
-		gc.addObserver(entityListTableModel);
-		
-		// Check the index of the current object. If == 0, do nothing...
-//		if (this.getIndexField() != 0) {
-//			gc.getDao(i)
-//		}
-				
+		// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
+		LinkedList<Entity> data = dao.findAll();
+		entityListTableModel.setData(data);
 	}
 
 }

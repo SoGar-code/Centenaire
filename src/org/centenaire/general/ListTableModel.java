@@ -13,6 +13,7 @@ import org.centenaire.entity.Individual;
 import org.centenaire.entity.Mark;
 import org.centenaire.entity.TagLike;
 import org.centenaire.general.observer.Observer;
+import org.centenaire.general.pubsub.Subscriber;
 import org.centenaire.main.statistics.Average;
 import org.centenaire.main.statistics.StatisticsWindow;
 
