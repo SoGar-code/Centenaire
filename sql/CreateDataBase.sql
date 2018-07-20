@@ -27,15 +27,15 @@ CREATE TABLE Items(
 
 CREATE TABLE Event_Types(
   id SERIAL PRIMARY KEY,
-  name text,
-  start_date date,
-  end_date date
+  name text
 );
 
 CREATE TABLE Events(
   id SERIAL PRIMARY KEY,
   name text,
   place text,
+  start_date date,
+  end_date date,
   type integer references Event_types
 );
 

@@ -30,7 +30,7 @@ public abstract class Entity{
 	/**
 	 * Numbering of the different (concrete) Entity classes.
 	 * 
-	 * <p>Value 0 is for the abstract Entity class.
+	 * <p>Value 0 is for the abstract Entity class.</p>
 	 */
 	protected static int classIndex = 0;
 	
