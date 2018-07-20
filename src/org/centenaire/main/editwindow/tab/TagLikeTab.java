@@ -40,7 +40,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 	/**
 	 * The constructor takes a parameter, since several Entity classes are similar.
 	 * 
-	 * @param i classIndex of the TagLike under consideration
+	 * @param classIndex classIndex of the TagLike under consideration
 	 */
 	public TagLikeTab(int classIndex) {
 		super();

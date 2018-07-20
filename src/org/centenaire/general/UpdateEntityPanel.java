@@ -38,7 +38,7 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	private Dao<T> dao;
 
 	private EntityEditor<T> updatePanel;
-	private JComboBox<T> entityCombo;
+	private EntityCombo<T> entityCombo;
 
 	private JButton svgButton;
 	
@@ -59,6 +59,9 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		// recover the suitable Dao
 		dao = (Dao<T>) gc.getDao(classIndex);
 		
+		// Create new EntityCombo
+		entityCombo = new EntityCombo<T>(classIndex);
+		
 		// create action listener
 		comboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
@@ -78,14 +81,6 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 				}
 			}
 		};
-		
-		// list of Entity elements		
-		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
-		
-		// Create combo to select Entity
-		T[] entityVect = (T[]) listEntity.toArray();
-		entityCombo = new JComboBox<T>(entityVect);
-		entityCombo.setPreferredSize(new Dimension(200,30));
 		
 		// Description label
 		JLabel selectedLabel = new JLabel("Elément sélectionné : ");
@@ -112,15 +107,7 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 				
 				T obj = updatePanel.getObject();
 				
-				String msg = String.format("Recovered object: %s", obj.toString());
-				System.out.println(msg);
-				
-				String msg2 = String.format("Obj index: %d", ((Entity) obj).getIndex());
-				System.out.println(msg2);
-				
 				dao.update(obj);
-				
-				// Notifier gc ?
 			}
 		});
 
@@ -147,27 +134,16 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	public void updateSubscriber() {
 		// Need to update svgButton, entityCombo and updatePanel.
 		
-		// Disable svgButton
+		// Disable svgButton (entityCombo is reset upon being notified...).
 		svgButton.setEnabled(false);
-		
-		// Update the combo
-		// =================
 		
 		// remove action listener
 		entityCombo.removeActionListener(comboListener);
+
+		// update the combo using the predefined method
+		entityCombo.updateSubscriber();
 		
-		// list of Entity elements		
-		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
-		
-		// Create combo to select Entity
-		T[] entityVect = (T[]) listEntity.toArray();
-		entityCombo.removeAllItems();
-		entityCombo.setModel(new DefaultComboBoxModel<T>(entityVect));
-		
-		// Cancel selection
-		entityCombo.setSelectedIndex(-1);
-		
-		// add the action listener again
+		// put the action listener back again
 		entityCombo.addActionListener(comboListener);
 		
 		// reset updatePanel
