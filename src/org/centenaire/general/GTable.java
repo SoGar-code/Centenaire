@@ -70,7 +70,7 @@ public class GTable extends JScrollPane{
 	    table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
 
 	    // Student CellEditor
-	    LinkedList<Individual> listStudent = gc.getStudentDao().findAll();
+	    LinkedList<Individual> listStudent = gc.getIndividualDao().findAll();
 	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
 	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	    
@@ -96,7 +96,7 @@ public class GTable extends JScrollPane{
 		// Method called by GeneralPanel when currentEntity==0 (Students)
 		// when "Save/update" button is pushed.
 		// Only for the Mark tab
-	    LinkedList<Individual> listStudent = gc.getStudentDao().findAll();
+	    LinkedList<Individual> listStudent = gc.getIndividualDao().findAll();
 	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
 	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
 	}

@@ -10,9 +10,9 @@ import org.centenaire.entity.TagLike;
 import org.centenaire.general.editorsRenderers.GIntegerField;
 
 /**
- * Class providing the editor form for TagLike. 
+ * Class providing the editor form for 'Individual' Entity class. 
  *
- * @see TagLike
+ * @see Individual
  */
 public class IndividualEditor extends EntityEditor<Individual> {
 	JTextField firstNameField;

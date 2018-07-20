@@ -104,7 +104,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			res.first();
 			Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-			Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+			Individual stud = GeneralController.getInstance().getIndividualDao().find(res.getInt("id_stud"));
 			Mark mark = new Mark(
 					index,
 					res.getFloat("mark"),
@@ -146,7 +146,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			ResultSet res = state.executeQuery();
 			while(res.next()){
 				Exams exam = GeneralController.getInstance().getExamsDao().find(res.getInt("id_exam"));
-				Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individual stud = GeneralController.getInstance().getIndividualDao().find(res.getInt("id_stud"));
 				Mark mark = new Mark(
 						res.getInt("id_mark"),
 						res.getFloat("mark"),
@@ -253,7 +253,7 @@ public class PostgreSQLMarkDao extends AbstractMarkDao {
 			state.setArray(2, array);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				Individual stud = GeneralController.getInstance().getStudentDao().find(res.getInt("id_stud"));
+				Individual stud = GeneralController.getInstance().getIndividualDao().find(res.getInt("id_stud"));
 				Average average = new Average(
 						stud,
 						res.getFloat("average")

@@ -13,10 +13,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import org.centenaire.main.editwindow.EditionWindow;
 import org.centenaire.entity.Individual;
 import org.centenaire.general.EntityDialog;
 import org.centenaire.general.GeneralController;
+import org.centenaire.main.editwindow.EditionWindow;
+import org.centenaire.main.questionnaire.Questionnaire;
 
 
 /**
@@ -107,7 +108,7 @@ public class Centenaire extends JFrame{
 
 	public static void main(String[] args) {
 		new Centenaire();
-		//new Questionnaire();
+		new Questionnaire();
 	}
 
 }

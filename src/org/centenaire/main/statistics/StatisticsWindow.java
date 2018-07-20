@@ -109,7 +109,7 @@ public class StatisticsWindow extends GeneralWindow {
 	
 	public void updateListStudent(){
 		listStudent.removeAllElements();
-        LinkedList<Individual> dataStudent = gc.getStudentDao().findAll();
+        LinkedList<Individual> dataStudent = gc.getIndividualDao().findAll();
         for(Individual stud:dataStudent){
         	listStudent.addElement(stud);
         }

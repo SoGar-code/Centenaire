@@ -22,14 +22,15 @@ public class Questionnaire extends JFrame {
 	
 	public Questionnaire() {
 		super();
-		this.setSize(600, 600);
+		// size: (width, height)
+		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel content = new JPanel();
 		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		
-		// Respondent
-		JLabel respondent = new JLabel("Descriptif du répondant");
+		// Respondent panel
+		JPanel respondent = new RespondentPanel();
 		content.add(respondent);
 		
 		JPanel question;

@@ -85,7 +85,7 @@ public class Mark extends Entity {
 	public static Mark defaultElement(){
 		return new Mark(
 				0,
-				GeneralController.getInstance().getStudentDao().anyElement(),
+				GeneralController.getInstance().getIndividualDao().anyElement(),
 				GeneralController.getInstance().getExamsDao().anyElement()
 				);
 	}

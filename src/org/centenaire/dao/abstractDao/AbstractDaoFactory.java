@@ -20,7 +20,7 @@ import org.centenaire.entity.TagLike;
  */
 public abstract class AbstractDaoFactory {
 
-	public abstract AbstractIndividualDao getStudentDao();
+	public abstract AbstractIndividualDao getIndividualDao();
 	
 	public abstract AbstractExamsDao getExamsDao();
 	
@@ -46,7 +46,7 @@ public abstract class AbstractDaoFactory {
 				System.out.println(msg);
 				return null;
 			case 1:
-				return getStudentDao();
+				return getIndividualDao();
 			case 2:
 				return getExamsDao();
 			case 3:

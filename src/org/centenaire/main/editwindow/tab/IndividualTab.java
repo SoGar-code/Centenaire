@@ -33,7 +33,6 @@ import org.centenaire.general.pubsub.Subscriber;
  */
 public class IndividualTab extends JPanel implements Subscriber{
 	Dao<Entity> dao;
-	EntityDialog<Individual> ed;
 	ListTableModel entityListTableModel;
 	
 	public IndividualTab() {
@@ -53,7 +52,7 @@ public class IndividualTab extends JPanel implements Subscriber{
 				
 				Individual tl = Individual.defaultElement();
 
-				ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
+				EntityDialog<Individual> ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
 				
 				// Try to get a value from the dialog...
 				try {

@@ -43,7 +43,7 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	}
 
 	@Override
-	public AbstractIndividualDao getStudentDao() {
+	public AbstractIndividualDao getIndividualDao() {
 		return new PostgreSQLIndividualDao(conn);
 	}
 

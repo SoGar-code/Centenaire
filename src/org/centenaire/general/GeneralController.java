@@ -159,8 +159,8 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	// management of Dao
 	//===================================
 
-	public AbstractIndividualDao getStudentDao(){
-		return df.getStudentDao();
+	public AbstractIndividualDao getIndividualDao(){
+		return df.getIndividualDao();
 	}
 
 	public Dao<TagLike> getSemesterDao(){

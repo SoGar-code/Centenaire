@@ -27,7 +27,7 @@ import org.centenaire.general.editorsRenderers.Delete;
 import org.centenaire.general.pubsub.Subscriber;
 
 /**
- * Class generating the tabs related to <it>TagLike</it> Entity elements.
+ * Class generating the tabs related to 'TagLike' Entity elements.
  * 
  * <p>In the current design, it contains a tabbed pane itself!</p>
  *

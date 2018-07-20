@@ -36,7 +36,7 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 	 * @param classIndex
 	 * 				classIndex of the Entity under consideration.
 	 */
-	EntityCombo(int classIndex){
+	public EntityCombo(int classIndex){
 		super();
 		this.classIndex = classIndex;
 		
