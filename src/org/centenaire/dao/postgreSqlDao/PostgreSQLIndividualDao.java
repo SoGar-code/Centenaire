@@ -46,10 +46,11 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean create(Individual obj) {
 		try{
-			String query="INSERT INTO students(stud_firstname, stud_lastname) VALUES(?,?)";
+			String query="INSERT INTO individuals(first_name, last_name, birth_year) VALUES(?,?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			state.setString(1, obj.getFirst_name());
 			state.setString(2, obj.getLast_name());
+			state.setInt(3, obj.getBirth_year());
 			int nb_rows = state.executeUpdate();
 			
 			// Update of the index (should be 0 up to this point)
@@ -65,7 +66,7 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.create -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.create -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -86,11 +87,12 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean update(Individual obj) {
 		try{
-			String query="UPDATE students SET stud_firstname = ?, stud_lastname = ? WHERE id_stud = ?";
+			String query="UPDATE individuals SET first_name = ?, last_name = ?, birth_year = ? WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setString(1, obj.getFirst_name());
 			state.setString(2, obj.getLast_name());
-			state.setInt(3, obj.getIndex());
+			state.setInt(3, obj.getBirth_year());
+			state.setInt(4, obj.getIndex());
 			int nb_rows = state.executeUpdate();
 			state.close();
 			
@@ -100,7 +102,7 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.update -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.update -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -121,7 +123,7 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean delete(Individual obj) {
 		try{
-			String query="DELETE FROM students WHERE id_stud = ?";
+			String query="DELETE FROM individuals WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, obj.getIndex());
 			int nb_rows = state.executeUpdate();
@@ -134,7 +136,7 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return true;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.delete -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.delete -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return false;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -145,12 +147,15 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public Individual find(int index) {
 		try{
-			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students WHERE id_stud = ?";
+			String query="SELECT id, first_name, last_name, birth_year FROM individuals WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Individual stud = new Individual(res.getInt("id_stud"),res.getString("stud_firstname"),res.getString("stud_lastname"));
+			Individual stud = new Individual(res.getInt("id"),
+											 res.getString("first_name"),
+											 res.getString("last_name"),
+											 res.getInt("birth_year"));
 			res.close();
 			state.close();
 			return stud;
