@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.centenaire.entity.Individual;
+
 /**
  * The JFrame corresponding to the questionnaire part of the system.
  * 
@@ -19,11 +21,13 @@ import javax.swing.JScrollPane;
  *
  */
 public class Questionnaire extends JFrame {
+	// Instead of using a local variable below, save it in gc!
+//	private Individual currentIndividual;
 	
 	public Questionnaire() {
 		super();
 		// size: (width, height)
-		this.setSize(800, 600);
+		this.setSize(920, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel content = new JPanel();

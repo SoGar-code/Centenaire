@@ -1,8 +1,8 @@
 # avoid hidden files and folders (.settings, .classpath, .project, ...)
-GestionBilicence/.*
+.*
 
 # avoid bin folder
-GestionBilicence/bin*
+bin/
 
 # avoid csv files:
 *.csv
@@ -14,3 +14,6 @@ GestionBilicence/bin*
 
 # avoid .classpath file
 .classpath
+
+# ignore auxiliary.sql
+sql/auxiliary.sql

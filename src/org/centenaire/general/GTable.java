@@ -89,7 +89,7 @@ public class GTable extends JScrollPane{
 	public ListTableModel getModel(){
 		// since the only constructor involves a ListTableModel, 
 		// the cast below should be safe...
-		return ((ListTableModel)this.table.getModel());
+		return (ListTableModel) this.table.getModel();
 	}
 	
 	public void updateComboIndividual(){

@@ -1,9 +1,17 @@
 -- PostgreSQL database dump
+-- to create the database in project Centenaire
+-- Latin1 encoding
 
-SET client_encoding = 'UTF8';
+-- with PostgreSQL (and OS = Windows):
+-- CREATE DATABASE bdd_centenaire;
+-- \c bdd_centenaire
+-- \i path/to/folder/CreateDataBase.sql
+
+
+SET client_encoding = 'Latin1';
 
 -- Personne
-CREATE TABLE Individuals(
+CREATE TABLE individuals(
   id SERIAL PRIMARY KEY,
   first_name text,
   last_name text,
@@ -11,120 +19,126 @@ CREATE TABLE Individuals(
 );
 
 -- types de productions
-CREATE TABLE Item_Types(
+CREATE TABLE item_type_relations(
   id SERIAL PRIMARY KEY,
   name text
 );
 
 -- Productions
-CREATE TABLE Items(
+CREATE TABLE items(
   id SERIAL PRIMARY KEY,
   title text,
-  type integer references Item_types,
+  type integer references item_type_relations,
   start_date date,
   end_date date
 );
 
-CREATE TABLE Event_Types(
+CREATE TABLE event_type_relations(
   id SERIAL PRIMARY KEY,
   name text
 );
 
-CREATE TABLE Events(
+CREATE TABLE events(
   id SERIAL PRIMARY KEY,
   name text,
   place text,
   start_date date,
   end_date date,
-  type integer references Event_types
+  type integer references event_type_relations
 );
 
-CREATE TABLE Institution_Types(
+CREATE TABLE institution_type_relations(
   id SERIAL PRIMARY KEY,
   name text
 );
 
-CREATE TABLE Institutions(
+CREATE TABLE institutions(
   id SERIAL PRIMARY KEY,
   name text,
   place text,
-  type integer references Institution_types
+  type integer references institution_type_relations
 );
 
-CREATE TABLE Tags(
+CREATE TABLE tags(
   id SERIAL PRIMARY KEY,
   name text
 );
 
-CREATE TABLE Disciplines(
+CREATE TABLE disciplines(
   id SERIAL PRIMARY KEY,
   name text
+);
+
+CREATE TABLE institutional_status(
+ id SERIAL PRIMARY KEY,
+ name text
 );
 
 -- primary key given by the two ids
 -- so at most one such link per person and institution
-CREATE TABLE Individuals_Institutions(
- indiv_id integer REFERENCES Individuals, --FK
- instit_id integer REFERENCES Institutions,--FK
+CREATE TABLE individual_institution_relations(
+ indiv_id integer REFERENCES individuals, --FK
+ instit_id integer REFERENCES institutions,--FK
+ instit_status integer REFERENCES institutional_status,
  PRIMARY KEY (indiv_id, instit_id)
 );
 
-CREATE TABLE Individuals_Disciplines(
+CREATE TABLE individual_discipline_relations(
  indiv_id integer REFERENCES Individuals, --FK
  disc_id integer REFERENCES Disciplines,--FK
  PRIMARY KEY (indiv_id, disc_id)
 );
 
-CREATE TABLE Individuals_Tags(
+CREATE TABLE individual_tag_relations(
  indiv_id integer REFERENCES Individuals, --FK
  tag_id integer REFERENCES Tags,--FK
  PRIMARY KEY (indiv_id, tag_id)
 );
 
-CREATE TABLE Items_Tags(
+CREATE TABLE items_tag_relations(
  item_id integer REFERENCES Items, --FK
  tag_id integer REFERENCES Tags, --FK
  PRIMARY KEY (item_id, tag_id)
 );
 
-CREATE TABLE Events_Tags(
+CREATE TABLE event_tag_relations(
  event_id integer REFERENCES Events,
  tag_id integer REFERENCES Tags,
  PRIMARY KEY (event_id, tag_id)
 );
 
-CREATE TABLE Author(
+CREATE TABLE author(
   indiv_id integer REFERENCES Individuals, --FK
   item_id integer REFERENCES Items, --FK
   PRIMARY KEY (indiv_id, item_id)
 );
 
-CREATE TABLE Direction(
-  item_id integer REFERENCES Items, --FK
-  indiv_id integer REFERENCES Individuals, --FK
+CREATE TABLE direction(
+  item_id integer REFERENCES items, --FK
+  indiv_id integer REFERENCES individuals, --FK
   PRIMARY KEY (indiv_id, item_id)
 );
 
-CREATE TABLE Organizer(
+CREATE TABLE organizer(
   event_id integer REFERENCES Events,
   indiv_id integer REFERENCES Individuals,
   PRIMARY KEY (event_id, indiv_id)
 );
 
-CREATE TABLE Participant(
+CREATE TABLE participant(
   event_id integer REFERENCES Events,
   indiv_id integer REFERENCES Individuals,
   PRIMARY KEY (event_id, indiv_id)
 );
 
-CREATE TABLE Affliation(
+CREATE TABLE affliation(
   item_id integer REFERENCES Items,
   instit_id integer REFERENCES Institutions,
-  PRIMARY KEY (event_id, indiv_id)
+  PRIMARY KEY (item_id, instit_id)
 );
 
 -- two possible values: "financement", "soutien institutionnel"
-CREATE TABLE Localisation_Types(
+CREATE TABLE localisation_type_relations(
   id SERIAL PRIMARY KEY,
   name text
 );
@@ -133,6 +147,6 @@ CREATE TABLE Localisation_Types(
 CREATE TABLE Localisations(
   event_id integer REFERENCES Events,
   instit_id integer REFERENCES Institutions,
-  loc_type integer references Localisation_Types,
+  loc_type integer references Localisation_Type_relations,
   PRIMARY KEY (event_id, instit_id)
 );

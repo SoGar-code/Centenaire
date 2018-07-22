@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -17,7 +18,6 @@ import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.general.EntityCombo;
-import org.centenaire.general.EntityDialog;
 import org.centenaire.general.GTable;
 import org.centenaire.general.GeneralController;
 import org.centenaire.general.ListTableModel;
@@ -36,13 +36,20 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private IndividualEditor indivEditor;
 	private ListTableModel tagListTableModel;
 	private JButton svgButton;
+	private JCheckBox lockBox;
+	private Dao dao;
+	
+	/**
+	 * Currently selected individual
+	 */
+	private Individual currentIndividual;
 	
 	RespondentPanel(){
 		super();
 		
 		GeneralController gc = GeneralController.getInstance();
 		
-		Dao dao = gc.getIndividualDao();
+		dao = gc.getIndividualDao();
 		
 		// Top panel
 		// ===============
@@ -80,26 +87,13 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// Link entityCombo and listener
 		entityCombo.addActionListener(comboListener);
 		
-		// *New entity* button
-		JButton newEntity = new JButton("Nouvel individu");
+		// New checkBox
+		lockBox = new JCheckBox("Verrouiller");
 		
-		// associated action
-		newEntity.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				System.out.println("RespondentPanel.newEntity activated!");
-				
-				Individual tl = Individual.defaultElement();
-
-				EntityDialog<Individual> ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
-				
-				// Try to get a value from the dialog...
-				try {
-					Individual finalElt = ed.showEntityDialog();
-				} catch (NullPointerException e) {
-					// edition was cancelled before completion...
-					System.out.println("Edition of the element cancelled.");
-				}
-				
+		// Add action listener
+		lockBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				entityCombo.setEnabled(!lockBox.isSelected());
 			}
 		});
 		
@@ -107,7 +101,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JPanel topPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		topPan.add(respondentLab);
 		topPan.add(entityCombo);
-		topPan.add(newEntity);
+		topPan.add(lockBox);
 		
 		// Center panel
 		// ======================
@@ -161,23 +155,55 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// register for Individual channel
 		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(this);
 	}
-
+	
+	/**
+	 * Method to update the variable 'currentIndividual'.
+	 * 
+	 * @param indiv
+	 * 			new value of 'currentIndividual'
+	 */
+	public void setCurrentIndividual(Individual indiv) {
+		this.currentIndividual = indiv;
+		
+		// Should notify 'Questionnaire'... (possibly using 
+	}
+	
+	/**
+	 * Method implementing the Subscriber interface in the current class
+	 * 
+	 * @see org.centenaire.general.pubsub.Subscriber
+	 */
 	@Override
 	public void updateSubscriber() {
-		// Disable svgButton 
-		svgButton.setEnabled(false);
-		
 		// unplug listener
 		entityCombo.removeActionListener(comboListener);
 		
-		// Update entityCombo
-		entityCombo.updateSubscriber();
+		// when 'lock' is not selected, update entityCombo
+		if (!lockBox.isSelected()) {
+
+			// Update entityCombo
+			entityCombo.updateSubscriber();
+			
+			// Reset indivEditor
+			indivEditor.reset();
+			
+		} else {
+			
+			// When 'lock' is selected, update indivEditor with current selected individual
+			Individual indiv = (Individual) entityCombo.getSelectedItem();
+			
+			Individual newIndiv = (Individual) dao.find(indiv.getIndex());
+			
+			indivEditor.setObject(newIndiv);
+			
+			// Update entityCombo
+			entityCombo.setEnabled(true);
+			entityCombo.setSelectedItem(newIndiv);
+			entityCombo.setEnabled(false);
+		}
 		
 		// replug listener
 		entityCombo.addActionListener(comboListener);
-		
-		// Reset indivEditor
-		indivEditor.reset();
 		
 		// Should do something about tagListTableModel ...
 	}

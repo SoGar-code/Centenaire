@@ -1,37 +1,45 @@
--- To populate the database initially in project GestionBilicence
--- UTF-8 encoding
+-- To populate the database initially in project Centenaire
+-- Latin1 encoding
 
--- with PostgreSQL:
--- \c testdb (to connect to testdb)
--- \i path\to\folder\PopulateDataBase.sql
+-- with PostgreSQL (and OS = Windows):
+-- \c bdd_centenaire
+-- \i path/to/folder/PopulateDataBase.sql
 
-INSERT INTO students(stud_firstname, stud_lastname) VALUES('Marc','Dupont');
-INSERT INTO students(stud_firstname, stud_lastname) VALUES('Jean','Martin');
-INSERT INTO students(stud_firstname, stud_lastname) VALUES('Marie','Richard');
+SET client_encoding = 'Latin1';
 
-INSERT INTO stud_num(id_stud,stud_number) VALUES(1,7510);
-INSERT INTO stud_num(id_stud,stud_number) VALUES(2,7511);
+-- create types of items
+INSERT INTO item_type_relations(name) VALUES('Thèse');
+INSERT INTO item_type_relations(name) VALUES('HDR');
+INSERT INTO item_type_relations(name) VALUES('Mémoire de master');
+INSERT INTO item_type_relations(name) VALUES('Article');
+INSERT INTO item_type_relations(name) VALUES('Livre');
+INSERT INTO item_type_relations(name) VALUES('Numéro de revue');
+INSERT INTO item_type_relations(name) VALUES('Chapitre de livre');
+INSERT INTO item_type_relations(name) VALUES('Edition de sources');
+INSERT INTO item_type_relations(name) VALUES('Article de presse');
 
-INSERT INTO semesters(semester_name) VALUES('L1S1 2017-2018');
-INSERT INTO semesters(semester_name) VALUES('L1S2 2016-2017');
-INSERT INTO semesters(semester_name) VALUES('L2S1 2015-2016');
-INSERT INTO semesters(semester_name) VALUES('L2S2 2016-2017');
-INSERT INTO semesters(semester_name) VALUES('APB 2017');
+-- create types of events
+INSERT INTO event_type_relations(name) VALUES('Débat grand public');
+INSERT INTO event_type_relations(name) VALUES('Séminaire');
+INSERT INTO event_type_relations(name) VALUES('Colloque');
+INSERT INTO event_type_relations(name) VALUES('Conférence grand public');
+INSERT INTO event_type_relations(name) VALUES('Intervention radio');
+INSERT INTO event_type_relations(name) VALUES('Intervention TV');
 
-INSERT INTO acad_years(ay_name) VALUES('2017-2018');
-INSERT INTO acad_years(ay_name) VALUES('2016-2017');
+-- create types of institutions
+INSERT INTO institution_type_relations(name) VALUES('Université');
+INSERT INTO institution_type_relations(name) VALUES('Laboratoire');
+INSERT INTO institution_type_relations(name) VALUES('Association');
+INSERT INTO institution_type_relations(name) VALUES('Organisation non-scientifique');
 
-INSERT INTO subjects(subject_name) VALUES('English');
-INSERT INTO subjects(subject_name) VALUES('History');
+-- create institutional status
+INSERT INTO institutional_status(name) VALUES('Collaboration');
+INSERT INTO institutional_status(name) VALUES('MCF');
+INSERT INTO institutional_status(name) VALUES('Professeur');
+INSERT INTO institutional_status(name) VALUES('Post-doctorant');
+INSERT INTO institutional_status(name) VALUES('Doctorant');
+INSERT INTO institutional_status(name) VALUES('ATER');
 
-INSERT INTO exams(name, id_semester) VALUES('Test 1', 1);
-INSERT INTO exams(name, id_semester) VALUES('Test 2', 1);
-INSERT INTO exams(name, id_semester) VALUES('Test 3', 2);
-
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(1, 1, 10);
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(1, 2, 5);
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(1, 3, 15);
-
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(2, 1, 7.5);
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(2, 2, 8);
-INSERT INTO marks(id_exam, id_stud, mark) VALUES(3, 3, 18);
+-- create localisation_type_relations
+INSERT INTO localisation_type_relations(name) VALUES('Financement');
+INSERT INTO localisation_type_relations(name) VALUES('Soutien institutionnel');
