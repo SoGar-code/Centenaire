@@ -28,6 +28,13 @@ public class Individual extends Entity{
 		this.birth_year = birth_year;
 	}
 	
+	public Individual(int index, String first_name, String last_name, int birth_year) {
+		super(index);
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.birth_year = birth_year;
+	}
+	
 	public String getFirst_name() {
 		return first_name;
 	}

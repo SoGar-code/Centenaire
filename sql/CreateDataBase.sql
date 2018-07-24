@@ -131,7 +131,7 @@ CREATE TABLE participant(
   PRIMARY KEY (event_id, indiv_id)
 );
 
-CREATE TABLE affliation(
+CREATE TABLE affiliation(
   item_id integer REFERENCES Items,
   instit_id integer REFERENCES Institutions,
   PRIMARY KEY (item_id, instit_id)

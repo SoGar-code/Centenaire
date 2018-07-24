@@ -63,21 +63,11 @@ public class GTable extends JScrollPane{
 	    // edit CellEditor
 	    table.setDefaultEditor(Edit.class, new ButtonEditEditor(new JCheckBox()));
 	    table.setDefaultRenderer(Edit.class, new ButtonRenderer());
-	    
-	    // Semester CellEditor
-	    LinkedList<TagLike> listSemester = gc.getSemesterDao().findAll();
-	    JComboBox<TagLike> comboSemester = new JComboBox<TagLike>(listSemester.toArray(new TagLike[listSemester.size()]));
-	    table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
 
 	    // Student CellEditor
-	    LinkedList<Individual> listStudent = gc.getIndividualDao().findAll();
-	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
-	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
-	    
-	    // Exams CellEditor
-	    LinkedList<Exams> listExams = gc.getExamsDao().findAll();
-	    JComboBox<Exams> comboExams = new JComboBox<Exams>(listExams.toArray(new Exams[listExams.size()]));
-	    table.setDefaultEditor(Exams.class, new DefaultCellEditor(comboExams));
+	    LinkedList<Individual> listIndividual = gc.getIndividualDao().findAll();
+	    JComboBox<Individual> comboIndividual = new JComboBox<Individual>(listIndividual.toArray(new Individual[listIndividual.size()]));
+	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboIndividual));
 	    
 	    // float CellEditor and renderers
 	    table.setDefaultEditor(float.class, new FloatEditor(2)); // for two decimals

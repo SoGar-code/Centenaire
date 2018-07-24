@@ -152,16 +152,16 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Individual stud = new Individual(res.getInt("id"),
+			Individual individual = new Individual(res.getInt("id"),
 											 res.getString("first_name"),
 											 res.getString("last_name"),
 											 res.getInt("birth_year"));
 			res.close();
 			state.close();
-			return stud;
+			return individual;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -172,33 +172,34 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	// Code to create a new element.
 	// NB: create updates the index
 	public Individual newElement(){
-		Individual stud = Individual.defaultElement();
-		this.create(stud);
-		return stud;
+		Individual individual = Individual.defaultElement();
+		this.create(individual);
+		return individual;
 	}
 
 	
 	public LinkedList<Individual> findAll() {
 		LinkedList<Individual> data = new LinkedList<Individual>();
 		try{
-			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY stud_lastname";
+			String query="SELECT id, first_name, last_name, birth_year FROM individuals ORDER BY last_name";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
 				Individual individual = new Individual(
-						res.getInt("id_stud"),
-						res.getString("stud_firstname"),
-						res.getString("stud_lastname")
+						res.getInt("id"),
+						res.getString("first_name"),
+						res.getString("last_name"),
+						res.getInt("birth_year")
 						);
 				data.add(individual);
 			}
-			System.out.println("PostgreSQLStudentDao.getData(): found "+data.size()+" lines.");
+			System.out.println("PostgreSQLIndividualDao.findAll(): found "+data.size()+" lines.");
 			res.close();
 			state.close();
 			return data;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.getData -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.findAll -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -209,56 +210,25 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public Individual anyElement(){
 		try{
-			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY id_stud LIMIT 1";
-			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			String query="SELECT stud, first_name, last_name, birth_year FROM individuals ORDER BY id LIMIT 1";
+			PreparedStatement state = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
-			Individual stud;
+			Individual individual;
 			if (res.first()){
-				stud = this.find(res.getInt("id_stud"));
+				individual = this.find(res.getInt("id"));
 			} else {
-				stud = this.newElement();
+				individual = this.newElement();
 			}
 			res.close();
 			state.close();
-			return stud;
+			return individual;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.anyElement -- ERROR!", JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public LinkedList<Individual> getData(boolean inverseSort) {
-		LinkedList<Individual> data = new LinkedList<Individual>();
-		try{
-			String query="SELECT id_stud, stud_firstname, stud_lastname FROM students ORDER BY stud_lastname";
-					if (inverseSort)
-						query=query+" DESC";
-			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet res = state.executeQuery();
-			while(res.next()){
-				Individual stud = new Individual(
-						res.getInt("id_stud"),
-						res.getString("stud_firstname"),
-						res.getString("stud_lastname")
-						);
-				data.add(stud);
-			}
-			System.out.println("PostgreSQLStudentDao.getData(): found "+data.size()+" lines.");
-			res.close();
-			state.close();
-			return data;
-		} catch (SQLException e){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLStudentDao.getData -- ERROR!",JOptionPane.ERROR_MESSAGE);
-			return null;
-		} catch (Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 }
