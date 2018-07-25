@@ -12,6 +12,7 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractMarkDao;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.TagLike;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 
@@ -54,7 +55,7 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	
 	@Override
 	public Dao<TagLike> getTagDao() {
-		return new PostgreSQLTagLikeDao(conn, "Tags");
+		return new PostgreSQLTagLikeDao(conn, "Tags", EntityEnum.TAG.getValue());
 	}
 	
 	@Override

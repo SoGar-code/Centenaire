@@ -69,5 +69,15 @@ public class TagLike extends Entity{
 	public String toString(){
 		return name;
 	}
+	
+	public static TagLike newElement(int index, String name, int classIndex) {
+		if (classIndex == EntityEnum.TAG.getValue()) {
+			Tag tag = new Tag(index, name);
+			return tag;
+		} else {
+			System.out.println("TagLike.newElement -- TagLike classIndex not found!");
+			return null;
+		}
+	}
 
 }

@@ -13,9 +13,18 @@ package org.centenaire.entity;
 public enum EntityEnum {
 	ENTITY(0),
 	INDIV(1),
-	TAG(4);
+	ITEM(2),
+	EVENTS(3),
+	INSTIT(4),
+	ITEMTYPE(5),
+	EVENTTYPE(6),
+	INSTITTYPE(7),
+	TAG(8),
+	DISCIPLINES(9),
+	INSTITSTATUS(10),
+	LOCALISATIONTYPE(11);
 	
-	private int classIndex;
+	private final int classIndex;
 	
 	EntityEnum(int classIndex){
 		this.classIndex = classIndex;

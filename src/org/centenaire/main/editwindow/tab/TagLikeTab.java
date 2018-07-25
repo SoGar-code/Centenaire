@@ -85,7 +85,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
 				new Class[] {String.class},
-				new String[] {"Etiquette"},
+				new String[] {"Mot-clef"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);

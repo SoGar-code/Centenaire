@@ -21,7 +21,7 @@ public class Tag extends TagLike {
 	}
 	
 	public static Tag defaultElement() {
-		return new Tag("default tag value");
+		return new Tag("Mot-clef par défaut");
 	}
 	
 }

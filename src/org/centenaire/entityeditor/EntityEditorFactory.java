@@ -1,6 +1,7 @@
 package org.centenaire.entityeditor;
 
-import org.centenaire.entity.EntityFactory;
+import org.centenaire.entity.Entity;
+import org.centenaire.entity.EntityEnum;
 
 /**
  * Factory class for EntityEditor
@@ -23,34 +24,32 @@ public class EntityEditorFactory {
 	 * @return the class of the associated EntityEditor.
 	 */
 	public static Class getEntityEditorClass(int classIndex) {
-		switch(classIndex) {
-			case 0:
-				return EntityEditor.class;
-			case 1:
-				return IndividualEditor.class;
-			case 4:
-				return TagLikeEditor.class;
-			default:
-				System.out.println("EntityEditorFactory.getEntityClass -- entity not found!");
-				return null;
+		if (classIndex == EntityEnum.ENTITY.getValue()) {
+			return EntityEditor.class;
+		} else if (classIndex == EntityEnum.INDIV.getValue()) {
+			return IndividualEditor.class;
+		} else if (classIndex == EntityEnum.TAG.getValue()) {
+			return TagLikeEditor.class;
+		} else {
+			System.out.println("EntityEditorFactory.getEntityClass -- entity not found!");
+			return null;
 		}
 				
 	}
 	
 	public static EntityEditor getEntityEditor(int classIndex) {
-		switch(classIndex) {
-			case 0:
-				String msg = "EntityEditorFactory.getEntityEditor -- classIndex 0 is for "
-						+ "the abstract Entity class! So no defaultElement...";
-				System.out.println(msg);
-				return null;
-			case 1:
-				return new IndividualEditor();
-			case 4:
-				return new TagLikeEditor();
-			default:
-				System.out.println("EntityEditorFactory.getEntityEditor -- entity not found!");
-				return null;
+		if (classIndex == EntityEnum.ENTITY.getValue()) {
+			String msg = "EntityEditorFactory.getEntityEditor -- classIndex 0 is for "
+					+ "the abstract Entity class! So no defaultElement...";
+			System.out.println(msg);
+			return null;
+		} else if (classIndex == EntityEnum.INDIV.getValue()) {
+			return new IndividualEditor();
+		} else if (classIndex == EntityEnum.TAG.getValue()) {
+			return new TagLikeEditor();
+		} else {
+			System.out.println("EntityEditorFactory.getEntityEditor -- entity not found!");
+			return null;
 		}
 				
 	}

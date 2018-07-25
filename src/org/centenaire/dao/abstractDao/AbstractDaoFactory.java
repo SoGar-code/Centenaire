@@ -5,9 +5,7 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
-import org.centenaire.entity.Exams;
-import org.centenaire.entity.Individual;
-import org.centenaire.entity.Mark;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.TagLike;
 
 /**
@@ -39,23 +37,18 @@ public abstract class AbstractDaoFactory {
 	 * @see org.centenaire.entity.Entity#getClassIndex()
 	 */
 	public Dao getDao(int i){
-		switch (i){
-			case 0:
-				String msg = "AbstractDaoFactory.getDao -- classIndex 0 is for "
-						+ "the abstract Entity class! So no DAO...";
-				System.out.println(msg);
-				return null;
-			case 1:
-				return getIndividualDao();
-			case 2:
-				return getExamsDao();
-			case 3:
-				return getMarkDao();
-			case 4:
-				return getTagDao();
-			default:
-				System.out.println("AbstractDaoFactory.getDao -- type not found!");
-				return null;
+		if (i == EntityEnum.ENTITY.getValue()) {
+			String msg = "AbstractDaoFactory.getDao -- classIndex 0 is for "
+					+ "the abstract Entity class! So no DAO...";
+			System.out.println(msg);
+			return null;
+		} else if (i == EntityEnum.INDIV.getValue()) {
+			return getIndividualDao();
+		} else if (i == EntityEnum.TAG.getValue()) {
+			return getTagDao();
+		} else {
+			System.out.println("AbstractDaoFactory.getDao -- type not found!");
+			return null;
 		}
 	}
 	

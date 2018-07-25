@@ -20,15 +20,33 @@ import org.centenaire.entity.TagLike;
  * <p>This implementation also includes a notification system. 
  * This component performs as Publisher.</p>
  * 
+ * @param <T> Entity class associated to the editor.
+ * 
  * @see org.centenaire.entity.Entity
  * @see org.centenaire.general.pubsub.Publisher
  */
-public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
+public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<T> {
 	private String databaseName;
+	private int classIndex;
 	
-	public PostgreSQLTagLikeDao(Connection conn, String databaseName){
+	/**
+	 * Constructor of Dao for TagLike elements.
+	 * 
+	 * <p>This is a generic class used to deal with several types
+	 * of TagLike elements, hence the extra arguments.</p>
+	 * 
+	 * @param conn
+	 * 				the connection to use as support.
+	 * @param databaseName
+	 * 				name of the database to use (generic class).
+	 * @param classIndex
+	 * 				classIndex of the 'TagLike' Entity under consideration.
+	 */
+	public PostgreSQLTagLikeDao(Connection conn, String databaseName, int classIndex){
 		super();
 		this.conn = conn;
+		this.databaseName = databaseName;
+		this.classIndex = classIndex;
 	}
 
 	/**
@@ -45,7 +63,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	 * @see org.centenaire.general.pubsub.Dispatcher
 	 */
 	@Override
-	public boolean create(TagLike obj) {
+	public boolean create(T obj) {
 		try{
 			String query=String.format("INSERT INTO %s(name) VALUES(?)", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -60,7 +78,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 			state.close();
 			
 			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.TAG.getValue());
+			this.publish(this.classIndex);
 			
 			return true;
 		} catch (SQLException e){
@@ -84,7 +102,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	 * @see org.centenaire.general.pubsub.Dispatcher
 	 */
 	@Override
-	public boolean update(TagLike obj) {
+	public boolean update(T obj) {
 		try{
 			String query=String.format("UPDATE %s SET name = ? WHERE id = ?", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -94,7 +112,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 			state.close();
 			
 			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.TAG.getValue());
+			this.publish(this.classIndex);
 			
 			return true;
 		} catch (SQLException e){
@@ -118,7 +136,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	 * @see org.centenaire.general.pubsub.Dispatcher
 	 */
 	@Override
-	public boolean delete(TagLike obj) {
+	public boolean delete(T obj) {
 		try{
 			String query=String.format("DELETE FROM %s WHERE id = ?", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -128,7 +146,7 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 			state.close();
 			
 			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.TAG.getValue());
+			this.publish(this.classIndex);
 			
 			return true;
 		} catch (SQLException e){
@@ -142,17 +160,19 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	}
 
 	@Override
-	public TagLike find(int index) {
+	public T find(int index) {
 		try{
 			String query=String.format("SELECT id, name FROM %s WHERE id = ?", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			TagLike semester = new TagLike(res.getInt("id"),res.getString("name"));
+			T tl = (T) TagLike.newElement(res.getInt("id"), 
+											res.getString("name"), 
+											this.classIndex);
 			res.close();
 			state.close();
-			return semester;
+			return tl;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
 			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
@@ -165,29 +185,29 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	
 	// Code to create a new element.
 	// NB: create updates the index
-	public TagLike newElement(){
-		TagLike semester = TagLike.defaultElement();
-		this.create(semester);
-		return semester;
+	public T newElement(){
+		T obj = this.newElement();
+		this.create(obj);
+		return obj;
 	}
 	
-	// Returns an element of type Semester
+	// Returns an element of type TagLike
 	// either an already existing one or
 	// we create and initialize a new one in the database
-	public TagLike anyElement(){
+	public T anyElement(){
 		try{
 			String query=String.format("SELECT id, name FROM %s ORDER BY id LIMIT 1", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
-			TagLike semester;
+			T tl;
 			if (res.first()){
-				semester = this.find(res.getInt("id"));
+				tl = this.find(res.getInt("id"));
 			} else {
-				semester = this.newElement();
+				tl = this.newElement();
 			}
 			res.close();
 			state.close();
-			return semester;
+			return tl;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
 			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
@@ -199,26 +219,30 @@ public class PostgreSQLTagLikeDao extends AbstractTagLikeDao {
 	}
 	
 	
-	public LinkedList<TagLike> findAll() {
-		LinkedList<TagLike> data = new LinkedList<TagLike>();
+	public LinkedList<T> findAll() {
+		LinkedList<T> data = new LinkedList<T>();
 		try{
 			String query=String.format("SELECT id, name FROM %s ORDER BY id", this.databaseName);
+			
+			System.out.println(query);
+			
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				TagLike semester = new TagLike(
+				T tl = (T) TagLike.newElement(
 						res.getInt("id"),
-						res.getString("name")
+						res.getString("name"),
+						this.classIndex
 						);
-				data.add(semester);
+				data.add(tl);
 			}
-			System.out.println("PostgreSQLTagDao.getData(): found "+data.size()+" lines.");
+			System.out.println("PostgreSQLTagDao.findAll(): found "+data.size()+" lines.");
 			res.close();
 			state.close();
 			return data;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.getData -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.findAll -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();

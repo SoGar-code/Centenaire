@@ -26,19 +26,18 @@ public class EntityFactory {
 	}
 	
 	public static Entity getDefaultElement(int i) {
-		switch(i) {
-			case 0:
-				String msg = "EntityFactory.getDefaultElement -- classIndex 0 is for "
-						+ "the abstract Entity class! So no defaultElement...";
-				System.out.println(msg);
-				return null;
-			case 1:
-				return Individual.defaultElement();
-			case 4:
-				return Tag.defaultElement();
-			default:
-				System.out.println("EntityFactory.getDefaultElement -- entity not found!");
-				return null;
+		if (i == EntityEnum.ENTITY.getValue()) {
+			String msg = "EntityFactory.getDefaultElement -- classIndex 0 is for "
+					+ "the abstract Entity class! So no defaultElement...";
+			System.out.println(msg);
+			return null;
+		} else if (i == EntityEnum.INDIV.getValue()) {
+			return Individual.defaultElement();
+		} else if (i == EntityEnum.TAG.getValue()) {
+			return Tag.defaultElement();
+		} else {
+			System.out.println("EntityFactory.getDefaultElement -- entity not found!");
+			return null;
 		}
 				
 	}
