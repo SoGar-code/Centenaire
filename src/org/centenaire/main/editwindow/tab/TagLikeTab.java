@@ -61,7 +61,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				
 				TagLike tl = TagLike.defaultElement();
 
-				EntityDialog<TagLike> ed = new EntityDialog<TagLike>(4);
+				EntityDialog<TagLike> ed = new EntityDialog<TagLike>(classIndex);
 				
 				// Try to get a value from the dialog...
 				try {

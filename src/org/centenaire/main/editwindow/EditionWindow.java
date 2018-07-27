@@ -46,17 +46,17 @@ public class EditionWindow extends GeneralWindow {
 		IndividualTab indivTab = new IndividualTab();
 		tabbedPane.addTab("Personnes",indivTab);
 		
-		// Final assembly into a tabbed panel.
-		TagLikeTab tagLikeTab = new TagLikeTab(EntityEnum.TAG.getValue());
-		tabbedPane.addTab("Tags",tagLikeTab);
-		
-		String[] listTabs = {"Institutions","Evénements"};
+		String[] listTabs = {"Productions", "Evénements", "Institutions"};
 		String name;
-		for (int i = 0; i < 2; i++){
+		for (int i = 0; i < 3; i++){
 			name = listTabs[i];
 			JTabbedPane aux = this.createTabbedView(name);
 			tabbedPane.addTab(name,aux);
 		}
+		
+		// Final assembly into a tabbed panel.
+		TagLikeTab tagLikeTab = new TagLikeTab(EntityEnum.TAG.getValue());
+		tabbedPane.addTab("Marqueurs", tagLikeTab);
 		
 		//======================
 		// Buttons and listeners
@@ -137,11 +137,6 @@ public class EditionWindow extends GeneralWindow {
 		content = String.format("Fenêtre 'modifier' de %s", name);
 		JLabel editTab = new JLabel(content);
 		tabbedView.add("Modifier", editTab);
-		
-		// Tab with create
-		content = String.format("Fenêtre 'nouveau' de %s", name);
-		JLabel createTab = new JLabel(content);
-		tabbedView.add("Nouveau", createTab);
 		
 		return tabbedView;
 	}
