@@ -103,7 +103,10 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	/**
 	 * Data update, provided by Observer pattern.
 	 * 
-	 * <p> It corresponds to data flowing from gc to the model.
+	 * <p> It corresponds to data flowing from gc to the model.</p>
+	 * 
+	 * @param currentData
+	 * 				the current content of the list.
 	 */
 	public void updateObserver(LinkedList<Entity> currentData){
 		this.setData(currentData);
@@ -117,12 +120,21 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		gc.saveTable(data);
 	}
 	
+	/**
+	 * Remove an element from the list.
+	 * 
+	 * <p>This method *does not* delete the element
+	 * from the database!</p>
+	 * 
+	 * <p>This method triggers an update of the 
+	 * content of the table.</p>
+	 * 
+	 * @param row
+	 * 		the index of the row to remove.
+	 */
 	public void removeRow(int row){
-		gc.removeRow(row,data);
-	}
-	
-	public void editRow(int row){
-
+		data.remove(row);
+		this.fireTableDataChanged();
 	}
 	
 	public StudentAction getStudentAction(){
@@ -198,6 +210,11 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 			}
 			fireTableDataChanged();
 		}
+	}
+
+	public void editRow(int row) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	  /*

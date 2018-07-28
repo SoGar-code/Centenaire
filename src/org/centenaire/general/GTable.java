@@ -123,4 +123,13 @@ public class GTable extends JScrollPane{
 		}
 	}
 	
+	/**
+	 * Extract the attribute *Table* of this component.
+	 * 
+	 * @return table, the JTable in this component.
+	 */
+	public JTable getTable() {
+		return this.table;
+	}
+	
 }

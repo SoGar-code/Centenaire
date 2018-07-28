@@ -13,9 +13,8 @@ public class Event extends Entity {
 	/**
 	 * Numbering of the different (concrete) Entity classes.
 	 * 
-	 * <p>Value 2 is for the concrete class 'Event'.</p>
 	 */
-	protected static int classIndex = 0;
+	protected static int classIndex = EntityEnum.EVENTS.getValue();
 	
 	private String name;
 	private String place;

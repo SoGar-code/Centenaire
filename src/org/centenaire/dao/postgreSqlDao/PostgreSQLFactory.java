@@ -6,15 +6,21 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import org.postgresql.util.PSQLException;
-
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
-import org.centenaire.dao.abstractDao.AbstractExamsDao;
-import org.centenaire.dao.abstractDao.AbstractMarkDao;
-import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.TagLike;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.entity.Discipline;
+import org.centenaire.entity.EntityEnum;
+import org.centenaire.entity.Event;
+import org.centenaire.entity.EventType;
+import org.centenaire.entity.InstitStatus;
+import org.centenaire.entity.Institution;
+import org.centenaire.entity.InstitutionType;
+import org.centenaire.entity.Item;
+import org.centenaire.entity.ItemType;
+import org.centenaire.entity.LocalType;
+import org.centenaire.entity.Tag;
+import org.postgresql.util.PSQLException;
 
 /**
  * Create a connection to a PostgreSQL database
@@ -49,17 +55,55 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	}
 
 	@Override
-	public AbstractExamsDao getExamsDao() {
-		return new PostgreSQLExamDao(conn);
+	public Dao<Item> getItemDao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dao<Event> getEventDao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dao<Institution> getInstitutionDao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dao<ItemType> getItemTypeDao() {
+		return new PostgreSQLTagLikeDao(conn, "item_type_relations", EntityEnum.ITEMTYPE.getValue());
+	}
+
+	@Override
+	public Dao<EventType> getEventTypeDao() {
+		return new PostgreSQLTagLikeDao(conn, "event_type_relations", EntityEnum.EVENTTYPE.getValue());
+	}
+
+	@Override
+	public Dao<InstitutionType> getInstitTypeDao() {
+		return new PostgreSQLTagLikeDao(conn, "institution_type_relations", EntityEnum.INSTITTYPE.getValue());
 	}
 	
 	@Override
-	public Dao<TagLike> getTagDao() {
+	public Dao<Tag> getTagDao() {
 		return new PostgreSQLTagLikeDao(conn, "Tags", EntityEnum.TAG.getValue());
 	}
-	
+
 	@Override
-	public AbstractMarkDao getMarkDao() {
-		return new PostgreSQLMarkDao(conn);
+	public Dao<Discipline> getDisciplineDao() {
+		return new PostgreSQLTagLikeDao(conn, "disciplines", EntityEnum.DISCIPLINES.getValue());
+	}
+
+	@Override
+	public Dao<InstitStatus> getInstitStatusDao() {
+		return new PostgreSQLTagLikeDao(conn, "institutional_status", EntityEnum.INSTITSTATUS.getValue());
+	}
+
+	@Override
+	public Dao<LocalType> getLocalTypeDao() {
+		return new PostgreSQLTagLikeDao(conn, "localisation_type_relations", EntityEnum.LOCALISATIONTYPE.getValue());
 	}
 }

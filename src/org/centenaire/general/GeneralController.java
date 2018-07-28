@@ -102,7 +102,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 		return this.currentEntity;
 	}
 	
-	public void removeRow(int position, LinkedList<Entity> currentData){
+	public void deleteRow(int position, LinkedList<Entity> currentData){
 		boolean test = this.getDao(currentEntity).delete(currentData.get(position));
 		if (test){
 			currentData.remove(position);
@@ -123,7 +123,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 			this.updateObservable(currentData);
 		} else {
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "DaoTableModel.addRow failed","ERROR",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, "GeneralController.addRow failed","ERROR",JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

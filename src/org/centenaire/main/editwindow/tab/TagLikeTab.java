@@ -89,6 +89,8 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
+		// Enable drag
+		entityList.getTable().setDragEnabled(true);
 		
 		// Creation of 'modifier' pane
 		//===================================================

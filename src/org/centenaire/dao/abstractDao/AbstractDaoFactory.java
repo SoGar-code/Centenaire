@@ -5,8 +5,17 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
+import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.Event;
+import org.centenaire.entity.EventType;
+import org.centenaire.entity.InstitStatus;
+import org.centenaire.entity.Institution;
+import org.centenaire.entity.InstitutionType;
+import org.centenaire.entity.Item;
+import org.centenaire.entity.ItemType;
+import org.centenaire.entity.LocalType;
+import org.centenaire.entity.Tag;
 
 /**
  * Factory class for Dao classes
@@ -17,14 +26,28 @@ import org.centenaire.entity.TagLike;
  *
  */
 public abstract class AbstractDaoFactory {
-
+	
 	public abstract AbstractIndividualDao getIndividualDao();
 	
-	public abstract AbstractExamsDao getExamsDao();
+	public abstract Dao<Item> getItemDao();
 	
-	public abstract Dao<TagLike> getTagDao();
+	public abstract Dao<Event> getEventDao();
 	
-	public abstract AbstractMarkDao getMarkDao();
+	public abstract Dao<Institution> getInstitutionDao();
+	
+	public abstract Dao<ItemType> getItemTypeDao();
+	
+	public abstract Dao<EventType> getEventTypeDao();
+	
+	public abstract Dao<InstitutionType> getInstitTypeDao();
+	
+	public abstract Dao<Tag> getTagDao();
+	
+	public abstract Dao<Discipline> getDisciplineDao();
+	
+	public abstract Dao<InstitStatus> getInstitStatusDao();
+	
+	public abstract Dao<LocalType> getLocalTypeDao();
 	
 	/**
 	 * To get a Dao class indexed by an integer
@@ -44,8 +67,26 @@ public abstract class AbstractDaoFactory {
 			return null;
 		} else if (i == EntityEnum.INDIV.getValue()) {
 			return getIndividualDao();
+		} else if (i == EntityEnum.ITEM.getValue()) {
+			return getItemDao();
+		} else if (i == EntityEnum.EVENTS.getValue()) {
+			return getEventDao();
+		} else if (i == EntityEnum.INSTIT.getValue()) {
+			return getInstitutionDao();
+		} else if (i == EntityEnum.ITEMTYPE.getValue()) {
+			return getItemTypeDao();
+		} else if (i == EntityEnum.EVENTTYPE.getValue()) {
+			return getEventTypeDao();
+		} else if (i == EntityEnum.INSTITTYPE.getValue()) {
+			return getInstitTypeDao();
 		} else if (i == EntityEnum.TAG.getValue()) {
 			return getTagDao();
+		} else if (i == EntityEnum.DISCIPLINES.getValue()) {
+			return getDisciplineDao();
+		} else if (i == EntityEnum.INSTITSTATUS.getValue()) {
+			return getInstitStatusDao();
+		} else if (i == EntityEnum.LOCALISATIONTYPE.getValue()) {
+			return getInstitStatusDao();
 		} else {
 			System.out.println("AbstractDaoFactory.getDao -- type not found!");
 			return null;

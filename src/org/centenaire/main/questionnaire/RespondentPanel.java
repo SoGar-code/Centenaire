@@ -37,7 +37,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private ListTableModel tagListTableModel;
 	private JButton svgButton;
 	private JCheckBox lockBox;
-	private Dao dao;
+	private Dao daoIndiv;
+	private Dao daoTag;
 	
 	/**
 	 * Currently selected individual
@@ -49,7 +50,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		GeneralController gc = GeneralController.getInstance();
 		
-		dao = gc.getIndividualDao();
+		daoIndiv = gc.getIndividualDao();
 		
 		// Top panel
 		// ===============
@@ -94,6 +95,17 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		lockBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				entityCombo.setEnabled(!lockBox.isSelected());
+				
+				if (!lockBox.isSelected()) {
+					// unplug listener
+					entityCombo.removeActionListener(comboListener);
+					
+					// update content
+					entityCombo.updateSubscriber();
+					
+					// replug listener
+					entityCombo.addActionListener(comboListener);
+				}
 			}
 		});
 		
@@ -117,8 +129,15 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				new Class[] {String.class, Delete.class},
 				new String[] {"Etiquette", "Retirer"},
 				gc.getDao(EntityEnum.TAG.getValue()).findAll()
-				);
+				) {
+			public boolean isCellEditable(int row, int col){
+				return (col == 1);
+			}
+		};
 		GTable entityList = new GTable(tagListTableModel);
+		// Enable drag
+		entityList.getTable().setDragEnabled(true);
+		
 		// Choose size (width, height)
 		entityList.setSize(50, 200);
 		
@@ -138,7 +157,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				
 				Individual obj = indivEditor.getObject();
 				
-				dao.update(obj);
+				daoIndiv.update(obj);
 			}
 		});
 		
@@ -178,6 +197,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// unplug listener
 		entityCombo.removeActionListener(comboListener);
 		
+		
+		
 		// when 'lock' is not selected, update entityCombo
 		if (!lockBox.isSelected()) {
 
@@ -192,7 +213,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 			// When 'lock' is selected, update indivEditor with current selected individual
 			Individual indiv = (Individual) entityCombo.getSelectedItem();
 			
-			Individual newIndiv = (Individual) dao.find(indiv.getIndex());
+			Individual newIndiv = (Individual) daoIndiv.find(indiv.getIndex());
 			
 			indivEditor.setObject(newIndiv);
 			
@@ -207,4 +228,5 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		// Should do something about tagListTableModel ...
 	}
+	
 }

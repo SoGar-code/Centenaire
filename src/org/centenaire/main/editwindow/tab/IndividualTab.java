@@ -73,11 +73,13 @@ public class IndividualTab extends JPanel implements Subscriber{
 		
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
-				new Class[] {String.class, String.class, Delete.class},
+				new Class[] {String.class, String.class},
 				new String[] {"Prénom", "Nom"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
+		// Enable drag
+		entityList.getTable().setDragEnabled(true);
 		
 		// Creation of 'modifier' pane
 		//===================================================

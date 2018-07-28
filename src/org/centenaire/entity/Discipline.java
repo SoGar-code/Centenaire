@@ -4,14 +4,15 @@
 package org.centenaire.entity;
 
 /**
- * Implementation of 'EventType' Entity class
+ * 
+ *
  */
-public class EventType extends TagLike {
+public class Discipline extends TagLike {
 
 	/**
 	 * @param name
 	 */
-	public EventType(String name) {
+	public Discipline(String name) {
 		super(name);
 	}
 
@@ -19,7 +20,7 @@ public class EventType extends TagLike {
 	 * @param index
 	 * @param name
 	 */
-	public EventType(int index, String name) {
+	public Discipline(int index, String name) {
 		super(index, name);
 	}
 
