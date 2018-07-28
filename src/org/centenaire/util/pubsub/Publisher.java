@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.general.pubsub;
+package org.centenaire.util.pubsub;
 
 /**
  * Class implementing Publisher of a Publisher-Subscriber pattern.

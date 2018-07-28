@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.general;
+package org.centenaire.util;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.general.pubsub.Subscriber;
+import org.centenaire.util.pubsub.Subscriber;
 
 /**
  * Generic combo for entities
@@ -20,7 +20,7 @@ import org.centenaire.general.pubsub.Subscriber;
  * <p>Provided with an implementation of the Subscriber interface
  * for the Publisher-Subscriber pattern, but no registration!</p>
  * 
- * @see org.centenaire.general.pubsub.Subscriber
+ * @see org.centenaire.util.pubsub.Subscriber
  *
  */
 public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
@@ -56,12 +56,22 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 	}
 	
 	/**
+	 * Method to get the current selected entity
+	 * 
+	 * @return the 'Entity' object currently selected (with its proper class).
+	 */
+	public T getSelectedEntity() {
+		T currentEntity = (T) this.getSelectedItem();
+		return currentEntity;
+	}
+	
+	/**
 	 * Default implementation of the Subscriber interface for this class.
 	 * 
 	 * <p>In details, this fetches the new list of Entity elements
 	 * and removes any selection in the comboBox.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
 	public void updateSubscriber() {		

@@ -1,4 +1,4 @@
-package org.centenaire.general.editorsRenderers;
+package org.centenaire.util.editorsRenderers;
 
 /**
  * A class to help define editors and renderers in GeneralPanel.
@@ -6,6 +6,6 @@ package org.centenaire.general.editorsRenderers;
  * <p>
  * It does not need to do anything.
  */
-public class Delete {
+public class Edit {
 
 }

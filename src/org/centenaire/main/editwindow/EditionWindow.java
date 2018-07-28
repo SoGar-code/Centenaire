@@ -1,22 +1,15 @@
 package org.centenaire.main.editwindow;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.general.GTable;
-import org.centenaire.general.GeneralWindow;
+import org.centenaire.main.editwindow.tab.EventTab;
 import org.centenaire.main.editwindow.tab.IndividualTab;
 import org.centenaire.main.editwindow.tab.TagLikeTab;
+import org.centenaire.util.GeneralWindow;
 
 /**
  * Window to edit elements in the database
@@ -29,11 +22,7 @@ import org.centenaire.main.editwindow.tab.TagLikeTab;
  * 
  */
 public class EditionWindow extends GeneralWindow {
-	
-	private JPanel pan;
-	private JButton saveButton;
-	private JButton newLineButton;
-	//private JButton editButton;
+
 	private JTabbedPane tabbedPane;
 
 	public EditionWindow(){
@@ -42,78 +31,25 @@ public class EditionWindow extends GeneralWindow {
 		// Initialize basic content
 		tabbedPane = new JTabbedPane();
 		
-		// Final assembly into a tabbed panel.
+		// Add individual tab
 		IndividualTab indivTab = new IndividualTab();
 		tabbedPane.addTab("Personnes",indivTab);
 		
-		String[] listTabs = {"Productions", "Evénements", "Institutions"};
-		String name;
-		for (int i = 0; i < 3; i++){
-			name = listTabs[i];
-			JTabbedPane aux = this.createTabbedView(name);
-			tabbedPane.addTab(name,aux);
-		}
+		// Add item tab
+		JTabbedPane aux = this.createTabbedView("Productions");
+		tabbedPane.addTab("Productions",aux);
+		
+		// Add Event tab
+		EventTab eventTab = new EventTab();
+		tabbedPane.addTab("Evénements",eventTab);
+		
+		// Add item tab
+		JTabbedPane aux2 = this.createTabbedView("Institutions");
+		tabbedPane.addTab("Institutions",aux2);
 		
 		// Final assembly into a tabbed panel.
 		TagLikeTab tagLikeTab = new TagLikeTab(EntityEnum.TAG.getValue());
 		tabbedPane.addTab("Marqueurs", tagLikeTab);
-		
-		//======================
-		// Buttons and listeners
-		//======================
-		newLineButton = new JButton("New line");
-		//editButton = new JButton("Edit/More info");
-		saveButton = new JButton("Save/update");
-	    
-		// Keeping the listeners as generic as possible
-		// while putting the "data methods" in the TableModel
-		
-		// listener on the "New line" button
-		class AddListener implements ActionListener{
-			public void actionPerformed(ActionEvent event){
-				((GTable) tabbedPane.getSelectedComponent()).getModel().addRow();
-			}
-		}
-		
-		/*
-		// listener on the "Edit" button
-		class EditListener implements ActionListener{
-			public void actionPerformed(ActionEvent event){
-				int currentEntity = tabbedPane.getSelectedIndex();
-				// currentEntity==0 corresponds to Student
-				if (currentEntity==0){
-					EditStudentDialog studDialog = new EditStudentDialog(Student.defaultElement());
-					studDialog.showEditStudentDialog();
-				}
-				//((GTable) tabbedPane.getSelectedComponent()).getModel().addRow();
-			}
-		}
-		*/
-		
-		// listener on the "Save/update" button
-		class SaveListener implements ActionListener{
-			public void actionPerformed(ActionEvent event){
-				((GTable) tabbedPane.getSelectedComponent()).getModel().saveTable();
-				
-				// if currentEntity == 0 or 2, notify the Marks tab
-				Set<Integer> indices = new HashSet<Integer>(Arrays.asList(0,2));
-				int currentEntity = tabbedPane.getSelectedIndex();
-				if (indices.contains(currentEntity)){
-					((GTable) tabbedPane.getComponent(3)).updateCombo(currentEntity);
-				}
-				// currentEntity == 1 i.e. Semesters
-				if (currentEntity==1){
-					// update comboSemester for Exams and Marks tab
-					((GTable) tabbedPane.getComponent(1)).updateComboSemester();
-					((GTable) tabbedPane.getComponent(3)).updateComboSemester();
-				}
-			}
-		}
-	    
-	    newLineButton.addActionListener(new AddListener());
-	    //editButton.addActionListener(new EditListener());
-	    saveButton.addActionListener(new SaveListener());
-		
 		
 		//======================
 		// Final assembly

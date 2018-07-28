@@ -45,6 +45,8 @@ public class EntityEditorFactory {
 			return null;
 		} else if (classIndex == EntityEnum.INDIV.getValue()) {
 			return new IndividualEditor();
+		} else if (classIndex == EntityEnum.EVENTS.getValue()) {
+			return new EventEditor();
 		} else if (classIndex == EntityEnum.TAG.getValue()) {
 			return new TagLikeEditor();
 		} else {

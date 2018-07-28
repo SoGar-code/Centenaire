@@ -3,9 +3,9 @@ package org.centenaire.dao;
 import java.sql.Connection;
 import java.util.LinkedList;
 
-import org.centenaire.general.GeneralController;
-import org.centenaire.general.pubsub.Channel;
-import org.centenaire.general.pubsub.Publisher;
+import org.centenaire.util.GeneralController;
+import org.centenaire.util.pubsub.Channel;
+import org.centenaire.util.pubsub.Publisher;
 
 /**
  * Abstract class including the different possible actions on POJOs.
@@ -23,20 +23,6 @@ public abstract class Dao<T> implements Publisher{
 	abstract public T find(int index);
 	
 	/**
-	 * Provide a fully initialized element (in terms of index)
-	 * 
-	 * @return fully initialized element.
-	 */
-	abstract public T newElement();
-	
-	/**
-	 * Return either an existing element (from DB) or creates a new one.
-	 * 
-	 * @return Entity object 
-	 */
-	abstract public T anyElement();
-	
-	/**
 	 * Recover all elements in the DB with chosen type.
 	 * 
 	 * @return list of elements in the DB with chosen type.
@@ -46,17 +32,13 @@ public abstract class Dao<T> implements Publisher{
 	/**
 	 * Method to implement the Publisher interface of the Publisher-Subscriber pattern.
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	public void publish(int channelIndex) {
-		String msg = String.format("==> requested channelIndex: %s", channelIndex);
-		System.out.println(msg);
+		// Get the requested channel from Dispatcher
 		Channel channel = gc.getChannel(channelIndex);
 		
-		String msg2 = String.format("==> is channel null? %s", (channel==null));
-		System.out.println(msg2);
-		
-		System.out.println("Could get Channel! Trying to publish...");
+		// Publish on that channel
 		channel.publish();
 	}
 }

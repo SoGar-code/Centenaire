@@ -1,4 +1,4 @@
-package org.centenaire.general.editorsRenderers;
+package org.centenaire.util.editorsRenderers;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
-import org.centenaire.general.GeneralController;
-import org.centenaire.general.ListTableModel;
+import org.centenaire.util.GeneralController;
+import org.centenaire.util.ListTableModel;
 
 public class ButtonEditEditor extends DefaultCellEditor {
 	/*

@@ -1,4 +1,4 @@
-package org.centenaire.general.observer;
+package org.centenaire.util.observer;
 
 import java.util.LinkedList;
 

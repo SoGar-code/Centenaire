@@ -2,7 +2,7 @@ package org.centenaire.entityeditor;
 
 import javax.swing.JPanel;
 
-import org.centenaire.general.pubsub.Subscriber;
+import org.centenaire.util.pubsub.Subscriber;
 
 /**
  * Abstract class to represent the "editor forms" of entities.

@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -14,15 +15,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entityeditor.IndividualEditor;
-import org.centenaire.general.EntityCombo;
-import org.centenaire.general.GTable;
-import org.centenaire.general.GeneralController;
-import org.centenaire.general.ListTableModel;
-import org.centenaire.general.editorsRenderers.Delete;
-import org.centenaire.general.pubsub.Subscriber;
+import org.centenaire.util.EntityCombo;
+import org.centenaire.util.GTable;
+import org.centenaire.util.GeneralController;
+import org.centenaire.util.ListTableModel;
+import org.centenaire.util.editorsRenderers.Delete;
+import org.centenaire.util.pubsub.Subscriber;
 
 /**
  * Panel describing the current respondent.
@@ -128,7 +130,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		tagListTableModel = new ListTableModel(
 				new Class[] {String.class, Delete.class},
 				new String[] {"Etiquette", "Retirer"},
-				gc.getDao(EntityEnum.TAG.getValue()).findAll()
+				(LinkedList<Entity>) gc.getDao(EntityEnum.TAG.getValue()).findAll()
 				) {
 			public boolean isCellEditable(int row, int col){
 				return (col == 1);
@@ -190,7 +192,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	/**
 	 * Method implementing the Subscriber interface in the current class
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
 	public void updateSubscriber() {

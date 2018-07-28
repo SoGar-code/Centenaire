@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.general.editorsRenderers;
+package org.centenaire.util;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -19,13 +19,13 @@ public class GIntegerField extends JFormattedTextField {
 	/**
 	 * Default constructor for this class
 	 * 
-	 * <p>Default behaviour is to accept all positive Integer values.
+	 * <p>Default behaviour is to accept all positive Integer values.</p>
 	 * 
 	 */
 	public GIntegerField() {
 		super();
 		int minimum = 0;
-	    NumberFormat format = NumberFormat.getInstance();
+	    NumberFormat format = NumberFormat.getIntegerInstance();
 	    NumberFormatter formatter = new NumberFormatter(format);
 	    formatter.setValueClass(Integer.class);
 	    formatter.setMinimum(minimum);
@@ -45,7 +45,7 @@ public class GIntegerField extends JFormattedTextField {
 	 */
 	public GIntegerField(int minimum) {
 		super();
-	    NumberFormat format = NumberFormat.getInstance();
+	    NumberFormat format = NumberFormat.getIntegerInstance();
 	    NumberFormatter formatter = new NumberFormatter(format);
 	    formatter.setValueClass(Integer.class);
 	    formatter.setMinimum(minimum);

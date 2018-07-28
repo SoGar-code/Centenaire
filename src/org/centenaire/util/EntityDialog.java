@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.general;
+package org.centenaire.util;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

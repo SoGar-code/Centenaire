@@ -3,7 +3,7 @@
  */
 package org.centenaire.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Implementation of the 'Event' Entity class.
@@ -20,10 +20,35 @@ public class Event extends Entity {
 	private String place;
 	private Date startDate;
 	private Date endDate;
-	private int eventType;
+	private EventType eventType;
 	
 	/**
 	 * Default constructor for the 'Event' Entity class.
+	 * 
+	 * @param index
+	 * 			index of this Event as an Entity class
+	 * @param name
+	 * 			Name of the Event
+	 * @param place
+	 * 			Place where the Event takes place
+	 * @param startDate
+	 * 			Start date for the Event (when applicable)
+	 * @param endDate
+	 * 			End date for the Event (when applicable)
+	 * @param eventType
+	 * 			Type of Event
+	 */
+	public Event(int index, String name, String place, Date startDate, Date endDate, EventType eventType) {
+		super(index);
+		this.name = name;
+		this.place = place;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.eventType = eventType;
+	}
+	
+	/**
+	 * Constructor for the 'Event' Entity class (no index).
 	 * 
 	 * @param name
 	 * 			Name of the Event
@@ -36,7 +61,8 @@ public class Event extends Entity {
 	 * @param eventType
 	 * 			Type of Event
 	 */
-	public Event(String name, String place, Date startDate, Date endDate, int eventType) {
+	public Event(String name, String place, Date startDate, Date endDate, EventType eventType) {
+		super();
 		this.name = name;
 		this.place = place;
 		this.startDate = startDate;
@@ -50,28 +76,28 @@ public class Event extends Entity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getplace() {
+	public String getPlace() {
 		return place;
 	}
-	public void setplace(String place) {
+	public void setPlace(String place) {
 		this.place = place;
 	}
-	public Date getstartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setstartDate(Date startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public Date getendDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setendDate(Date endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	public int geteventType() {
+	public EventType getEventType() {
 		return eventType;
 	}
-	public void seteventType(int eventType) {
+	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
 	
@@ -88,5 +114,7 @@ public class Event extends Entity {
 		
 	}
 	
-	
+	public String toString() {
+		return this.name;
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * Package implementing a Pub-Sub (Publisher-Subscriber) pattern.
  */
-package org.centenaire.general.pubsub;
+package org.centenaire.util.pubsub;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.general;
+package org.centenaire.util;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,7 +20,7 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entityeditor.EntityEditor;
 import org.centenaire.entityeditor.EntityEditorFactory;
-import org.centenaire.general.pubsub.Subscriber;
+import org.centenaire.util.pubsub.Subscriber;
 
 /**
  * Generic Entity update panel.
@@ -31,7 +31,7 @@ import org.centenaire.general.pubsub.Subscriber;
  *
  * @param <T> the Entity class under consideration
  *
- * @see org.centenaire.general.pubsub.Subscriber
+ * @see org.centenaire.util.pubsub.Subscriber
  */
 public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	private final int classIndex;

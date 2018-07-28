@@ -17,13 +17,13 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
-import org.centenaire.general.EntityDialog;
-import org.centenaire.general.GTable;
-import org.centenaire.general.GeneralController;
-import org.centenaire.general.ListTableModel;
-import org.centenaire.general.UpdateEntityPanel;
-import org.centenaire.general.editorsRenderers.Delete;
-import org.centenaire.general.pubsub.Subscriber;
+import org.centenaire.util.EntityDialog;
+import org.centenaire.util.GTable;
+import org.centenaire.util.GeneralController;
+import org.centenaire.util.ListTableModel;
+import org.centenaire.util.UpdateEntityPanel;
+import org.centenaire.util.editorsRenderers.Delete;
+import org.centenaire.util.pubsub.Subscriber;
 
 /**
  * Class generating the tab related to the 'Individual' Entity.
@@ -39,7 +39,7 @@ public class IndividualTab extends JPanel implements Subscriber{
 		super();
 
 		GeneralController gc = GeneralController.getInstance();
-		dao = gc.getDao(EntityEnum.INDIV.getValue());
+		dao = (Dao<Entity>) gc.getDao(EntityEnum.INDIV.getValue());
 		
 		// *New entity* button
 		// ====================
@@ -49,14 +49,12 @@ public class IndividualTab extends JPanel implements Subscriber{
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				System.out.println("IndividualTab.newEntity activated!");
-				
-				Individual tl = Individual.defaultElement();
 
 				EntityDialog<Individual> ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
 				
-				// Try to get a value from the dialog...
+				// Open the dialog (where new individual is created)...
 				try {
-					Individual finalElt = ed.showEntityDialog();
+					ed.showEntityDialog();
 				} catch (NullPointerException e) {
 					// edition was cancelled before completion...
 					System.out.println("Edition of the element cancelled.");

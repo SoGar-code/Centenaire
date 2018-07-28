@@ -21,7 +21,7 @@ import org.centenaire.main.editwindow.ExtraInfoStudent;
  * This component performs as Publisher.</p>
  * 
  * @see org.centenaire.entity.Entity
- * @see org.centenaire.general.pubsub.Publisher
+ * @see org.centenaire.util.pubsub.Publisher
  */
 public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	
@@ -40,8 +40,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	 * when a new element is successfully created, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean create(Individual obj) {
@@ -81,8 +81,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	 * when an element is successfully updated, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean update(Individual obj) {
@@ -117,8 +117,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	 * when an element is successfully deleted, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean delete(Individual obj) {

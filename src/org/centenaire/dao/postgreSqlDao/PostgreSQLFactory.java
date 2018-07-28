@@ -62,8 +62,7 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 
 	@Override
 	public Dao<Event> getEventDao() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PostgreSQLEventDao(conn);
 	}
 
 	@Override

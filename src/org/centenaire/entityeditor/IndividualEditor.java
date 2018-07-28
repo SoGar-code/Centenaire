@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
-import org.centenaire.general.editorsRenderers.GIntegerField;
+import org.centenaire.util.GIntegerField;
 
 /**
  * Class providing the editor form for 'Individual' Entity class. 
@@ -50,7 +50,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		// ================
 		JPanel birthDayPan = new JPanel();
 		JLabel birthYearLabel = new JLabel("Birth year: ");
-		birthYearField = new GIntegerField(1900);
+		birthYearField = new GIntegerField(1800);
 		birthYearField.setColumns(8);
 		birthYearField.setIntegerValue(1901);
 		

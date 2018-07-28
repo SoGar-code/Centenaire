@@ -1,21 +1,11 @@
-package org.centenaire.general;
+package org.centenaire.util;
 
 import java.util.LinkedList;
-import java.util.List;
 
-import javax.swing.JList;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.Individual;
-import org.centenaire.entity.Mark;
-import org.centenaire.entity.TagLike;
-import org.centenaire.general.observer.Observer;
-import org.centenaire.general.pubsub.Subscriber;
-import org.centenaire.main.statistics.Average;
-import org.centenaire.main.statistics.StatisticsWindow;
+import org.centenaire.util.observer.Observer;
 
 /**
  * A superclass for the table models of the project.
@@ -36,18 +26,12 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	protected Class[] listClass;
 	protected String[] title;
 	protected GeneralController gc = GeneralController.getInstance();
-	
-	// Listeners for Student and Semester (from "Statistics" part)
-	private StudentAction studAction;
-	private SemesterAction semesterAction;
 
 	public ListTableModel(Class[] listClass, String[]  title, LinkedList<Entity> data){
 		super();
 		this.data=data;
 		this.listClass=listClass;
 		this.title=title;
-		studAction = new StudentAction();
-		semesterAction = new SemesterAction();
 	}
 
 	// =====================================
@@ -112,10 +96,6 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		this.setData(currentData);
 	}
 
-	public void addRow(){
-		gc.addRow(data);
-	}
-
 	public void saveTable(){
 		gc.saveTable(data);
 	}
@@ -135,81 +115,6 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	public void removeRow(int row){
 		data.remove(row);
 		this.fireTableDataChanged();
-	}
-	
-	public StudentAction getStudentAction(){
-		return this.studAction;
-	}
-	
-	public SemesterAction getSemesterAction(){
-		return this.semesterAction;
-	}
-	 
-	/**
-	 * A class to notify 'observers' about an update about the entity Student.
-	 * 
-	 * <p>
-	 * Several such classes are needed, for dealing with different types of Entities.
-	 * 
-	 * <p>
-	 * Here, when selection in westList changes
-	 * StudentAction identifies currentStudent
-	 * and update data accordingly.
-	 *
-	 * @see StatisticsWindow
-	 */
-	class StudentAction implements ListSelectionListener{
-		@Override
-		public void valueChanged(ListSelectionEvent event) {
-			JList<Individual> westList = (JList<Individual>)event.getSource();
-			// deals with the case of an empty selection
-			try{
-				Individual currentStudent = westList.getSelectedValue();
-				System.out.println("ListTableModel.StudentAction - current Student = "+currentStudent.toString());
-				LinkedList<Mark> listMark = gc.getMarkDao().getDataOnStudent(currentStudent);
-				
-				// Conversion problem from LinkedList<Mark> to LinkedList<Entity>,
-				// bypassed in brute force!
-				data = new LinkedList<Entity>();
-				for (Entity mark:listMark){
-					data.add(mark);
-				}
-				fireTableDataChanged();
-			} catch (NullPointerException e){
-				// no currentStudent detected?
-				System.out.println("ListTableModel.StudentAction - no current Student!");
-				data = new LinkedList<Entity>();
-				fireTableDataChanged();
-			}
-
-		}
-	}
-	
-	/**
-	 * A class to notify 'observers' about an update about the entity Semester.
-	 * 
-	 * <p>
-	 * Several such classes are needed, for dealing with different types of Entities.
-	 *
-	 * @see StatisticsWindow
-	 */
-	class SemesterAction implements ListSelectionListener{
-		@Override
-		public void valueChanged(ListSelectionEvent event) {
-			JList<TagLike> westList = (JList<TagLike>)event.getSource();
-			List<TagLike> listCurrentSemester = westList.getSelectedValuesList();
-			
-			System.out.println("GC.SemesterAction - current Semesters contains "+listCurrentSemester.size()+" elements.");
-			
-			LinkedList<Average> listAverage = gc.getMarkDao().getAverage(listCurrentSemester);
-			// Conversion problem from LinkedList<Mark> to LinkedList<Entity>,
-			// bypassed in brute force!
-			data = new LinkedList<Entity>();
-			for (Entity average:listAverage){
-				data.add(average);
-			}
-			fireTableDataChanged();
-		}
 	}
 
 	public void editRow(int row) {

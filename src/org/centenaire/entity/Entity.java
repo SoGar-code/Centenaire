@@ -1,6 +1,6 @@
 package org.centenaire.entity;
 
-import org.centenaire.general.ListTableModel;
+import org.centenaire.util.ListTableModel;
 
 /**
  * Superclass of the POJO used for DAO

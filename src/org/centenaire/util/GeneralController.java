@@ -1,4 +1,4 @@
-package org.centenaire.general;
+package org.centenaire.util;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,15 +10,13 @@ import javax.swing.event.ChangeListener;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
-import org.centenaire.dao.abstractDao.AbstractExamsDao;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
-import org.centenaire.dao.abstractDao.AbstractMarkDao;
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.TagLike;
-import org.centenaire.general.observer.Observable;
-import org.centenaire.general.observer.Observer;
-import org.centenaire.general.pubsub.Channel;
-import org.centenaire.general.pubsub.Dispatcher;
+import org.centenaire.entity.Tag;
+import org.centenaire.util.observer.Observable;
+import org.centenaire.util.observer.Observer;
+import org.centenaire.util.pubsub.Channel;
+import org.centenaire.util.pubsub.Dispatcher;
 
 /**
  * Class used to store data regarding the current state of the interface.
@@ -40,22 +38,22 @@ import org.centenaire.general.pubsub.Dispatcher;
  * which is updated, we should not put the 'update functions' in components dealing with multiple types of 
  * Entity classes.</p>
  * 
- * @see org.centenaire.general.pubsub
- * @see org.centenaire.general.pubsub.Dispatcher
+ * @see org.centenaire.util.pubsub
+ * @see org.centenaire.util.pubsub.Dispatcher
  * 
  */
 public class GeneralController implements Observable, ChangeListener, Dispatcher{
 	/**
 	 * Controls the number of channels in the Publisher-Subscriber pattern.
 	 * 
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	private int nbChannels = 12;
 	
 	/**
 	 * List of channels to use for the Publisher-Subscriber pattern.
 	 * 
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	private ArrayList<Channel> listChannels;
 	
@@ -95,7 +93,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	}
 
 	public LinkedList<Entity> getCurrentData() {
-		return this.getDao(currentEntity).findAll();
+		return (LinkedList<Entity>) this.getDao(currentEntity).findAll();
 	}
 	
 	public int getCurrentEntity() {
@@ -103,7 +101,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	}
 	
 	public void deleteRow(int position, LinkedList<Entity> currentData){
-		boolean test = this.getDao(currentEntity).delete(currentData.get(position));
+		boolean test = ((Dao<Entity>) this.getDao(currentEntity)).delete(currentData.get(position));
 		if (test){
 			currentData.remove(position);
 			// To notify the table of the change of data
@@ -116,7 +114,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 
 	// Take a non-initialized element
 	public void addRow(Entity obj,LinkedList<Entity> currentData){
-		boolean test = this.getDao(currentEntity).create(obj);
+		boolean test = ((Dao<Entity>) this.getDao(currentEntity)).create(obj);
 		if (test){
 			currentData.add(obj);
 			// To notify the table of the change of data
@@ -127,25 +125,12 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 		}
 	}
 
-	// Create a new element
-	public void addRow(LinkedList<Entity> currentData){
-		Entity obj = (Entity)this.getDao(currentEntity).newElement();
-		if (obj == null){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "DaoTableModel.addRow failed","ERROR",JOptionPane.ERROR_MESSAGE);
-		} else {
-			currentData.add(obj);
-			// To notify the table of the change of data
-			this.updateObservable(currentData);
-		} 
-	}
-
 	// Action corresponding to the listener of the "Save/update" button
 	public void saveTable(LinkedList<Entity> currentData){
 		// Saves modified data
 		int i = 0;
 		for (Entity obj : currentData){
-			if (gc.getDao(currentEntity).update(obj)){
+			if (((Dao<Entity>) gc.getDao(currentEntity)).update(obj)){
 				i++;						
 			} else {
 				System.out.println("GeneralController.saveTable: skipped one line.");
@@ -163,19 +148,11 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 		return df.getIndividualDao();
 	}
 
-	public Dao<TagLike> getSemesterDao(){
+	public Dao<Tag> getTagDao(){
 		return df.getTagDao();
 	}
 	
-	public AbstractExamsDao getExamsDao(){
-		return df.getExamsDao();
-	}	
-	
-	public AbstractMarkDao getMarkDao(){
-		return df.getMarkDao();
-	}
-	
-	public Dao<Entity> getDao(int i){
+	public Dao<?> getDao(int i){
 		return df.getDao(i);
 	}
 	
@@ -220,7 +197,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * <p>In our specific case, publishers are going to be the 
 	 * methods 'create' and 'update' in the Dao pattern.
 	 * 
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 * @see org.centenaire.dao.Dao#create(Object)
 	 * @see org.centenaire.dao.Dao#update(Object)
 	 */

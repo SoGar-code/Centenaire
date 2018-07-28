@@ -23,7 +23,7 @@ import org.centenaire.entity.TagLike;
  * @param <T> Entity class associated to the editor.
  * 
  * @see org.centenaire.entity.Entity
- * @see org.centenaire.general.pubsub.Publisher
+ * @see org.centenaire.util.pubsub.Publisher
  */
 public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<T> {
 	private String databaseName;
@@ -59,8 +59,8 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 	 * when a new element is successfully created, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean create(T obj) {
@@ -98,8 +98,8 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 	 * when an element is successfully updated, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean update(T obj) {
@@ -132,8 +132,8 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 	 * when an element is successfully deleted, thus implementing the Publisher
 	 * interface of the Publisher-Subscriber pattern.</p>
 	 * 
-	 * @see org.centenaire.general.pubsub.Subscriber
-	 * @see org.centenaire.general.pubsub.Dispatcher
+	 * @see org.centenaire.util.pubsub.Subscriber
+	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
 	@Override
 	public boolean delete(T obj) {
@@ -223,8 +223,6 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 		LinkedList<T> data = new LinkedList<T>();
 		try{
 			String query=String.format("SELECT id, name FROM %s ORDER BY id", this.databaseName);
-			
-			System.out.println(query);
 			
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();

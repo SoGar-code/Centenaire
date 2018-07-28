@@ -1,4 +1,4 @@
-package org.centenaire.general;
+package org.centenaire.util;
 
 import javax.swing.JPanel;
 

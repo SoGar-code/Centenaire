@@ -16,8 +16,8 @@ import javax.swing.JTabbedPane;
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
+import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
-import org.centenaire.entity.TagLike;
 import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
@@ -27,46 +27,35 @@ import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
- * Class generating the tabs related to 'TagLike' Entity elements.
+ * Class generating the tab related to the 'Event' Entity.
  * 
- * <p>In the current design, it contains a tabbed pane itself!</p>
+ * <p>In the current design, it contains a tabbed panel itself!</p>
  *
  */
-public class TagLikeTab extends JPanel implements Subscriber{
-	ListTableModel entityListTableModel;
+public class EventTab extends JPanel implements Subscriber{
 	Dao<Entity> dao;
-	private int classIndex;
+	ListTableModel entityListTableModel;
 	
-	/**
-	 * The constructor takes a parameter, since several Entity classes are similar.
-	 * 
-	 * @param classIndex classIndex of the TagLike under consideration
-	 */
-	public TagLikeTab(int classIndex) {
+	public EventTab() {
 		super();
-		this.classIndex = classIndex;
-		
-		// Get GeneralController and dao
-		GeneralController gc = GeneralController.getInstance();
-		dao = (Dao<Entity>) gc.getDao(classIndex);
 
+		GeneralController gc = GeneralController.getInstance();
+		dao = (Dao<Entity>) gc.getDao(EntityEnum.EVENTS.getValue());
+		
 		// *New entity* button
 		// ====================
-		JButton newEntity = new JButton("Nouvelle étiquette");
+		JButton newEntity = new JButton("Nouvel événement");
 		
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("TagLikeTab.newEntity activated!");
-				
-				TagLike tl = TagLike.defaultElement();
+				System.out.println("EventTab.newEntity activated!");
 
-				EntityDialog<TagLike> ed = new EntityDialog<TagLike>(classIndex);
+				EntityDialog<Event> ed = new EntityDialog<Event>(EntityEnum.EVENTS.getValue());
 				
-				// Try to get a value from the dialog...
+				// Open the dialog (where new event is created)...
 				try {
-					TagLike finalElt = ed.showEntityDialog();
-					
+					ed.showEntityDialog();
 				} catch (NullPointerException e) {
 					// edition was cancelled before completion...
 					System.out.println("Edition of the element cancelled.");
@@ -74,18 +63,17 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				
 			}
 		});
-		
 		// Include it in a bottomPan
 		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPan.add(newEntity);
 		
-		// Creation of Tag list (already initialized)
+		// Creation of Event list (already initialized)
 		//===================================================
 		
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
 				new Class[] {String.class},
-				new String[] {"Mot-clef"},
+				new String[] {"Nom"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
@@ -94,9 +82,9 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(classIndex);
+		UpdateEntityPanel<Event> uep = new UpdateEntityPanel<Event>(EntityEnum.EVENTS.getValue());
 		// uep subscribes to suitable channel 
-		gc.getChannel(classIndex).addSubscriber(uep);
+		gc.getChannel(EntityEnum.EVENTS.getValue()).addSubscriber(uep);
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -110,7 +98,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
 		// Let component subscribe to suitable channel
-		gc.getChannel(classIndex).addSubscriber(this);
+		gc.getChannel(EntityEnum.EVENTS.getValue()).addSubscriber(this);
 	}
 
 	/**
@@ -118,7 +106,6 @@ public class TagLikeTab extends JPanel implements Subscriber{
 	 * 
 	 * @see org.centenaire.general.Subscriber
 	 */
-	@Override
 	public void updateSubscriber() {
 		// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
 		LinkedList<Entity> data = dao.findAll();

@@ -21,9 +21,13 @@ import org.centenaire.entity.Tag;
  * Factory class for Dao classes
  *
  * <p>
- * Includes getDao(int i).
- * </p>
+ * This class includes the factory ("dispatcher") of Dao classes.
+ * Concretely, it provides the method getDao(int i). </p>
+ * 
+ * <p>In this "getDao" method, the integer used to call the Dao class 
+ * is defined by the EntityEnum Enumeration.</p>
  *
+ * @see org.centenaire.entity.EntityEnum
  */
 public abstract class AbstractDaoFactory {
 	

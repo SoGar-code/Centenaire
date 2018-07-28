@@ -1,4 +1,4 @@
-package org.centenaire.general.editorsRenderers;
+package org.centenaire.util.editorsRenderers;
 
 import java.awt.Component;
 import java.text.NumberFormat;

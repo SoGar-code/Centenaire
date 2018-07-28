@@ -3,7 +3,7 @@
  */
 package org.centenaire.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Implementation of 'Item' Entity class.
