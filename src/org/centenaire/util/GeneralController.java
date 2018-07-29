@@ -1,5 +1,6 @@
 package org.centenaire.util;
 
+import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -57,8 +58,6 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 */
 	private ArrayList<Channel> listChannels;
 	
-	private static GeneralController gc = new GeneralController();
-	
 	/**
 	 * Implicitly, df encodes which type of Database we are using in this instance.
 	 */
@@ -71,6 +70,16 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	private int currentEntity=1;
 	
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
+	
+	private DataFlavor linkedListFlavor = new DataFlavor(LinkedList.class, "LinkedList");
+	
+	/**
+	 * The instance of GeneralController itself!
+	 * 
+	 * <p>This part implements the Singleton pattern for GeneralController.</p>
+	 * 
+	 */
+	private static GeneralController gc = new GeneralController();
 	
 	/**
 	 * Private constructor of the Singleton class GeneralController.
@@ -215,4 +224,10 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 
 	// NB: listeners for WestList (in different tabs of "Statistics")
 	// are in StudentAction and SemesterAction (see above)
+	
+	// DataFlavor
+	// ===========
+	public DataFlavor getLinkedListFlavor() {
+		return this.linkedListFlavor;
+	}
 }

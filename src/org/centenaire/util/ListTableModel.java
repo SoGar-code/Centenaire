@@ -1,6 +1,7 @@
 package org.centenaire.util;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -121,23 +122,26 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
-
-	  /*
-	  // fonction utilisée pour la date dans TransModel
-	  public static Date convertStringToDate(Object value){
-		  Date date = new Date(0);
-		  try{
-			  date = Date.valueOf((String)value);
-		  } catch (IllegalArgumentException e){
-			  e.printStackTrace();
-			  JOptionPane jop = new JOptionPane();
-			  jop.showMessageDialog(null, "Date pas au format yyyy-mm-dd ? "+e.getMessage(),"ERREUR ds ZModel.convertStringToDate",JOptionPane.ERROR_MESSAGE);
-		  } catch (Exception e){
-			  e.printStackTrace();
-			  JOptionPane jop = new JOptionPane();
-			  jop.showMessageDialog(null, e.getMessage(),"ERREUR ds ZModel.convertStringToDate",JOptionPane.ERROR_MESSAGE);
-		  }
-		  return date; 
-	  }
+	
+	/**
+	 * Return the selected 'row'
 	 */
+	public Entity getRow(int row) {
+		Entity entity = data.get(row);
+		return entity;
+	}
+	
+	/**
+	 * Include additional rows in data.
+	 * 
+	 * <p>For the moment, the additional data is appended
+	 * to the existing one. More precise behavior, such as 
+	 * inserting at a given position, would require an improved
+	 * method here!</p>
+	 * 
+	 */
+	public void addAll(List<Entity> moreData) {
+		this.data.addAll(moreData);
+		this.fireTableDataChanged();
+	}
 }

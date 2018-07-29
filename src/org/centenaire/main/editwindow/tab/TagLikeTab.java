@@ -12,19 +12,20 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Individual;
+import org.centenaire.entity.Tag;
 import org.centenaire.entity.TagLike;
 import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.UpdateEntityPanel;
-import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
+import org.centenaire.util.transferHandler.SourceHandler;
 
 /**
  * Class generating the tabs related to 'TagLike' Entity elements.
@@ -89,8 +90,13 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
-		// Enable drag
-		entityList.getTable().setDragEnabled(true);
+		// Enable drag and define TransferHandler
+		JTable table = entityList.getTable();
+		table.setDragEnabled(true);
+		table.setTransferHandler(new SourceHandler<Tag>(EntityEnum.TAG.getValue()));
+		
+		// Drag and drop listener
+
 		
 		// Creation of 'modifier' pane
 		//===================================================

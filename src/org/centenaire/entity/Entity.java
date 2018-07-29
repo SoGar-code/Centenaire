@@ -1,5 +1,7 @@
 package org.centenaire.entity;
 
+import java.io.Serializable;
+
 import org.centenaire.util.ListTableModel;
 
 /**
@@ -26,7 +28,7 @@ import org.centenaire.util.ListTableModel;
  * @see EntityFactory
  * 
  */
-public abstract class Entity{
+public abstract class Entity implements Serializable{
 	/**
 	 * Numbering of the different (concrete) Entity classes.
 	 * 

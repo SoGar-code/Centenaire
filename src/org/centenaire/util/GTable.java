@@ -41,15 +41,19 @@ public class GTable extends JScrollPane{
 		super();
 		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		table = new JTable(){
-            public void changeSelection(final int row, final int column, boolean toggle, boolean extend)
-            {
-                super.changeSelection(row, column, toggle, extend);
-                table.editCellAt(row, column);
-                table.transferFocus();
-            }
-		};
+//		table = new JTable(){
+//            public void changeSelection(final int row, final int column, boolean toggle, boolean extend)
+//            {
+//                super.changeSelection(row, column, toggle, extend);
+//                table.editCellAt(row, column);
+//                table.transferFocus();
+//            }
+//		};
+		table = new JTable();
 		table.setModel(model);
+		
+		// Avoid Droping issues with empty tables (cf. Java tutorial "Empty Table Drop")
+		table.setFillsViewportHeight(true);
 		
 		table.setRowHeight(30);
 	    //==================================

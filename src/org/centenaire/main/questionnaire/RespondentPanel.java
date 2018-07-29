@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GTable;
@@ -25,6 +27,7 @@ import org.centenaire.util.GeneralController;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
+import org.centenaire.util.transferHandler.TargetHandler;
 
 /**
  * Panel describing the current respondent.
@@ -125,20 +128,27 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// Choose size (width, height)
 		indivEditor.setSize(100, 200);
 		
+		// Create a minimal TagList
+		Tag defaultTag = new Tag("Valeur par défaut");
+		LinkedList<Entity> listEntity = new LinkedList<Entity>();
+		listEntity.add(defaultTag);
+		
 		// right: table of tags
 		// NB: needs suitable DAO method
 		tagListTableModel = new ListTableModel(
 				new Class[] {String.class, Delete.class},
 				new String[] {"Etiquette", "Retirer"},
-				(LinkedList<Entity>) gc.getDao(EntityEnum.TAG.getValue()).findAll()
+				listEntity
 				) {
 			public boolean isCellEditable(int row, int col){
 				return (col == 1);
 			}
 		};
 		GTable entityList = new GTable(tagListTableModel);
-		// Enable drag
+		// Support for Drop
 		entityList.getTable().setDragEnabled(true);
+		entityList.getTable().setDropMode(DropMode.INSERT);
+		entityList.getTable().setTransferHandler(new TargetHandler<Tag>(EntityEnum.TAG.getValue()));
 		
 		// Choose size (width, height)
 		entityList.setSize(50, 200);
