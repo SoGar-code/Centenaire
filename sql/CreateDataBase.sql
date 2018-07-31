@@ -40,7 +40,8 @@ CREATE TABLE event_type_relations(
 
 CREATE TABLE events(
   id SERIAL PRIMARY KEY,
-  name text,
+  full_name text,
+  short_name text,
   place text,
   start_date date,
   end_date date,

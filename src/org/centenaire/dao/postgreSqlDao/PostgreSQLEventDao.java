@@ -49,13 +49,14 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public boolean create(Event obj) {
 		try{
-			String query="INSERT INTO events(name, place, start_date, end_date, type) VALUES(?,?,?,?,?)";
+			String query="INSERT INTO events(full_name, short_name, place, start_date, end_date, type) VALUES(?,?,?,?,?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			state.setString(1, obj.getName());
-			state.setString(2, obj.getPlace());
-			state.setDate(3, obj.getStartDate());
-			state.setDate(4, obj.getEndDate());
-			state.setInt(5, obj.getEventType().getIndex());
+			state.setString(1, obj.getFullName());
+			state.setString(2, obj.getShortName());
+			state.setString(3, obj.getPlace());
+			state.setDate(4, obj.getStartDate());
+			state.setDate(5, obj.getEndDate());
+			state.setInt(6, obj.getEventType().getIndex());
 			
 			// Update of the index (should be 0 up to this point)
 			ResultSet genKey = state.getGeneratedKeys();
@@ -91,13 +92,14 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public boolean update(Event obj) {
 		try{
-			String query="UPDATE events SET name = ?, place = ?, start_date = ?, end_date = ?, type = ? WHERE id = ?";
+			String query="UPDATE events SET full_name = ?, short_name = ?, place = ?, start_date = ?, end_date = ?, type = ? WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			state.setString(1, obj.getName());
-			state.setString(2, obj.getPlace());
-			state.setDate(3, obj.getStartDate());
-			state.setDate(4, obj.getEndDate());
-			state.setInt(5, obj.getEventType().getIndex());
+			state.setString(1, obj.getFullName());
+			state.setString(2, obj.getShortName());
+			state.setString(3, obj.getPlace());
+			state.setDate(4, obj.getStartDate());
+			state.setDate(5, obj.getEndDate());
+			state.setInt(6, obj.getEventType().getIndex());
 
 			state.close();
 			
@@ -152,7 +154,7 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public Event find(int index) {
 		try{
-			String query="SELECT id, name, place, start_date, end_date, type FROM events WHERE id = ?";
+			String query="SELECT id, full_name, short_name, place, start_date, end_date, type FROM events WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
@@ -165,7 +167,8 @@ public class PostgreSQLEventDao extends Dao<Event> {
 			
 			// Create a suitable Event
 			Event event = new Event(res.getInt("id"),
-									 res.getString("name"),
+									 res.getString("full_name"),
+									 res.getString("short_name"),
 									 res.getString("place"),
 									 res.getDate("start_date"),
 									 res.getDate("end_date"),
@@ -187,7 +190,7 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	public LinkedList<Event> findAll() {
 		LinkedList<Event> data = new LinkedList<Event>();
 		try{
-			String query="SELECT id, name, place, start_date, end_date, type FROM events ORDER BY start_date";
+			String query="SELECT id, full_name, short_name, place, start_date, end_date, type FROM events ORDER BY start_date";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			
@@ -200,7 +203,8 @@ public class PostgreSQLEventDao extends Dao<Event> {
 				
 				// Create a suitable Event
 				Event event = new Event(res.getInt("id"),
-										 res.getString("name"),
+										 res.getString("full_name"),
+										 res.getString("short_name"),
 										 res.getString("place"),
 										 res.getDate("start_date"),
 										 res.getDate("end_date"),

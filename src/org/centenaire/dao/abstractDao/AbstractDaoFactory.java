@@ -90,7 +90,7 @@ public abstract class AbstractDaoFactory {
 		} else if (i == EntityEnum.INSTITSTATUS.getValue()) {
 			return getInstitStatusDao();
 		} else if (i == EntityEnum.LOCALISATIONTYPE.getValue()) {
-			return getInstitStatusDao();
+			return getLocalTypeDao();
 		} else {
 			System.out.println("AbstractDaoFactory.getDao -- type not found!");
 			return null;
@@ -103,7 +103,7 @@ public abstract class AbstractDaoFactory {
 		
 		// Compare with available options in DialogConnection
 		// Deduce what kind of Database is used
-		if (new String("bdd_centenaire").equals(infoConn[3])){
+		if (new String("bdd_centenaire_test").equals(infoConn[3])){
 			return new PostgreSQLFactory(infoConn);
 		}
 		else {

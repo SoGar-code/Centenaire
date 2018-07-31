@@ -2,20 +2,16 @@ package org.centenaire.entityeditor;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.centenaire.dao.Dao;
-import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.EventType;
-import org.centenaire.util.Converters;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GDateField;
 import org.centenaire.util.GeneralController;
@@ -26,7 +22,8 @@ import org.centenaire.util.GeneralController;
  * @see Event
  */
 public class EventEditor extends EntityEditor<Event> {
-	JTextField nameField;
+	JTextArea fullNameField;
+	JTextField shortNameField;
 	JTextField placeField;
 	GDateField startDateField;
 	GDateField endDateField;
@@ -37,17 +34,29 @@ public class EventEditor extends EntityEditor<Event> {
 		
 		Date today = new Date(Calendar.getInstance().getTimeInMillis());
 		
-		// Name field
+		// Full name field
 		// =================
-		JPanel namePan = new JPanel();
-		JLabel nameLabel = new JLabel("Nom : ");
+		JPanel fullNamePan = new JPanel();
+		JLabel fullNameLabel = new JLabel("Nom complet : ");
 		
 		// Active text area...
-		nameField = new JTextField(20);
-		nameField.setText("-");
+		fullNameField = new JTextArea(3, 30);
+		fullNameField.setText("-");
 		
-		namePan.add(nameLabel);
-		namePan.add(nameField);
+		fullNamePan.add(fullNameLabel);
+		fullNamePan.add(fullNameField);
+		
+		// Name field
+		// =================
+		JPanel shortNamePan = new JPanel();
+		JLabel shortNameLabel = new JLabel("Abréviation : ");
+		
+		// Active text area...
+		shortNameField = new JTextField(20);
+		shortNameField.setText("-");
+		
+		shortNamePan.add(shortNameLabel);
+		shortNamePan.add(fullNameField);
 		
 		// Place field
 		// =================
@@ -55,7 +64,7 @@ public class EventEditor extends EntityEditor<Event> {
 		JLabel placeLabel = new JLabel("Lieu : ");
 		
 		// Active text area...
-		placeField = new JTextField(20);
+		placeField = new JTextField(30);
 		placeField.setText("-");
 		
 		placePan.add(placeLabel);
@@ -66,6 +75,7 @@ public class EventEditor extends EntityEditor<Event> {
 		JPanel startDatePan = new JPanel();
 		JLabel startDateLabel = new JLabel("Date de début (AAAA-MM-JJ) : ");
 		startDateField = new GDateField();
+		startDateField.setColumns(12);
 		startDateField.setDate(today);
 		
 		startDatePan.add(startDateLabel);
@@ -76,6 +86,7 @@ public class EventEditor extends EntityEditor<Event> {
 		JPanel endDatePan = new JPanel();
 		JLabel endDateLabel = new JLabel("Date de fin (AAAA-MM-JJ) : ");
 		endDateField = new GDateField();
+		endDateField.setColumns(12);
 		endDateField.setDate(today);
 		
 		endDatePan.add(endDateLabel);
@@ -96,7 +107,8 @@ public class EventEditor extends EntityEditor<Event> {
 		
 		// Final assembly
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.add(namePan);
+		this.add(fullNamePan);
+		this.add(shortNamePan);
 		this.add(placePan);
 		this.add(startDatePan);
 		this.add(endDatePan);
@@ -111,13 +123,15 @@ public class EventEditor extends EntityEditor<Event> {
 	@Override
 	public Event getObject() {
 		int index = this.getIndexField();
-		String name = this.nameField.getText();
+		String fullName = this.fullNameField.getText();
+		String shortName = this.shortNameField.getText();
 		String place = this.placeField.getText();
 		Date startDate = this.startDateField.getDate();
 		Date endDate = this.endDateField.getDate();
 		EventType eventType = this.eventTypeCombo.getSelectedEntity();
 
-		Event event = new Event(name, 
+		Event event = new Event(fullName,
+								shortName,
 								place, 
 								startDate, 
 								endDate, 
@@ -132,7 +146,8 @@ public class EventEditor extends EntityEditor<Event> {
 	@Override
 	public void setObject(Event obj) {
 		this.setIndexField(obj.getIndex());
-		nameField.setText(obj.getName());
+		fullNameField.setText(obj.getFullName());
+		shortNameField.setText(obj.getShortName());
 		placeField.setText(obj.getPlace());
 		startDateField.setDate(obj.getStartDate());
 		endDateField.setDate(obj.getEndDate());
@@ -147,7 +162,7 @@ public class EventEditor extends EntityEditor<Event> {
 		Date today = new Date(Calendar.getInstance().getTimeInMillis());
 		
 		this.setIndexField(0);
-		nameField.setText("-");
+		fullNameField.setText("-");
 		placeField.setText("-");
 		startDateField.setDate(today);
 		endDateField.setDate(today);

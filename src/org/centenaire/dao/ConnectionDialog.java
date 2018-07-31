@@ -53,7 +53,7 @@ public class ConnectionDialog extends JDialog{
 		
 		// Chosing database:
 		JLabel dbLabel = new JLabel("Base de données :");
-		JComboBox<String> dbCombo = new JComboBox<String>(new String[]{"bdd_centenaire"});
+		JComboBox<String> dbCombo = new JComboBox<String>(new String[]{"bdd_centenaire_test"});
 		
 		// User:
 		JLabel userLabel = new JLabel("Utilisateur :");

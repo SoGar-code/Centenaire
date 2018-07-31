@@ -16,7 +16,8 @@ public class Event extends Entity {
 	 */
 	protected static int classIndex = EntityEnum.EVENTS.getValue();
 	
-	private String name;
+	private String full_name;
+	private String short_name;
 	private String place;
 	private Date startDate;
 	private Date endDate;
@@ -27,8 +28,10 @@ public class Event extends Entity {
 	 * 
 	 * @param index
 	 * 			index of this Event as an Entity class
-	 * @param name
-	 * 			Name of the Event
+	 * @param full_name
+	 * 			Full name of the Event
+	 * @param short_name
+	 * 			Short name of the Event
 	 * @param place
 	 * 			Place where the Event takes place
 	 * @param startDate
@@ -38,9 +41,16 @@ public class Event extends Entity {
 	 * @param eventType
 	 * 			Type of Event
 	 */
-	public Event(int index, String name, String place, Date startDate, Date endDate, EventType eventType) {
+	public Event(int index, 
+					String full_name, 
+					String short_name,
+					String place, 
+					Date startDate, 
+					Date endDate, 
+					EventType eventType) {
 		super(index);
-		this.name = name;
+		this.full_name = full_name;
+		this.short_name = short_name;
 		this.place = place;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -48,10 +58,12 @@ public class Event extends Entity {
 	}
 	
 	/**
-	 * Constructor for the 'Event' Entity class (no index).
+	 * Default constructor for the 'Event' Entity class.
 	 * 
-	 * @param name
-	 * 			Name of the Event
+	 * @param full_name
+	 * 			Full name of the Event
+	 * @param short_name
+	 * 			Short name of the Event
 	 * @param place
 	 * 			Place where the Event takes place
 	 * @param startDate
@@ -61,21 +73,39 @@ public class Event extends Entity {
 	 * @param eventType
 	 * 			Type of Event
 	 */
-	public Event(String name, String place, Date startDate, Date endDate, EventType eventType) {
+	public Event(
+					String full_name, 
+					String short_name,
+					String place, 
+					Date startDate, 
+					Date endDate, 
+					EventType eventType) {
 		super();
-		this.name = name;
+		this.full_name = full_name;
+		this.short_name = short_name;
 		this.place = place;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.eventType = eventType;
 	}
 	
-	public String getName() {
-		return name;
+
+	public String getFullName() {
+		return full_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setFullName(String full_name) {
+		this.full_name = full_name;
 	}
+
+	public String getShortName() {
+		return short_name;
+	}
+
+	public void setShortName(String short_name) {
+		this.short_name = short_name;
+	}
+
 	public String getPlace() {
 		return place;
 	}
@@ -115,6 +145,6 @@ public class Event extends Entity {
 	}
 	
 	public String toString() {
-		return this.name;
+		return this.full_name;
 	}
 }

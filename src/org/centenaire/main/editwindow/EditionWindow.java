@@ -48,7 +48,7 @@ public class EditionWindow extends GeneralWindow {
 		tabbedPane.addTab("Institutions",aux2);
 		
 		// Final assembly into a tabbed panel.
-		TagLikeTab tagLikeTab = new TagLikeTab(EntityEnum.TAG.getValue());
+		TagLikeTab tagLikeTab = new TagLikeTab();
 		tabbedPane.addTab("Marqueurs", tagLikeTab);
 		
 		//======================

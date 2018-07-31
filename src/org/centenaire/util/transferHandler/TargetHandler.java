@@ -104,6 +104,7 @@ public class TargetHandler<T> extends TransferHandler {
 			LinkedList<Entity> data = (LinkedList<Entity>) t.getTransferData(linkedListFlavor);
 			
 			// Using TransferSupport, recover the component
+			// NB: the support component is actually the JTable (inside GTable...)
 			JTable table = (JTable) support.getComponent();
 			
 			// Perform the import properly speaking
