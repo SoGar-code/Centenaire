@@ -66,8 +66,7 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 
 	@Override
 	public Dao<Institution> getInstitutionDao() {
-		// TODO Auto-generated method stub
-		return null;
+		return new PostgreSQLInstitutionDao(conn);
 	}
 
 	@Override

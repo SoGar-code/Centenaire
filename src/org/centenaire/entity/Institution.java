@@ -18,6 +18,13 @@ public class Institution extends Entity {
 		this.place = place;
 		this.institType = institType;
 	}
+	
+	public Institution(String name, String place, InstitutionType institType) {
+		super();
+		this.name = name;
+		this.place = place;
+		this.institType = institType;
+	}
 
 	public String getName() {
 		return name;
@@ -42,14 +49,24 @@ public class Institution extends Entity {
 	public void setInstitType(InstitutionType institType) {
 		this.institType = institType;
 	}
+	
+	public String toString() {
+		return name;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.centenaire.entity.Entity#getEntry(int)
 	 */
 	@Override
 	public Object getEntry(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (i){
+		case 0:
+			return name;
+		case 1:
+			return institType;
+		default:
+			return "-";
+		}
 	}
 
 	/* (non-Javadoc)

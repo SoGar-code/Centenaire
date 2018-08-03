@@ -7,6 +7,7 @@ import javax.swing.JTabbedPane;
 
 import org.centenaire.main.editwindow.tab.EventTab;
 import org.centenaire.main.editwindow.tab.IndividualTab;
+import org.centenaire.main.editwindow.tab.InstitutionTab;
 import org.centenaire.main.editwindow.tab.ItemTab;
 import org.centenaire.main.editwindow.tab.TagLikeTab;
 import org.centenaire.util.GeneralWindow;
@@ -43,9 +44,9 @@ public class EditionWindow extends GeneralWindow {
 		EventTab eventTab = new EventTab();
 		tabbedPane.addTab("Evénements", eventTab);
 		
-		// Add item tab
-		JTabbedPane aux2 = this.createTabbedView("Institutions");
-		tabbedPane.addTab("Institutions",aux2);
+		// Add Event tab
+		InstitutionTab institTab = new InstitutionTab();
+		tabbedPane.addTab("Institutions", institTab);
 		
 		// Final assembly into a tabbed panel.
 		TagLikeTab tagLikeTab = new TagLikeTab();
