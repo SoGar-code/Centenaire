@@ -56,7 +56,7 @@ public class EventEditor extends EntityEditor<Event> {
 		shortNameField.setText("-");
 		
 		shortNamePan.add(shortNameLabel);
-		shortNamePan.add(fullNameField);
+		shortNamePan.add(shortNameField);
 		
 		// Place field
 		// =================

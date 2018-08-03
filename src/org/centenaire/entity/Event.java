@@ -135,8 +135,14 @@ public class Event extends Entity {
 	
 	@Override
 	public Object getEntry(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (i){
+		case 0:
+			return short_name;
+		case 1:
+			return startDate;
+		default:
+			return "-";
+		}
 	}
 	@Override
 	public void setEntry(int i, Object obj) {
@@ -145,6 +151,6 @@ public class Event extends Entity {
 	}
 	
 	public String toString() {
-		return this.full_name;
+		return this.short_name;
 	}
 }

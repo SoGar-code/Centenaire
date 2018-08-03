@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
-import org.centenaire.entity.EntityEnum;
 import org.centenaire.main.editwindow.tab.EventTab;
 import org.centenaire.main.editwindow.tab.IndividualTab;
+import org.centenaire.main.editwindow.tab.ItemTab;
 import org.centenaire.main.editwindow.tab.TagLikeTab;
 import org.centenaire.util.GeneralWindow;
 
@@ -33,15 +33,15 @@ public class EditionWindow extends GeneralWindow {
 		
 		// Add individual tab
 		IndividualTab indivTab = new IndividualTab();
-		tabbedPane.addTab("Personnes",indivTab);
+		tabbedPane.addTab("Personnes", indivTab);
 		
 		// Add item tab
-		JTabbedPane aux = this.createTabbedView("Productions");
-		tabbedPane.addTab("Productions",aux);
+		ItemTab itemTab = new ItemTab();
+		tabbedPane.addTab("Productions", itemTab);
 		
 		// Add Event tab
 		EventTab eventTab = new EventTab();
-		tabbedPane.addTab("Evénements",eventTab);
+		tabbedPane.addTab("Evénements", eventTab);
 		
 		// Add item tab
 		JTabbedPane aux2 = this.createTabbedView("Institutions");

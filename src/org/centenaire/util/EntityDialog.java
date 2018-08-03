@@ -43,7 +43,7 @@ public class EntityDialog<T> extends JDialog {
 		super();
 		this.setTitle("Création d'un nouvel objet");
 		this.setModal(true);
-		this.setSize(400,250);
+		this.setSize(400,350);
 		this.setLocationRelativeTo(null);
 		
 		EntityEditor<T> entityEditor = EntityEditorFactory.getEntityEditor(classIndex);

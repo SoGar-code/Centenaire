@@ -22,6 +22,14 @@ public class Item extends Entity {
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
+	
+	public Item(String title, ItemType itemType, Date startDate, Date endDate) {
+		super();
+		this.title = title;
+		this.itemType = itemType;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 
 	public String getTitle() {
 		return title;
@@ -54,14 +62,24 @@ public class Item extends Entity {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
+	public String toString() {
+		return this.title;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.centenaire.entity.Entity#getEntry(int)
 	 */
 	@Override
 	public Object getEntry(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (i){
+		case 0:
+			return title;
+		case 1:
+			return startDate;
+		default:
+			return "-";
+		}
 	}
 
 	/* (non-Javadoc)

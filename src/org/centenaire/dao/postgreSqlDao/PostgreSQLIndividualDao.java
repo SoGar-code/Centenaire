@@ -51,7 +51,7 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			state.setString(1, obj.getFirst_name());
 			state.setString(2, obj.getLast_name());
 			state.setInt(3, obj.getBirth_year());
-			int nb_rows = state.executeUpdate();
+			state.executeUpdate();
 			
 			// Update of the index (should be 0 up to this point)
 			ResultSet genKey = state.getGeneratedKeys();
