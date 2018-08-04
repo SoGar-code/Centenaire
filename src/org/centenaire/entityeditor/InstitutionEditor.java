@@ -102,7 +102,7 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		this.setIndexField(obj.getIndex());
 		nameField.setText(obj.getName());
 		placeField.setText(obj.getPlace());
-		institutionTypeCombo.setSelectedItem(obj.getInstitType());
+		institutionTypeCombo.setSelectedEntity(obj.getInstitType());
 	}
 	
 	/**

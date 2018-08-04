@@ -120,7 +120,7 @@ public class ItemEditor extends EntityEditor<Item> {
 		titleField.setText(obj.getTitle());
 		startDateField.setDate(obj.getStartDate());
 		endDateField.setDate(obj.getEndDate());
-		itemTypeCombo.setSelectedItem(obj.getItemType());
+		itemTypeCombo.setSelectedEntity(obj.getItemType());
 	}
 	
 	/**

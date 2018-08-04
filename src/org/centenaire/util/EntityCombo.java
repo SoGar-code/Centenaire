@@ -4,7 +4,6 @@
 package org.centenaire.util;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
@@ -12,6 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
@@ -63,6 +63,47 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 	public T getSelectedEntity() {
 		T currentEntity = (T) this.getSelectedItem();
 		return currentEntity;
+	}
+	
+	/**
+	 * Method to set the current selected entity.
+	 * 
+	 * <p>This is a sort of reimplementation of the default method
+	 * "setSelectedItem" of JComboBox. Here, we compare entities using
+	 * their index. Just like in the original method, if no element is 
+	 * found, the combo is left without element selected.</p>
+	 * 
+	 */
+	public void setSelectedEntity(T entity) {
+		boolean foundEntity = false;
+		DefaultComboBoxModel<T> model = (DefaultComboBoxModel<T>) this.getModel();
+		
+		int entityIndex = ((Entity) entity).getIndex();
+		int listSize = model.getSize();
+		int listIndex = 0;
+		
+		do {
+			// Consider an object in the list
+			T currentEntity = model.getElementAt(listIndex);
+			
+			int currentIndex = ((Entity) currentEntity).getIndex();
+			
+			// If the current element and the requested element have the same (entity) index...
+			if (entityIndex == currentIndex) {
+				// then we have found what we were looking for!
+				this.setSelectedIndex(listIndex);
+				foundEntity = true;
+				System.out.println("EntityCombo.setSelectedEntity -- found something!");
+				break;
+			}
+			listIndex++;
+		} while (!foundEntity && (listIndex < listSize));
+
+		// In case nothing was found...
+		if (!foundEntity) {
+			this.setSelectedIndex(-1);
+		}
+			
 	}
 	
 	/**

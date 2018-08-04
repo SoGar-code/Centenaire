@@ -41,6 +41,7 @@ public class EventEditor extends EntityEditor<Event> {
 		
 		// Active text area...
 		fullNameField = new JTextArea(3, 30);
+		fullNameField.setLineWrap(true);
 		fullNameField.setText("-");
 		
 		fullNamePan.add(fullNameLabel);
@@ -151,7 +152,7 @@ public class EventEditor extends EntityEditor<Event> {
 		placeField.setText(obj.getPlace());
 		startDateField.setDate(obj.getStartDate());
 		endDateField.setDate(obj.getEndDate());
-		eventTypeCombo.setSelectedItem(obj.getEventType());
+		eventTypeCombo.setSelectedEntity(obj.getEventType());
 	}
 	
 	/**
@@ -163,6 +164,7 @@ public class EventEditor extends EntityEditor<Event> {
 		
 		this.setIndexField(0);
 		fullNameField.setText("-");
+		shortNameField.setText("-");
 		placeField.setText("-");
 		startDateField.setDate(today);
 		endDateField.setDate(today);

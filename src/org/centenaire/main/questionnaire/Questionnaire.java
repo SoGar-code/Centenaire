@@ -38,6 +38,10 @@ public class Questionnaire extends JFrame {
 		content.add(respondent);
 		
 		JPanel question;
+		
+		JPanel q_I_1 = new Question_I_1();
+		content.add(q_I_1);
+		
 		// Questions 1 to 25: generate and assemble!
 		for (int i = 0; i <= 25; i++){
 			String body = String.format("Contenu de la question %d. Ce contenu peut-être "
