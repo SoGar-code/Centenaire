@@ -5,10 +5,12 @@ package org.centenaire.main.questionnaire;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import javax.swing.BoxLayout;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Discipline;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.InstitStatus;
+import org.centenaire.entity.Institution;
 import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.util.EntityCombo;
@@ -128,6 +133,35 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// Choose size (width, height)
 		indivEditor.setSize(100, 200);
 		
+		// Institution panel
+		JPanel institPan = new JPanel(new GridLayout(4, 2));
+		
+		JLabel institLab = new JLabel("Institution : ");
+		EntityCombo<Institution> institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());		
+		
+		JLabel statusLab = new JLabel("Statut : ");
+		EntityCombo<InstitStatus> statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
+		
+		JLabel disciplineLab = new JLabel("Discipline : ");
+		EntityCombo<Discipline> disciplineCombo = new EntityCombo<Discipline>(EntityEnum.DISCIPLINES.getValue());		
+		
+		JLabel laboLab = new JLabel("Labo de recherche : ");
+		EntityCombo<Institution> laboCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
+		
+		institPan.add(institLab);
+		institPan.add(institCombo);
+		institPan.add(statusLab);
+		institPan.add(statusCombo);
+		institPan.add(disciplineLab);
+		institPan.add(disciplineCombo);	
+		institPan.add(laboLab);
+		institPan.add(laboCombo);
+		
+		// Auxiliary 'individual' panel
+		JPanel auxIndivPan = new JPanel(new FlowLayout());
+		auxIndivPan.add(indivEditor);
+		auxIndivPan.add(institPan);
+		
 		// Create a minimal TagList
 		Tag defaultTag = new Tag("Valeur par défaut");
 		LinkedList<Entity> listEntity = new LinkedList<Entity>();
@@ -153,8 +187,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// Choose size (width, height)
 		entityList.setSize(50, 200);
 		
-		JPanel centerPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		centerPan.add(indivEditor);
+		JPanel centerPan = new JPanel();
+		centerPan.setLayout(new BoxLayout(centerPan, BoxLayout.PAGE_AXIS));
+		centerPan.add(auxIndivPan);
 		centerPan.add(entityList);
 		
 		// Bottom panel

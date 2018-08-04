@@ -51,7 +51,19 @@ public class EntityEditorFactory {
 			return new EventEditor();
 		} else if (classIndex == EntityEnum.INSTIT.getValue()) {
 			return new InstitutionEditor();
+		} else if (classIndex == EntityEnum.ITEMTYPE.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.EVENTTYPE.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.INSTITTYPE.getValue()) {
+			return new TagLikeEditor();
 		} else if (classIndex == EntityEnum.TAG.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.DISCIPLINES.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.INSTITSTATUS.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.LOCALISATIONTYPE.getValue()) {
 			return new TagLikeEditor();
 		} else {
 			System.out.println("EntityEditorFactory.getEntityEditor -- entity not found!");

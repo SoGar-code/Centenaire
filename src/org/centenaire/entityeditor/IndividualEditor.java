@@ -25,7 +25,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		// First name field
 		// =================
 		JPanel firstNamePan = new JPanel();
-		JLabel firstNameLabel = new JLabel("First name: ");
+		JLabel firstNameLabel = new JLabel("Prénom : ");
 		
 		// Active text area...
 		firstNameField = new JTextField(20);
@@ -37,7 +37,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		// Last name field
 		// =================
 		JPanel lastNamePan = new JPanel();
-		JLabel lastNameLabel = new JLabel("Last name: ");
+		JLabel lastNameLabel = new JLabel("Nom : ");
 		
 		// Active text area...
 		lastNameField = new JTextField(20);
@@ -49,7 +49,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		// Birthyear field
 		// ================
 		JPanel birthDayPan = new JPanel();
-		JLabel birthYearLabel = new JLabel("Birth year: ");
+		JLabel birthYearLabel = new JLabel("Année de naissance : ");
 		birthYearField = new GIntegerField(1800);
 		birthYearField.setColumns(8);
 		birthYearField.setIntegerValue(1901);
