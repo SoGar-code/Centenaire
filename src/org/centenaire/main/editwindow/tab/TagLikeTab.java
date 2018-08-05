@@ -4,6 +4,7 @@
 package org.centenaire.main.editwindow.tab;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,17 +53,36 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// Get dao
 		dao = (Dao<Entity>) gc.getDao(classIndex);
 		
+		// Supported types of 'Entity':
+		EntityEnum[] entityEnumList = {EntityEnum.ITEMTYPE, 
+				EntityEnum.EVENTTYPE,
+				EntityEnum.INSTITTYPE,
+				EntityEnum.TAG,
+				EntityEnum.DISCIPLINES,
+				EntityEnum.INSTITSTATUS,
+				EntityEnum.LOCALISATIONTYPE};
+		
+		// Creation of 'modifier' pane (CardLayout)
+		//===================================================
+		CardLayout cl = new CardLayout();
+		JPanel modifyPan = new JPanel(cl);
+		
+		UpdateEntityPanel<TagLike> uep;
+
+		for (EntityEnum entityEnum:entityEnumList) {
+			// Create uep for each suitable classIndex			
+			uep = new UpdateEntityPanel<TagLike>(entityEnum.getValue());
+			
+			// Subscribe that uep to the suitable panel
+			gc.getChannel(entityEnum.getValue()).addSubscriber(uep);
+			
+			// Include it in the CardLayout
+			modifyPan.add(uep, entityEnum.toString());
+		}
+		
 		// Selection combo
 		// =================
-		EntityEnum[] entityEnumList = {EntityEnum.ITEMTYPE, 
-									EntityEnum.EVENTTYPE,
-									EntityEnum.INSTITTYPE,
-									EntityEnum.TAG,
-									EntityEnum.DISCIPLINES,
-									EntityEnum.INSTITSTATUS,
-									EntityEnum.LOCALISATIONTYPE};
-		JComboBox<EntityEnum> entityCombo = new JComboBox<EntityEnum>(entityEnumList);
-		entityCombo.setSelectedItem(EntityEnum.TAG);
+		JComboBox<EntityEnum> entityCombo = new JComboBox<EntityEnum>(entityEnumList);		
 		
 		// associated action
 		entityCombo.addActionListener(new ActionListener(){
@@ -71,15 +91,18 @@ public class TagLikeTab extends JPanel implements Subscriber{
 
 				try {		
 					// recover the currently selected object
-					EntityEnum entity = (EntityEnum) entityCombo.getSelectedItem();
+					EntityEnum entityEnum = (EntityEnum) entityCombo.getSelectedItem();
 
 					// update the classIndex
-					classIndex = entity.getValue();
+					classIndex = entityEnum.getValue();
+					
+					// Display the suitable page of modifyPan
+					cl.show(modifyPan, entityEnum.toString());
 					
 					// Update selected dao
 					dao = (Dao<Entity>) gc.getDao(classIndex);
 					
-					// Update panel
+					// Update panel (i.e. the 'Liste' Tab)
 					updateSubscriber(classIndex);
 					
 				} catch (ClassCastException except) {
@@ -100,7 +123,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
 				new Class[] {String.class},
-				new String[] {"Mot-clef"},
+				new String[] {"Intitulé"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
@@ -108,20 +131,11 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		JTable table = entityList.getTable();
 		table.setDragEnabled(true);
 		table.setTransferHandler(new SourceHandler<Tag>(EntityEnum.TAG.getValue()));
-
-		
-		// Creation of 'modifier' pane
-		//===================================================
-		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(classIndex);
-		// uep subscribes to all suitable channels 
-		for (EntityEnum entity:entityEnumList) {
-			gc.getChannel(entity.getValue()).addSubscriber(uep);
-		}
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.addTab("Liste", entityList);
-		tabbedPane.addTab("Modifier", uep);
+		tabbedPane.addTab("Modifier", modifyPan);
 		
 		
 		// *New entity* button
@@ -151,6 +165,9 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPan.add(newEntity);
 
+		// Setting all variable components to starting point
+		entityCombo.setSelectedItem(EntityEnum.TAG);
+		cl.show(modifyPan, EntityEnum.TAG.toString());
 		
 		// Final assembly
 		// ===============

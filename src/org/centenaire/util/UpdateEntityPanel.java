@@ -25,6 +25,14 @@ import org.centenaire.util.pubsub.Subscriber;
 /**
  * Generic Entity update panel.
  * 
+ * <p>This panel includes:
+ * <ul>
+ * 		<li>an 'EntityCombo', to select the entity to edit</li>
+ * 		<li>an 'EntityEditor', to edit that entity after selection</li>
+ * 		<li>a save button to forward the changes to the database</li>
+ * </ul></p>
+ * 
+ * 
  * <p>It includes an implementation of the 'Subscriber' interface 
  * of the Publisher-Subscriber pattern used to notify the component 
  * about updates in the database.</p>
