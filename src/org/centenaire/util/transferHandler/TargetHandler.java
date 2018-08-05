@@ -58,13 +58,20 @@ public class TargetHandler<T> extends TransferHandler {
 	
 	/**
 	 * Import only suitable data.
+	 * 
+	 * 
 	 */
 	public boolean canImport(TransferHandler.TransferSupport info) {
 		// Check that received data have an authorised type.
 		if (!info.isDataFlavorSupported(linkedListFlavor)) {
 			return false;
+		} else {
+			// If data flavor is supported, check matching classIndex.
+			EntityTransferable et = (EntityTransferable) info.getTransferable();
+			boolean test = (this.classIndex == et.getClassIndex());
+			
+			return test;
 		}
-		return true;
 	}
 	
 	/**
@@ -76,10 +83,7 @@ public class TargetHandler<T> extends TransferHandler {
 	 * 
 	 */
 	protected Transferable createTransferable(JComponent c) {
-		
-		EntityTransferable<T> et = new EntityTransferable<T>(classIndex);
-		
-		return et;
+		return null;
 	}
 	
 	/**
@@ -103,7 +107,7 @@ public class TargetHandler<T> extends TransferHandler {
 		try {
 			LinkedList<Entity> data = (LinkedList<Entity>) t.getTransferData(linkedListFlavor);
 			
-			// Using TransferSupport, recover the component
+			// Using TransferSupport, recover the target component
 			// NB: the support component is actually the JTable (inside GTable...)
 			JTable table = (JTable) support.getComponent();
 			
