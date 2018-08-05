@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  * A template for dealing with the different questions.
@@ -22,7 +23,7 @@ import javax.swing.JPanel;
 public abstract class QuestionTemplate extends JPanel {
 	private static int nbQuestion = 0;
 	
-	private JLabel questionLab;
+	private JTextArea questionJTA;
 	/**
 	 * Main panel, where content can be added.
 	 */
@@ -30,7 +31,19 @@ public abstract class QuestionTemplate extends JPanel {
 	
 	public QuestionTemplate() {
 		super();
-		questionLab = new JLabel();
+		nbQuestion++;
+		
+		JLabel questionLab = new JLabel(String.format("Question %s.", nbQuestion));
+		questionJTA = new JTextArea();
+		questionJTA.setEditable(false);
+		questionJTA.setLineWrap(true);
+		questionJTA.setColumns(70);
+		
+		// Include these in top panel
+		JPanel topPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		topPan.add(questionLab);
+		topPan.add(questionJTA);
+		
 		main = new JPanel();
 		
 		// Save button, its listener and its panel
@@ -45,7 +58,7 @@ public abstract class QuestionTemplate extends JPanel {
 		});
 		
 		this.setLayout(new BorderLayout());
-		this.add(questionLab, BorderLayout.NORTH);
+		this.add(topPan, BorderLayout.NORTH);
 		this.add(main, BorderLayout.CENTER);
 		this.add(savePan, BorderLayout.SOUTH);
 	}
@@ -57,7 +70,7 @@ public abstract class QuestionTemplate extends JPanel {
 	 * 			string to be used in 'question' field.
 	 */
 	public void setQuestionLab(String questionString) {
-		this.questionLab.setText(questionString);
+		this.questionJTA.setText(questionString);
 	}
 	
 	/**
