@@ -14,6 +14,8 @@ public class Institution extends Entity {
 	
 	public Institution(int index, String name, String place, InstitutionType institType) {
 		super(index);
+		this.classIndex = EntityEnum.INSTIT.getValue();
+		
 		this.name = name;
 		this.place = place;
 		this.institType = institType;
@@ -21,6 +23,8 @@ public class Institution extends Entity {
 	
 	public Institution(String name, String place, InstitutionType institType) {
 		super();
+		this.classIndex = EntityEnum.INSTIT.getValue();
+		
 		this.name = name;
 		this.place = place;
 		this.institType = institType;

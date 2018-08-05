@@ -8,20 +8,13 @@ package org.centenaire.entity;
  *
  */
 public class InstitStatus extends TagLike {
-
-	/**
-	 * @param name
-	 */
-	public InstitStatus(String name) {
-		super(name);
-	}
-
 	/**
 	 * @param index
 	 * @param name
 	 */
 	public InstitStatus(int index, String name) {
 		super(index, name);
+		classIndex = EntityEnum.INSTITSTATUS.getValue();
 	}
 
 }

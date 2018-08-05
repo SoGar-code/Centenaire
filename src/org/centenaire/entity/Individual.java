@@ -4,19 +4,22 @@ package org.centenaire.entity;
  * POJO for the 'Individuals' table in the database.
  */
 public class Individual extends Entity{
-	protected static int classIndex = 1;
 	protected String first_name;
 	protected String last_name;
 	protected int birth_year;
 
 	public Individual(String first_name, String last_name) {
 		super();
+		this.classIndex = EntityEnum.INDIV.getValue();
+		
 		this.first_name = first_name;
 		this.last_name = last_name;
 	}
 	
 	public Individual(int index, String first_name, String last_name) {
 		super(index);
+		this.classIndex = EntityEnum.INDIV.getValue();
+		
 		this.first_name = first_name;
 		this.last_name = last_name;
 	}

@@ -8,22 +8,13 @@ package org.centenaire.entity;
  *
  */
 public class LocalType extends TagLike {
-
-	/**
-	 * @param name
-	 */
-	public LocalType(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * @param index
 	 * @param name
 	 */
 	public LocalType(int index, String name) {
 		super(index, name);
-		// TODO Auto-generated constructor stub
+		this.classIndex = EntityEnum.LOCALISATIONTYPE.getValue();
 	}
 
 }

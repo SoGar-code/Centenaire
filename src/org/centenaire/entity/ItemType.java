@@ -7,7 +7,6 @@ package org.centenaire.entity;
  *
  */
 public class ItemType extends TagLike {
-
 	/**
 	 * Constructor of ItemType object.
 	 * 
@@ -15,6 +14,7 @@ public class ItemType extends TagLike {
 	 */
 	public ItemType(String name) {
 		super(name);
+		this.classIndex = EntityEnum.ITEMTYPE.getValue();
 	}
 
 	/**
@@ -23,10 +23,6 @@ public class ItemType extends TagLike {
 	 */
 	public ItemType(int index, String name) {
 		super(index, name);
+		this.classIndex = EntityEnum.ITEMTYPE.getValue();
 	}
-	
-	public static ItemType defaultElement() {
-		return new ItemType("default item types value");
-	}
-
 }

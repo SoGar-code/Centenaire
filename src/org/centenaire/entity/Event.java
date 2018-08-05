@@ -10,12 +10,6 @@ import java.sql.Date;
  *
  */
 public class Event extends Entity {
-	/**
-	 * Numbering of the different (concrete) Entity classes.
-	 * 
-	 */
-	protected static int classIndex = EntityEnum.EVENTS.getValue();
-	
 	private String full_name;
 	private String short_name;
 	private String place;
@@ -49,6 +43,8 @@ public class Event extends Entity {
 					Date endDate, 
 					EventType eventType) {
 		super(index);
+		this.classIndex = EntityEnum.EVENTS.getValue();
+		
 		this.full_name = full_name;
 		this.short_name = short_name;
 		this.place = place;
@@ -81,6 +77,8 @@ public class Event extends Entity {
 					Date endDate, 
 					EventType eventType) {
 		super();
+		this.classIndex = EntityEnum.EVENTS.getValue();
+		
 		this.full_name = full_name;
 		this.short_name = short_name;
 		this.place = place;
@@ -88,7 +86,6 @@ public class Event extends Entity {
 		this.endDate = endDate;
 		this.eventType = eventType;
 	}
-	
 
 	public String getFullName() {
 		return full_name;

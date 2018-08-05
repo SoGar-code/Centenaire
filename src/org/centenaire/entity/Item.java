@@ -17,6 +17,8 @@ public class Item extends Entity {
 
 	public Item(int index, String title, ItemType itemType, Date startDate, Date endDate) {
 		super(index);
+		this.classIndex = EntityEnum.ITEM.getValue();
+		
 		this.title = title;
 		this.itemType = itemType;
 		this.startDate = startDate;
@@ -25,6 +27,8 @@ public class Item extends Entity {
 	
 	public Item(String title, ItemType itemType, Date startDate, Date endDate) {
 		super();
+		this.classIndex = EntityEnum.ITEM.getValue();
+		
 		this.title = title;
 		this.itemType = itemType;
 		this.startDate = startDate;

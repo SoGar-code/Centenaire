@@ -14,14 +14,12 @@ public class Tag extends TagLike {
 	
 	public Tag(String name) {
 		super(name);
+		this.classIndex = EntityEnum.TAG.getValue();
 	}
 
 	public Tag(int index, String name) {
 		super(index, name);
-	}
-	
-	public static Tag defaultElement() {
-		return new Tag("Mot-clef par défaut");
+		this.classIndex = EntityEnum.TAG.getValue();
 	}
 	
 }

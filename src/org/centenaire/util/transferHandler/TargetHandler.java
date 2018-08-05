@@ -59,6 +59,11 @@ public class TargetHandler<T> extends TransferHandler {
 	/**
 	 * Import only suitable data.
 	 * 
+	 * <p>This method is called when the user hovers
+	 * above the attached component.</p>
+	 * 
+	 * <p>In this method, the "TransferSupport" corresponds to the 
+	 * data from the source component!</p>
 	 * 
 	 */
 	public boolean canImport(TransferHandler.TransferSupport info) {
@@ -67,10 +72,33 @@ public class TargetHandler<T> extends TransferHandler {
 			return false;
 		} else {
 			// If data flavor is supported, check matching classIndex.
-			EntityTransferable et = (EntityTransferable) info.getTransferable();
-			boolean test = (this.classIndex == et.getClassIndex());
-			
-			return test;
+			LinkedList data;
+			try {
+				// Recover data from the transferable object
+				data = (LinkedList) info.getTransferable().getTransferData(linkedListFlavor);
+				
+				// See if we can cast the provided data into the requested format
+				Entity obj = (Entity) data.getFirst();
+				
+				int objClassIndex = obj.getClassIndex();
+				
+				boolean test = (this.classIndex == objClassIndex);
+				
+				return test;
+
+			} catch (ClassCastException e) {
+				System.out.print("Could not perform cast for provided data!");
+				return false;
+					
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
 		}
 	}
 	
