@@ -80,7 +80,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 					dao = (Dao<Entity>) gc.getDao(classIndex);
 					
 					// Update panel
-					updateSubscriber();
+					updateSubscriber(classIndex);
 					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
@@ -113,8 +113,10 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// Creation of 'modifier' pane
 		//===================================================
 		UpdateEntityPanel<TagLike> uep = new UpdateEntityPanel<TagLike>(classIndex);
-		// uep subscribes to suitable channel 
-		gc.getChannel(classIndex).addSubscriber(uep);
+		// uep subscribes to all suitable channels 
+		for (EntityEnum entity:entityEnumList) {
+			gc.getChannel(entity.getValue()).addSubscriber(uep);
+		}
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -157,8 +159,11 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		this.add(tabbedPane, BorderLayout.CENTER);
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
-		// Let component subscribe to suitable channel
-		gc.getChannel(classIndex).addSubscriber(this);
+		// Let component subscribe to all suitable channels
+		for (EntityEnum entity:entityEnumList) {
+			gc.getChannel(entity.getValue()).addSubscriber(this);
+		}
+
 	}
 
 	/**
@@ -167,10 +172,13 @@ public class TagLikeTab extends JPanel implements Subscriber{
 	 * @see org.centenaire.general.Subscriber
 	 */
 	@Override
-	public void updateSubscriber() {
-		// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
-		LinkedList<Entity> data = dao.findAll();
-		entityListTableModel.setData(data);
+	public void updateSubscriber(int channelIndex) {
+		// Update only if channelIndex matches the current classIndex
+		if (channelIndex == classIndex) {
+			// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
+			LinkedList<Entity> data = dao.findAll();
+			entityListTableModel.setData(data);
+		}
 	}
 
 }

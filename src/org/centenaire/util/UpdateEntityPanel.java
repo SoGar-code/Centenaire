@@ -130,24 +130,27 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	 * 
 	 * @see org.centenaire.general.Subscriber
 	 */
-	@Override
-	public void updateSubscriber() {
-		// Need to update svgButton, entityCombo and updatePanel.
-		
-		// Disable svgButton (entityCombo is reset upon being notified...).
-		svgButton.setEnabled(false);
-		
-		// remove action listener
-		entityCombo.removeActionListener(comboListener);
+	public void updateSubscriber(int channelIndex) {
+		// Check if the provided channelIndex matches the current classIndex
+		//if (channelIndex == this.classIndex) {
+			// Need to update svgButton, entityCombo and updatePanel.
+			
+			// Disable svgButton (entityCombo is reset upon being notified...).
+			svgButton.setEnabled(false);
+			
+			// remove action listener
+			entityCombo.removeActionListener(comboListener);
 
-		// update the combo using the predefined method
-		entityCombo.updateSubscriber();
-		
-		// put the action listener back again
-		entityCombo.addActionListener(comboListener);
-		
-		// reset updatePanel
-		updatePanel.reset();
+			// update the combo using the predefined method
+			entityCombo.updateSubscriber(channelIndex);
+			
+			// put the action listener back again
+			entityCombo.addActionListener(comboListener);
+			
+			// reset updatePanel
+			updatePanel.reset();
+		//}
+
 	}
 	
 //	/**

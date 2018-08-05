@@ -211,13 +211,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * @see org.centenaire.dao.Dao#update(Object)
 	 */
 	@Override
-	public Channel getChannel(int channelIndex) {
-		
-		System.out.println("getChannel called...");
-		String msg = String.format("==> available channels: %s", listChannels.size());
-		
-		System.out.println(msg);
-		
+	public Channel getChannel(int channelIndex) {	
 		Channel channel = listChannels.get(channelIndex);
 		return channel;
 	}

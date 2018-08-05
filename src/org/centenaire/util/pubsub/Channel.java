@@ -11,6 +11,7 @@ import java.util.List;
  * 
  * <p>Part of the Publisher-Subscriber pattern.</p>
  * 
+ * 
  * @see org.centenaire.general.Dispatcher
  */
 public class Channel {
@@ -24,9 +25,9 @@ public class Channel {
 		listSubscribers.add(sub);
 	}
 	
-	public void publish() {
+	public void publish(int channelIndex) {
 		for (Subscriber sub: listSubscribers) {
-			sub.updateSubscriber();
+			sub.updateSubscriber(channelIndex);
 		}
 	}
 }

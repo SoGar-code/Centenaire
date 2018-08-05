@@ -106,7 +106,7 @@ public class EventTab extends JPanel implements Subscriber{
 	 * 
 	 * @see org.centenaire.general.Subscriber
 	 */
-	public void updateSubscriber() {
+	public void updateSubscriber(int channelIndex) {
 		// Need to update ListTableModel (since UpdateEntityPanel is treated separately)
 		LinkedList<Entity> data = dao.findAll();
 		entityListTableModel.setData(data);

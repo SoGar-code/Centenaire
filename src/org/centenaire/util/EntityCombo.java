@@ -115,7 +115,7 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
-	public void updateSubscriber() {		
+	public void updateSubscriber(int channelIndex) {
 		// list of Entity elements		
 		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		

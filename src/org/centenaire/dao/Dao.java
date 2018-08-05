@@ -39,6 +39,6 @@ public abstract class Dao<T> implements Publisher{
 		Channel channel = gc.getChannel(channelIndex);
 		
 		// Publish on that channel
-		channel.publish();
+		channel.publish(channelIndex);
 	}
 }

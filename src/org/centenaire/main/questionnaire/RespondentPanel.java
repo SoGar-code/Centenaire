@@ -110,8 +110,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 					// unplug listener
 					entityCombo.removeActionListener(comboListener);
 					
-					// update content
-					entityCombo.updateSubscriber();
+					// update content (as if 'individual' had changed)
+					entityCombo.updateSubscriber(EntityEnum.INDIV.getValue());
 					
 					// replug listener
 					entityCombo.addActionListener(comboListener);
@@ -240,17 +240,15 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
-	public void updateSubscriber() {
+	public void updateSubscriber(int channelIndex) {
 		// unplug listener
 		entityCombo.removeActionListener(comboListener);
-		
-		
 		
 		// when 'lock' is not selected, update entityCombo
 		if (!lockBox.isSelected()) {
 
 			// Update entityCombo
-			entityCombo.updateSubscriber();
+			entityCombo.updateSubscriber(channelIndex);
 			
 			// Reset indivEditor
 			indivEditor.reset();

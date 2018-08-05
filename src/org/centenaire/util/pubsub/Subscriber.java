@@ -21,6 +21,9 @@ public interface Subscriber {
 	
 	/**
 	 * Method called when a new piece of news is published on registered channel.
+	 * 
+	 * @param channelIndex
+	 * 				index of the news channel publishing the piece of news.
 	 */
-	public void updateSubscriber();
+	public void updateSubscriber(int indexClass);
 }
