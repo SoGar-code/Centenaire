@@ -16,22 +16,41 @@ import org.centenaire.util.ListTableModel;
 /**
  * Table Model specific for coding the "relations" in the database.
  * 
+ * <p>This class incorporates a 'TransferHandler' as defined for 
+ * 'target' objects.</p>
+ * 
  * <p>This model does NOT rely on the notification system 
  * (at least as far as the <em>relations</em> are concerned). 
  * Instead, to update relations, it depends on "save" buttons.</p>
  *
  */
-public class DropListTableModel extends ListTableModel {
-	private RelationDao<Individual, Tag> relationDao;
+public class DropListTableModel<T extends Entity, U extends Entity> extends ListTableModel {
+	private RelationDao<T, U> relationDao;
 	
+	/**
+	 * Constructor for 'DropListTableModel', including the class index of the item displayed.
+	 * 
+	 * @param listClass
+	 * @param title
+	 * @param classIndexU
+	 */
 	public DropListTableModel(
 			Class[] listClass, 
-			String[] title, 
-			LinkedList<Entity> data) {
-		super(listClass, title, data);
+			String[] title,
+			int classIndexU) {
+		super(listClass, title, new LinkedList<Entity>());
 		
-		relationDao = (RelationDao<Individual, Tag>) gc.getRelationDao(EntityEnum.INDIVTAG.getValue());
+		relationDao = (RelationDao<T, U>) gc.getRelationDao(EntityEnum.INDIVTAG.getValue());
+
 	}
+	
+	/**
+	 * Define when a cell is editable.
+	 */
+	@Override
+	public boolean isCellEditable(int row, int col){
+		return (col == 1);
+	};
 	
 	/**
 	 * Include additional rows in data.
@@ -65,27 +84,21 @@ public class DropListTableModel extends ListTableModel {
 	}
 	
 	/**
-	 * Using the currently selected individual, recover the suitable list of tags.
+	 * Using currentEntity, recover the suitable list of elements.
 	 * 
-	 * @return list of tag for the currently selected individual.
 	 */
-	public void updateEntity(Individual currentIndividual){
+	public void updateEntity(T currentEntity){
 		// Initialise list of Entity
 		LinkedList<Entity> listEntity = new LinkedList<Entity>();
 		
-		System.out.println("==> updateEntity called...");
-		
 		// if an individual is currently selected...
-		if (currentIndividual != null){
+		if (currentEntity != null){
 			// Get list of relevant tags
-			List<Tag> tagList = relationDao.findAll(currentIndividual);
-			
-			String msg = String.format("==> nb recovered items: %s", tagList.size());
-			System.out.println(msg);
+			List<U> listU = relationDao.findAll(currentEntity);
 			
 			// Add these to "listEntity"
-			for (Tag tag:tagList) {
-				listEntity.add((Entity) tag);
+			for (U row:listU) {
+				listEntity.add((Entity) row);
 			}
 		}
 		
@@ -95,16 +108,16 @@ public class DropListTableModel extends ListTableModel {
 	/**
 	 * Save the content of the Table Model.
 	 */
-	public void saveContent(Individual currentIndividual) {
-		// Delete all previous relations associated to this individual
-		relationDao.deleteAll(currentIndividual);
-		
+	public void saveContent(T currentEntity) {
 		// Recover the current content of the model
 		List<Entity> entityList = this.getData();
 		
+		// Delete all previous relations associated to this individual
+		relationDao.deleteAll(currentEntity);
+		
 		// Create the required relations
 		for (Entity entity: entityList) {
-			relationDao.create(currentIndividual, (Tag) entity);
+			relationDao.create(currentEntity, (U) entity);
 		}
 	}
 }

@@ -153,10 +153,11 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		List<U> data = new LinkedList<U>();
 		try{
 			String query=String.format(
-					"SELECT %s FROM %s WHERE %s = ?", 
+					"SELECT %s FROM %s WHERE %s = ? ORDER BY %s", 
 					this.variableUName,
 					this.databaseName,
-					this.variableTName
+					this.variableTName,
+					this.variableUName
 					);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, objT.getIndex());

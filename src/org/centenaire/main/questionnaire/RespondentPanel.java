@@ -8,20 +8,15 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Discipline;
-import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
@@ -29,12 +24,9 @@ import org.centenaire.entity.Institution;
 import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.util.EntityCombo;
-import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
-import org.centenaire.util.ListTableModel;
 import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
-import org.centenaire.util.transferHandler.TargetHandler;
 
 /**
  * Panel describing the current respondent.
@@ -46,7 +38,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private EntityCombo<Individual> entityCombo ;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
-	private DropListTableModel tagListTableModel;
+	private DropTable dropTable;
 	private JButton svgButton;
 	private JCheckBox lockBox;
 	private Dao daoIndiv;
@@ -85,7 +77,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 					svgButton.setEnabled(true);
 					
 					// update tagListTableModel
-					tagListTableModel.updateEntity(entity);
+					dropTable.updateEntity(entity);
 					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
@@ -162,31 +154,18 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		auxIndivPan.add(indivEditor);
 		auxIndivPan.add(institPan);
 		
-		// right: table of tags
-		// NB: needs suitable DAO method
-		tagListTableModel = new DropListTableModel(
+		// Table of tags
+		dropTable = new DropTable<Individual, Tag>(
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.TAG.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Etiquette", "Retirer"},
-				new LinkedList<Entity>()
-				) {
-			public boolean isCellEditable(int row, int col){
-				return (col == 1);
-			}
-		};
-		GTable entityList = new GTable(tagListTableModel);
-		
-		// Support for Drop
-		entityList.getTable().setDragEnabled(true);
-		entityList.getTable().setDropMode(DropMode.INSERT);
-		entityList.getTable().setTransferHandler(new TargetHandler<Tag>(EntityEnum.TAG.getValue()));
-		
-		// Choose size (width, height)
-		//entityList.setSize(50, 200);
+				new String[] {"Etiquette", "Retirer"}
+				);
 		
 		JPanel centerPan = new JPanel();
 		centerPan.setLayout(new BoxLayout(centerPan, BoxLayout.PAGE_AXIS));
 		centerPan.add(auxIndivPan);
-		centerPan.add(entityList);
+		centerPan.add(dropTable);
 		
 		// Bottom panel
 		// ==============
@@ -199,10 +178,10 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				System.out.println("Calling save button");
 				
 				Individual obj = indivEditor.getObject();
+			
+				dropTable.saveContent(obj);
 				
 				daoIndiv.update(obj);
-				
-				tagListTableModel.saveContent(obj);
 			}
 		});
 		
@@ -238,6 +217,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 			
 			// Reset indivEditor
 			indivEditor.reset();
+			
+			// Reset dropTable
+			dropTable.reset();
 			
 		} else {
 			
