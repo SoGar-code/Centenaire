@@ -48,6 +48,10 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	        jop.showMessageDialog(null,e.getMessage(),"PostgreSQLFactory -- SQLException", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
+	protected static Connection getConnection() {
+		return conn;
+	}
 
 	@Override
 	public AbstractIndividualDao getIndividualDao() {

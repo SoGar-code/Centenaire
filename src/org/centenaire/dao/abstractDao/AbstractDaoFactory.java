@@ -97,21 +97,4 @@ public abstract class AbstractDaoFactory {
 		}
 	}
 	
-	public static AbstractDaoFactory getFactory(){
-		ConnectionDialog dialogConn = new ConnectionDialog();
-		String[] infoConn = dialogConn.showConnectionDialog();
-		
-		// Compare with available options in DialogConnection
-		// Deduce what kind of Database is used
-		if (new String("bdd_centenaire_test").equals(infoConn[3])){
-			return new PostgreSQLFactory(infoConn);
-		}
-		else {
-			System.out.println("AbstractDaoFactory.getFactory() -- unknown database");
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, null,"AbstractDaoFactory.getFactory() -- unknown database!",JOptionPane.ERROR_MESSAGE);
-			return null;			
-		}
-
-	}
 }

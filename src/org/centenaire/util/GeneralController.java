@@ -9,9 +9,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.dao.abstractDao.AbstractRelationDaoFactory;
+import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
+import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationFactory;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.Tag;
 import org.centenaire.util.observer.Observable;
@@ -49,7 +53,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * 
 	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
-	private int nbChannels = 12;
+	private int nbChannels = 23;
 	
 	/**
 	 * List of channels to use for the Publisher-Subscriber pattern.
@@ -60,8 +64,19 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	
 	/**
 	 * Implicitly, df encodes which type of Database we are using in this instance.
+	 * 
+	 * <p>The connection is not coded as such in GeneralController, 
+	 * this factory object is used instead.</p>
 	 */
 	private static AbstractDaoFactory df;
+	
+	/**
+	 * Implicitly, rdf encodes which type of Database we are using in this instance.
+	 * 
+	 * <p>The connection is not coded as such in GeneralController, 
+	 * this additional factory object is used instead.</p>
+	 */
+	private static AbstractRelationDaoFactory rdf;
 	
 	/**
 	 * The *currentEntity* variables encodes the kind of entity under consideration at the moment.
@@ -85,8 +100,8 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * Private constructor of the Singleton class GeneralController.
 	 */
 	private GeneralController(){
-		// Generate a suitable data factory
-		df = AbstractDaoFactory.getFactory();
+		// Generate suitable data factories
+		this.establishConnection();
 		
 		// Initialize 'listChannels'
 		listChannels = new ArrayList<Channel>();
@@ -96,9 +111,33 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 		}
 	}
 	
-	
 	public static GeneralController getInstance(){
 		return gc;
+	}
+	
+	/**
+	 * Method to create connection and thus choose the factories for the Dao.
+	 * 
+	 * <p>This method has no output, but it provides instances for both 
+	 * DaoFactory and RelationDaoFactory.</p>
+	 */
+	public void establishConnection() {
+		ConnectionDialog dialogConn = new ConnectionDialog();
+		String[] infoConn = dialogConn.showConnectionDialog();
+		
+		// Compare with available options in DialogConnection
+		// Deduce what kind of Database is used
+		if (new String("bdd_centenaire_test").equals(infoConn[3])){
+			this.df = new PostgreSQLFactory(infoConn);
+			
+			// NB: this constructor uses 'PostgreSQLFactory' and its connection.
+			this.rdf = new PostgreSQLRelationFactory();
+		}
+		else {
+			System.out.println("GeneralController.establishConnection() -- unknown database");
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, null,"GeneralController.establishConnection() -- unknown database!",JOptionPane.ERROR_MESSAGE);			
+		}
 	}
 
 	public LinkedList<Entity> getCurrentData() {
