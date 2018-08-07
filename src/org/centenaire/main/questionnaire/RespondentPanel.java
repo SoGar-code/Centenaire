@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.DropMode;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
@@ -44,22 +46,17 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private EntityCombo<Individual> entityCombo ;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
-	private ListTableModel tagListTableModel;
+	private DropListTableModel tagListTableModel;
 	private JButton svgButton;
 	private JCheckBox lockBox;
 	private Dao daoIndiv;
 	private Dao daoTag;
 	
-	/**
-	 * Currently selected individual
-	 */
-	private Individual currentIndividual;
-	
 	RespondentPanel(){
 		super();
 		
+		// Generic data objects
 		GeneralController gc = GeneralController.getInstance();
-		
 		daoIndiv = gc.getIndividualDao();
 		
 		// Top panel
@@ -86,6 +83,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				
 					// enable the save button
 					svgButton.setEnabled(true);
+					
+					// update tagListTableModel
+					tagListTableModel.updateEntity(entity);
 					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
@@ -137,7 +137,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JPanel institPan = new JPanel(new GridLayout(4, 2));
 		
 		JLabel institLab = new JLabel("Institution : ");
-		EntityCombo<Institution> institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());		
+		EntityCombo<Institution> institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
 		
 		JLabel statusLab = new JLabel("Statut : ");
 		EntityCombo<InstitStatus> statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
@@ -162,30 +162,26 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		auxIndivPan.add(indivEditor);
 		auxIndivPan.add(institPan);
 		
-		// Create a minimal TagList
-		Tag defaultTag = new Tag("Valeur par défaut");
-		LinkedList<Entity> listEntity = new LinkedList<Entity>();
-		listEntity.add(defaultTag);
-		
 		// right: table of tags
 		// NB: needs suitable DAO method
-		tagListTableModel = new ListTableModel(
+		tagListTableModel = new DropListTableModel(
 				new Class[] {String.class, Delete.class},
 				new String[] {"Etiquette", "Retirer"},
-				listEntity
+				new LinkedList<Entity>()
 				) {
 			public boolean isCellEditable(int row, int col){
 				return (col == 1);
 			}
 		};
 		GTable entityList = new GTable(tagListTableModel);
+		
 		// Support for Drop
 		entityList.getTable().setDragEnabled(true);
 		entityList.getTable().setDropMode(DropMode.INSERT);
 		entityList.getTable().setTransferHandler(new TargetHandler<Tag>(EntityEnum.TAG.getValue()));
 		
 		// Choose size (width, height)
-		entityList.setSize(50, 200);
+		//entityList.setSize(50, 200);
 		
 		JPanel centerPan = new JPanel();
 		centerPan.setLayout(new BoxLayout(centerPan, BoxLayout.PAGE_AXIS));
@@ -205,6 +201,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				Individual obj = indivEditor.getObject();
 				
 				daoIndiv.update(obj);
+				
+				tagListTableModel.saveContent(obj);
 			}
 		});
 		
@@ -220,18 +218,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		// register for Individual channel
 		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(this);
-	}
-	
-	/**
-	 * Method to update the variable 'currentIndividual'.
-	 * 
-	 * @param indiv
-	 * 			new value of 'currentIndividual'
-	 */
-	public void setCurrentIndividual(Individual indiv) {
-		this.currentIndividual = indiv;
-		
-		// Should notify 'Questionnaire'... (possibly using 
 	}
 	
 	/**
@@ -273,5 +259,4 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		// Should do something about tagListTableModel ...
 	}
-	
 }

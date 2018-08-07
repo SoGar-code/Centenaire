@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.TagLike;
 
 /**
  * Relation DAO for a PostgreSQL database.
@@ -159,8 +158,9 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 					this.databaseName,
 					this.variableTName
 					);
-			
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, objT.getIndex());
+			
 			ResultSet res = state.executeQuery();
 			
 			// Recover suitable Dao
@@ -184,6 +184,40 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		} catch (Exception e){
 			e.printStackTrace();
 			return null;
+		}
+	};
+	
+	/**
+	 * Delete all relations involving the object 'objT'.
+	 * 
+	 * @param objT
+	 */
+	@Override
+	public boolean deleteAll(T objT) {
+		try{
+			String query=String.format(
+					"DELETE FROM %s WHERE %s = ?", 
+					this.databaseName,
+					this.variableTName
+					);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, objT.getIndex());
+			
+			int nb_rows = state.executeUpdate();
+			System.out.println("PostgreSQLRelationDao.deleteAll: deleted "+nb_rows+" lines");
+			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(this.classIndex);
+			
+			return true;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLRelationDao.deleteAll -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
 		}
 	};
 }

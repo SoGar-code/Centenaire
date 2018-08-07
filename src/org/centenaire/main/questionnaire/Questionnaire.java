@@ -16,8 +16,6 @@ import org.centenaire.entity.Individual;
 
 /**
  * The JFrame corresponding to the questionnaire part of the system.
- * 
- * @author OG
  *
  */
 public class Questionnaire extends JFrame {
@@ -27,7 +25,7 @@ public class Questionnaire extends JFrame {
 	public Questionnaire() {
 		super();
 		// size: (width, height)
-		this.setSize(920, 600);
+		this.setSize(900, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel content = new JPanel();
@@ -37,18 +35,19 @@ public class Questionnaire extends JFrame {
 		JPanel respondent = new RespondentPanel();
 		content.add(respondent);
 		
+		// Panel containing questions
 		JPanel question;
 		
 		JPanel q_I_1 = new Question_I_1();
 		content.add(q_I_1);
 		
 		// Questions 1 to 25: generate and assemble!
-		for (int i = 0; i <= 25; i++){
-			String body = String.format("Contenu de la question %d. Ce contenu peut-être "
-					+ "très très très très très très très long...", i);
-			question = this.createQuestion(i, body);
-			content.add(question);
-		}
+//		for (int i = 0; i <= 25; i++){
+//			String body = String.format("Contenu de la question %d. Ce contenu peut-être "
+//					+ "très très très très très très très long...", i);
+//			question = this.createQuestion(i, body);
+//			content.add(question);
+//		}
 		
 		JScrollPane wrapper = new JScrollPane(content);
 		wrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

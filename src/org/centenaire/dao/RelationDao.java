@@ -56,6 +56,28 @@ public abstract class RelationDao<T extends Entity, U extends Entity> implements
 	public abstract List<U> findAll(T objT);
 	
 	/**
+	 * Delete all relations involving the object 'objT'.
+	 * 
+	 * @param objT
+	 */
+	public abstract boolean deleteAll(T objT);
+	
+	/**
+	 * Define a list of relations involving 'objT' and the prescribed list of U objects.
+	 * 
+	 * @param objT
+	 * @param listU
+	 * @return
+	 */
+	public boolean createAll(T objT, List<U> listU) {
+		boolean test = true;
+		for (U objU:listU) {
+			test &= create(objT, objU);
+		}
+		return test;
+	}
+	
+	/**
 	 * Method to implement the Publisher interface of the Publisher-Subscriber pattern.
 	 * 
 	 * @see org.centenaire.util.pubsub.Subscriber

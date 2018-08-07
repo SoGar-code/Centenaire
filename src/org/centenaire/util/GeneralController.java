@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 
 import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
+import org.centenaire.dao.RelationDao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.dao.abstractDao.AbstractRelationDaoFactory;
@@ -202,6 +203,13 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	
 	public Dao<?> getDao(int i){
 		return df.getDao(i);
+	}
+	
+	//===================================
+	// management of relation Dao
+	//===================================
+	public RelationDao<?, ?> getRelationDao(int indexClass){
+		return rdf.getRelationDao(indexClass);
 	}
 	
 	//=================================

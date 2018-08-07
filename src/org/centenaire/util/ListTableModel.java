@@ -22,7 +22,7 @@ import org.centenaire.util.observer.Observer;
  */
 public class ListTableModel extends AbstractTableModel implements Observer{
 
-	private LinkedList<Entity> data;
+	protected LinkedList<Entity> data;
 
 	protected Class[] listClass;
 	protected String[] title;
@@ -120,7 +120,6 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 
 	public void editRow(int row) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
@@ -131,17 +130,4 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		return entity;
 	}
 	
-	/**
-	 * Include additional rows in data.
-	 * 
-	 * <p>For the moment, the additional data is appended
-	 * to the existing one. More precise behavior, such as 
-	 * inserting at a given position, would require an improved
-	 * method here!</p>
-	 * 
-	 */
-	public void addAll(List<Entity> moreData) {
-		this.data.addAll(moreData);
-		this.fireTableDataChanged();
-	}
 }

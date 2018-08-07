@@ -16,8 +16,8 @@ import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
 import org.centenaire.entity.Entity;
+import org.centenaire.main.questionnaire.DropListTableModel;
 import org.centenaire.util.GeneralController;
-import org.centenaire.util.ListTableModel;
 
 /**
  * Custom TransferHandler class for GTable with a ListTableModel.
@@ -140,7 +140,7 @@ public class TargetHandler<T> extends TransferHandler {
 			JTable table = (JTable) support.getComponent();
 			
 			// Perform the import properly speaking
-			((ListTableModel) table.getModel()).addAll(data);
+			((DropListTableModel) table.getModel()).addAll(data);
 			
 		} catch (UnsupportedFlavorException e) {
 			System.out.println("In TargetHandler.importData - unsupported flavor type!");
