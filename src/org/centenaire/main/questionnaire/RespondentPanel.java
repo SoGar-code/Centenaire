@@ -8,6 +8,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
@@ -35,10 +38,15 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class RespondentPanel extends JPanel implements Subscriber{
-	private EntityCombo<Individual> entityCombo ;
+	GeneralController gc = GeneralController.getInstance();
+	private EntityCombo<Individual> entityCombo;
+	private EntityCombo<Institution> institCombo;
+	private EntityCombo<InstitStatus> statusCombo;
+	private EntityCombo<Institution> laboCombo;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
-	private DropTable dropTable;
+	private DropTable<Individual, Tag> dropTableTag;
+	private DropTable<Individual, Discipline> dropTableDiscipline;
 	private JButton svgButton;
 	private JCheckBox lockBox;
 	private Dao daoIndiv;
@@ -48,7 +56,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		super();
 		
 		// Generic data objects
-		GeneralController gc = GeneralController.getInstance();
 		daoIndiv = gc.getIndividualDao();
 		
 		// Top panel
@@ -76,8 +83,11 @@ public class RespondentPanel extends JPanel implements Subscriber{
 					// enable the save button
 					svgButton.setEnabled(true);
 					
-					// update tagListTableModel
-					dropTable.updateEntity(entity);
+					// update dropTableTag
+					dropTableTag.updateEntity(entity);
+					
+					// update dropTableDiscipline
+					dropTableDiscipline.updateEntity(entity);
 					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
@@ -129,23 +139,18 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JPanel institPan = new JPanel(new GridLayout(4, 2));
 		
 		JLabel institLab = new JLabel("Institution : ");
-		EntityCombo<Institution> institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
+		institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
 		
 		JLabel statusLab = new JLabel("Statut : ");
-		EntityCombo<InstitStatus> statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
-		
-		JLabel disciplineLab = new JLabel("Discipline : ");
-		EntityCombo<Discipline> disciplineCombo = new EntityCombo<Discipline>(EntityEnum.DISCIPLINES.getValue());		
+		statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
 		
 		JLabel laboLab = new JLabel("Labo de recherche : ");
-		EntityCombo<Institution> laboCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
+		laboCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
 		
 		institPan.add(institLab);
 		institPan.add(institCombo);
 		institPan.add(statusLab);
 		institPan.add(statusCombo);
-		institPan.add(disciplineLab);
-		institPan.add(disciplineCombo);	
 		institPan.add(laboLab);
 		institPan.add(laboCombo);
 		
@@ -154,18 +159,33 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		auxIndivPan.add(indivEditor);
 		auxIndivPan.add(institPan);
 		
+		// Table of discipline
+		dropTableDiscipline = new DropTable<Individual, Discipline>(
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.DISCIPLINES.getValue(),
+				EntityEnum.INDIVDISCIPL.getValue(),
+				new Class[] {String.class, Delete.class},
+				new String[] {"Discipline", "Retirer"}
+				);
+		
 		// Table of tags
-		dropTable = new DropTable<Individual, Tag>(
+		dropTableTag = new DropTable<Individual, Tag>(
 				EntityEnum.INDIV.getValue(),
 				EntityEnum.TAG.getValue(),
+				EntityEnum.INDIVTAG.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Etiquette", "Retirer"}
+				new String[] {"Taxinomie", "Retirer"}
 				);
+		
+		JPanel dropTablePan = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		dropTablePan.add(dropTableDiscipline);
+		dropTablePan.add(new JLabel(" "));
+		dropTablePan.add(dropTableTag);
 		
 		JPanel centerPan = new JPanel();
 		centerPan.setLayout(new BoxLayout(centerPan, BoxLayout.PAGE_AXIS));
 		centerPan.add(auxIndivPan);
-		centerPan.add(dropTable);
+		centerPan.add(dropTablePan);
 		
 		// Bottom panel
 		// ==============
@@ -179,7 +199,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				
 				Individual obj = indivEditor.getObject();
 			
-				dropTable.saveContent(obj);
+				dropTableTag.saveContent(obj);
+				
+				dropTableDiscipline.saveContent(obj);
 				
 				daoIndiv.update(obj);
 			}
@@ -218,14 +240,18 @@ public class RespondentPanel extends JPanel implements Subscriber{
 			// Reset indivEditor
 			indivEditor.reset();
 			
-			// Reset dropTable
-			dropTable.reset();
+			// Reset dropTableTag
+			dropTableTag.reset();
+
+			// Reset dropTableDiscipline
+			dropTableDiscipline.reset();
 			
 		} else {
 			
 			// When 'lock' is selected, update indivEditor with current selected individual
 			Individual indiv = (Individual) entityCombo.getSelectedItem();
 			
+			// Find latest 'version' of this individual
 			Individual newIndiv = (Individual) daoIndiv.find(indiv.getIndex());
 			
 			indivEditor.setObject(newIndiv);
@@ -240,5 +266,30 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		entityCombo.addActionListener(comboListener);
 		
 		// Should do something about tagListTableModel ...
+	}
+	
+	/**
+	 * Set the values of 'institPan' according to 'currentIndiv'
+	 * 
+	 * @param currentIndiv
+	 */
+	public void updateInstitPanel(Individual currentIndiv) {
+		// Recover suitable discipline
+//		RelationDao<Individual, Discipline> indivDiscipl = (RelationDao<Individual, Discipline>) gc.getRelationDao(EntityEnum.INDIVDISCIPL.getValue());
+//		List<Discipline> disciplList = indivDiscipl.findAll(currentIndiv);
+//		disciplineCombo.setSelectedEntity(disciplList.get(0));
+//		
+//		private EntityCombo<Institution> institCombo;
+//		private EntityCombo<InstitStatus> statusCombo;
+//		private EntityCombo<Institution> laboCombo;
+	}
+	
+	/**
+	 * Save the values of 'institPan'
+	 * 
+	 */
+	public void saveInstitPan(Individual currentIndiv) {
+//		Discipline discipl = disciplineCombo.getSelectedEntity();
+		
 	}
 }

@@ -37,10 +37,11 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	public DropListTableModel(
 			Class[] listClass, 
 			String[] title,
-			int classIndexU) {
+			int classIndexU,
+			int classIndexRelation) {
 		super(listClass, title, new LinkedList<Entity>());
 		
-		relationDao = (RelationDao<T, U>) gc.getRelationDao(EntityEnum.INDIVTAG.getValue());
+		relationDao = (RelationDao<T, U>) gc.getRelationDao(classIndexRelation);
 
 	}
 	

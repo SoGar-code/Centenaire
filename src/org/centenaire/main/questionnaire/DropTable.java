@@ -17,8 +17,8 @@ import org.centenaire.util.transferHandler.TargetHandler;
  */
 public class DropTable<T extends Entity, U extends Entity> extends GTable {
 
-	public DropTable(int classIndexT, int classIndexU, Class[] listClass, String[] title) {
-		super(new DropListTableModel<T, U>(listClass, title, classIndexU));
+	public DropTable(int classIndexT, int classIndexU, int classIndexRelation, Class[] listClass, String[] title) {
+		super(new DropListTableModel<T, U>(listClass, title, classIndexU, classIndexRelation));
 		
 		// Support for Drop
 		this.getTable().setDragEnabled(true);

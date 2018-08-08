@@ -90,6 +90,8 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 			state.setInt(2, objU.getIndex());
 			int nb_rows = state.executeUpdate();
 			
+			System.out.println("PostgreSQLRelationDao.create -- created "+nb_rows+" line.");
+			
 			state.close();
 			
 			// Notify the Dispatcher on a suitable channel.
