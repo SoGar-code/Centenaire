@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -71,8 +72,8 @@ public class ItemTab extends JPanel implements Subscriber{
 		
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
-				new Class[] {String.class},
-				new String[] {"Nom"},
+				new Class[] {String.class, String.class, Date.class},
+				new String[] {"Nom", "Type", "Date de début"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);

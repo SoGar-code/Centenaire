@@ -203,6 +203,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				
 				dropTableDiscipline.saveContent(obj);
 				
+				// NB: updating individual triggers a 'subscriber update'
+				// including (possibly) a reset of the droptables,
+				// so it has to be done last!
 				daoIndiv.update(obj);
 			}
 		});

@@ -136,6 +136,8 @@ public class Event extends Entity {
 		case 0:
 			return short_name;
 		case 1:
+			return eventType;
+		case 2:
 			return startDate;
 		default:
 			return "-";

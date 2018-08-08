@@ -80,6 +80,8 @@ public class Item extends Entity {
 		case 0:
 			return title;
 		case 1:
+			return itemType;
+		case 2:
 			return startDate;
 		default:
 			return "-";
