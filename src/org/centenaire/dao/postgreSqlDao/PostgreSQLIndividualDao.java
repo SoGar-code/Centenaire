@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
-import org.centenaire.main.editwindow.ExtraInfoStudent;
 
 /**
  * DAO for a PostgreSQL database, relative to 'Individual' Entity.
@@ -231,4 +230,84 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return null;
 		}
 	}
+	
+	/**
+	 * Generic method to set a string 'content' into a prescribed variable 'variableName'.
+	 * 
+	 * @param indiv
+	 * @param variableName
+	 * @param content
+	 * @return
+	 */
+	public boolean setStringContent(Individual indiv, String variableName, String content) {
+		try{
+			String query=String.format(
+					"UPDATE individuals SET %s = ? WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(2, indiv.getIndex());
+			state.setString(1, content);
+			
+			int nb_rows = state.executeUpdate();
+			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.INDIV.getValue());
+			
+			return true;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.setStringContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean setQ1(Individual indiv, String content) {
+		return setStringContent(indiv, "question_one", content);
+	}
+
+	@Override
+	public boolean setQ2(Individual indiv, String content) {
+		return setStringContent(indiv, "question_two", content);
+	}
+	
+	public String getStringContent(Individual indiv, String variableName) {
+		try{
+			String query=String.format(
+					"SELECT %s FROM individuals WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, indiv.getIndex());
+			ResultSet res = state.executeQuery();
+			res.first();
+			
+			String content = res.getString(variableName);
+			
+			res.close();
+			state.close();
+			return content;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.getStringContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return null;
+		} catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}	
+	}
+	
+	@Override
+	public String getQ1(Individual indiv) {
+		return getStringContent(indiv, "question_one");
+	}
+
+	@Override
+	public String getQ2(Individual indiv) {
+		return getStringContent(indiv, "question_two");
+	}
+	
 }

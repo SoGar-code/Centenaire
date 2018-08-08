@@ -87,4 +87,14 @@ public abstract class QuestionTemplate extends JPanel {
 	 * It is the one called when pressing the save button.</p>
 	 */
 	public abstract void saveQuestion();
+	
+	/**
+	 * Set the content of the question (when changing individual, for instance).
+	 */
+	public abstract void setQuestion();
+	
+	/**
+	 * Reset the content of the question
+	 */
+	public abstract void resetQuestion();
 }

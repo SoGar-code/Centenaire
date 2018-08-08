@@ -3,9 +3,6 @@
  */
 package org.centenaire.util.pubsub;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Class implementing Dispatcher of a Publisher-Subscriber pattern.
  * 

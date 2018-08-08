@@ -18,11 +18,13 @@ import org.centenaire.dao.abstractDao.AbstractRelationDaoFactory;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationFactory;
 import org.centenaire.entity.Entity;
+import org.centenaire.entity.Individual;
 import org.centenaire.entity.Tag;
 import org.centenaire.util.observer.Observable;
 import org.centenaire.util.observer.Observer;
 import org.centenaire.util.pubsub.Channel;
 import org.centenaire.util.pubsub.Dispatcher;
+import org.centenaire.util.pubsub.Publisher;
 
 /**
  * Class used to store data regarding the current state of the interface.
@@ -48,7 +50,7 @@ import org.centenaire.util.pubsub.Dispatcher;
  * @see org.centenaire.util.pubsub.Dispatcher
  * 
  */
-public class GeneralController implements Observable, ChangeListener, Dispatcher{
+public class GeneralController implements Observable, ChangeListener, Dispatcher, Publisher{
 	/**
 	 * Controls the number of channels in the Publisher-Subscriber pattern.
 	 * 
@@ -78,6 +80,11 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * this additional factory object is used instead.</p>
 	 */
 	private static AbstractRelationDaoFactory rdf;
+	
+	/**
+	 * Save the 'Individual' object under consideration (in the questionnaire), if any.
+	 */
+	private Individual currentIndividual = null;
 	
 	/**
 	 * The *currentEntity* variables encodes the kind of entity under consideration at the moment.
@@ -270,5 +277,33 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	// ===========
 	public DataFlavor getLinkedListFlavor() {
 		return this.linkedListFlavor;
+	}
+	
+	// currentIndividual
+	// ==================
+	/**
+	 * Set variable 'currentIndividual'.
+	 * 
+	 * <p>This would be a good place to notify
+	 * components about a change of 'currentIndividual'.</p>
+	 * 
+	 * @param currentIndividual
+	 */
+	public void setCurrentIndividual(Individual currentIndividual) {
+		this.currentIndividual = currentIndividual;
+		publish(0);
+	}
+	
+	public Individual getCurrentIndividual() {
+		return this.currentIndividual;
+	}
+
+	@Override
+	public void publish(int channelIndex) {
+		// Get the requested channel from Dispatcher
+		Channel channel = getChannel(channelIndex);
+		
+		// Publish on that channel
+		channel.publish(channelIndex);
 	}
 }

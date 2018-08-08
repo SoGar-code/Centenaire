@@ -15,7 +15,9 @@ CREATE TABLE individuals(
   id SERIAL PRIMARY KEY,
   first_name text,
   last_name text,
-  birth_year integer
+  birth_year integer,
+  question_one text,
+  question_two text
 );
 
 -- types de productions

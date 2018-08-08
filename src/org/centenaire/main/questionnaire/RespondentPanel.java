@@ -89,6 +89,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 					// update dropTableDiscipline
 					dropTableDiscipline.updateEntity(entity);
 					
+					// Modify currentIndividual in gc.
+					gc.setCurrentIndividual(entity);
+					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
 							+ "not updating the panel!";
