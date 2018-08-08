@@ -68,11 +68,6 @@ public class GTable extends JScrollPane{
 	    table.setDefaultEditor(Edit.class, new ButtonEditEditor(new JCheckBox()));
 	    table.setDefaultRenderer(Edit.class, new ButtonRenderer());
 
-	    // Student CellEditor
-	    LinkedList<Individual> listIndividual = gc.getIndividualDao().findAll();
-	    JComboBox<Individual> comboIndividual = new JComboBox<Individual>(listIndividual.toArray(new Individual[listIndividual.size()]));
-	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboIndividual));
-	    
 	    // float CellEditor and renderers
 	    table.setDefaultEditor(float.class, new FloatEditor(2)); // for two decimals
 	    table.setDefaultRenderer(float.class, new FloatRenderer(2)); // for two decimals
