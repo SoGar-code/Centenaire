@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.main.editwindow.tab;
+package org.centenaire.main.editwindow;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -130,6 +130,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
+		
 		// Enable drag and define TransferHandler
 		JTable table = entityList.getTable();
 		table.setDragEnabled(true);

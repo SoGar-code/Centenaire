@@ -35,6 +35,8 @@ public abstract class AbstractRelationDaoFactory {
 	
 	public abstract RelationDao<Item, Tag> getItemTag();
 	
+	public abstract RelationDao<Individual, Item> getAuthor();
+	
 	/**
 	 * To get a Dao class indexed by an integer
 	 * 
@@ -57,6 +59,8 @@ public abstract class AbstractRelationDaoFactory {
 			return getIndivTag();
 		} else if (i == EntityEnum.ITEMTAG.getValue()) {
 			return getItemTag();
+		} else if (i == EntityEnum.AUTHOR.getValue()) {
+			return getAuthor();
 		} else {
 			System.out.println("AbstractRelationDaoFactory.getRelationDao -- type not found!");
 			return null;

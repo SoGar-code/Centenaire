@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import org.centenaire.util.GeneralController;
+
 /**
  * A template for dealing with the different questions.
  *
@@ -21,7 +23,7 @@ import javax.swing.JTextArea;
  * to be implemented in the inherited classes.</p>
  */
 public abstract class QuestionTemplate extends JPanel {
-	private static int nbQuestion = 0;
+	protected GeneralController gc = GeneralController.getInstance();
 	
 	private JTextArea questionJTA;
 	/**
@@ -29,11 +31,10 @@ public abstract class QuestionTemplate extends JPanel {
 	 */
 	private JPanel main;
 	
-	public QuestionTemplate() {
+	public QuestionTemplate(String numbering) {
 		super();
-		nbQuestion++;
 		
-		JLabel questionLab = new JLabel(String.format("Question %s.", nbQuestion));
+		JLabel questionLab = new JLabel(String.format("Question %s.", numbering));
 		questionJTA = new JTextArea();
 		questionJTA.setEditable(false);
 		questionJTA.setLineWrap(true);

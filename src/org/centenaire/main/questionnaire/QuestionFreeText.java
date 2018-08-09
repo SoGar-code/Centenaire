@@ -16,8 +16,8 @@ public class QuestionFreeText extends QuestionTemplate {
 	private JTextArea questionContent;
 	public GeneralController gc = GeneralController.getInstance();
 
-	public QuestionFreeText(String questionString){
-		super();
+	public QuestionFreeText(String numbering, String questionString){
+		super(numbering);
 
 		this.setQuestionLab(questionString);
 		

@@ -71,5 +71,16 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.TAG.getValue(),
 				EntityEnum.ITEMTAG.getValue());
 	}
+	
+	@Override
+	public RelationDao<Individual, Item> getAuthor() {
+		return new PostgreSQLRelationDao<Individual, Item>(
+				conn, 
+				"author", 
+				"indiv_id",
+				"item_id",
+				EntityEnum.ITEM.getValue(),
+				EntityEnum.ITEMTAG.getValue());
+	}
 
 }

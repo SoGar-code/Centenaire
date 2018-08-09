@@ -5,11 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
-import org.centenaire.main.editwindow.tab.EventTab;
-import org.centenaire.main.editwindow.tab.IndividualTab;
-import org.centenaire.main.editwindow.tab.InstitutionTab;
-import org.centenaire.main.editwindow.tab.ItemTab;
-import org.centenaire.main.editwindow.tab.TagLikeTab;
 import org.centenaire.util.GeneralWindow;
 
 /**

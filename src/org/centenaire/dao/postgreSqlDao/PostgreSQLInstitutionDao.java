@@ -14,8 +14,6 @@ import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.InstitutionType;
-import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
 import org.centenaire.util.GeneralController;
 
 /**

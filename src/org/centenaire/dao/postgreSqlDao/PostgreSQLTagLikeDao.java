@@ -166,17 +166,21 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 			String query=String.format("SELECT id, name FROM %s WHERE id = ?", this.databaseName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
+			
 			ResultSet res = state.executeQuery();
+			
 			res.first();
-			T tl = (T) TagLikeFactory.newElement(res.getInt("id"), 
-											res.getString("name"), 
-											this.classIndex);
+			T tl = (T) TagLikeFactory.newElement(
+										res.getInt("id"), 
+										res.getString("name"), 
+										this.classIndex
+										);
 			res.close();
 			state.close();
 			return tl;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagLikeDao.find -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -211,7 +215,7 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 			return tl;
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLTagLikeDao.anyElement -- ERROR!",JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();

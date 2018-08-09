@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.main.editwindow.tab;
+package org.centenaire.main.editwindow;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

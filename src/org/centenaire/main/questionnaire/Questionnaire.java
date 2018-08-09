@@ -5,6 +5,7 @@ package org.centenaire.main.questionnaire;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -21,8 +22,7 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class Questionnaire extends JFrame implements Subscriber{
-	private QuestionTemplate q_I_1;
-	private QuestionTemplate q_I_2;
+	private LinkedList<QuestionTemplate> questions = new LinkedList<QuestionTemplate>();
 	
 	public Questionnaire() {
 		super();
@@ -38,6 +38,7 @@ public class Questionnaire extends JFrame implements Subscriber{
 		content.add(respondent);
 		
 		// Title I separator
+		// ===================
 		JPanel titleIPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel titleILab = new JLabel("I. Activités de recherche");
 		titleILab.setFont(new Font("Serif", Font.BOLD, 18));
@@ -45,12 +46,13 @@ public class Questionnaire extends JFrame implements Subscriber{
 		content.add(titleIPan);
 		
 		// Question I 1
+		// ==============
 		String question1String = "Quels sont les thèmes de vos "
 				+ "recherches actuelles relatives à la "
 				+ "première guerre mondiale, quel est "
 				+ "le champ chronologique et géographique "
 				+ "de ces recherches ?";
-		q_I_1 = new QuestionFreeText(question1String) {
+		QuestionTemplate q_I_1 = new QuestionFreeText("1", question1String) {
 			public void saveQuestion() {
 				String q1 = this.getContent();
 				Individual indiv = gc.getCurrentIndividual();
@@ -65,11 +67,15 @@ public class Questionnaire extends JFrame implements Subscriber{
 		};
 		content.add(q_I_1);
 		
+		// add to the list of questions
+		questions.add(q_I_1);
+		
 		// Question I 2
+		// ==============
 		String question2String = "Vos recherches vous ont-elles "
 				+ "conduites à travailler sur des sources récemment "
 				+ "déposées ou rendues publiques ? Si oui, lesquelles ?";
-		q_I_2 = new QuestionFreeText(question2String) {
+		QuestionTemplate q_I_2 = new QuestionFreeText("2", question2String) {
 			public void saveQuestion() {
 				String q2 = this.getContent();
 				Individual indiv = gc.getCurrentIndividual();
@@ -84,10 +90,23 @@ public class Questionnaire extends JFrame implements Subscriber{
 		};
 		content.add(q_I_2);
 		
+		// add to the list of questions
+		questions.add(q_I_2);
+		
+		// Question 3 (initial implementation)
+		// ====================================
+		String question3String = "Publications du répondant";
+		QuestionTemplate questionItem = new QuestionItem("3", question3String);
+		content.add(questionItem);
+		
+		// add to the list of questions
+		questions.add(questionItem);
+		
+		
 		JScrollPane wrapper = new JScrollPane(content);
 		wrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
-		// Subscribe to channel 0
+		// Subscribe to channel 0 (change of currentIndividual)
 		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(0).addSubscriber(this);
 	
@@ -105,11 +124,14 @@ public class Questionnaire extends JFrame implements Subscriber{
 	 */
 	@Override
 	public void updateSubscriber(int indexClass) {
-		// Act only when channel 0 is called
+		
+		// When channel 0 is called (change of currentIndividual)
+		// set the questions with what is already known
 		if (indexClass == 0) {
-			q_I_1.setQuestion();
-			q_I_2.setQuestion();
-		}	
+			for (QuestionTemplate question: questions) {
+				question.setQuestion();
+			}
+		}
 	}
 	
 }

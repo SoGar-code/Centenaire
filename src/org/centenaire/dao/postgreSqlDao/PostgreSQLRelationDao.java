@@ -167,11 +167,11 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 			ResultSet res = state.executeQuery();
 			
 			// Recover suitable Dao
-			Dao<?> dao = RelationDao.gc.getDao(classIndexU);
+			Dao<U> dao = (Dao<U>) RelationDao.gc.getDao(classIndexU);
 			
 			while(res.next()){
 				// Get the associated U object
-				U objU = (U) dao.find(res.getInt(this.variableUName));
+				U objU = dao.find(res.getInt(this.variableUName));
 						
 				// Add it to the list
 				data.add(objU);

@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
@@ -50,7 +47,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private JButton svgButton;
 	private JCheckBox lockBox;
 	private Dao daoIndiv;
-	private Dao daoTag;
 	
 	RespondentPanel(){
 		super();

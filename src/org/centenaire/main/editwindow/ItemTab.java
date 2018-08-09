@@ -1,58 +1,61 @@
 /**
  * 
  */
-package org.centenaire.main.editwindow.tab;
+package org.centenaire.main.editwindow;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Individual;
+import org.centenaire.entity.Event;
+import org.centenaire.entity.Item;
 import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.UpdateEntityPanel;
-import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
+import org.centenaire.util.transferHandler.SourceHandler;
 
 /**
- * Class generating the tab related to the 'Individual' Entity.
+ * Class generating the tab related to the 'Event' Entity.
  * 
  * <p>In the current design, it contains a tabbed panel itself!</p>
  *
  */
-public class IndividualTab extends JPanel implements Subscriber{
+public class ItemTab extends JPanel implements Subscriber{
 	Dao<Entity> dao;
 	ListTableModel entityListTableModel;
 	
-	public IndividualTab() {
+	public ItemTab() {
 		super();
 
 		GeneralController gc = GeneralController.getInstance();
-		dao = (Dao<Entity>) gc.getDao(EntityEnum.INDIV.getValue());
+		dao = (Dao<Entity>) gc.getDao(EntityEnum.ITEM.getValue());
 		
 		// *New entity* button
 		// ====================
-		JButton newEntity = new JButton("Nouvel individu");
+		JButton newEntity = new JButton("Nouvelle production");
 		
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("IndividualTab.newEntity activated!");
+				System.out.println("ItemTab.newEntity activated!");
 
-				EntityDialog<Individual> ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
+				EntityDialog<Event> ed = new EntityDialog<Event>(EntityEnum.ITEM.getValue());
 				
-				// Open the dialog (where new individual is created)...
+				// Open the dialog (where new event is created)...
 				try {
 					ed.showEntityDialog();
 				} catch (NullPointerException e) {
@@ -66,24 +69,27 @@ public class IndividualTab extends JPanel implements Subscriber{
 		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPan.add(newEntity);
 		
-		// Creation of Individual list (already initialized)
+		// Creation of Event list (already initialized)
 		//===================================================
 		
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
-				new Class[] {String.class, String.class},
-				new String[] {"Prénom", "Nom"},
+				new Class[] {String.class, String.class, Date.class},
+				new String[] {"Nom", "Type", "Date de début"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
-		// Enable drag
-		entityList.getTable().setDragEnabled(true);
+		
+		// Enable drag and define TransferHandler
+		JTable table = entityList.getTable();
+		table.setDragEnabled(true);
+		table.setTransferHandler(new SourceHandler<Item>(EntityEnum.ITEM.getValue()));
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<Individual> uep = new UpdateEntityPanel<Individual>(EntityEnum.INDIV.getValue());
+		UpdateEntityPanel<Event> uep = new UpdateEntityPanel<Event>(EntityEnum.ITEM.getValue());
 		// uep subscribes to suitable channel 
-		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(uep);
+		gc.getChannel(EntityEnum.ITEM.getValue()).addSubscriber(uep);
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -97,7 +103,7 @@ public class IndividualTab extends JPanel implements Subscriber{
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
 		// Let component subscribe to suitable channel
-		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(this);
+		gc.getChannel(EntityEnum.ITEM.getValue()).addSubscriber(this);
 	}
 
 	/**
