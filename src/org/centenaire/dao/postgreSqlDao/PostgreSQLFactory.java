@@ -20,6 +20,9 @@ import org.centenaire.entity.Item;
 import org.centenaire.entity.ItemType;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
+import org.centenaire.entity.TaxChrono;
+import org.centenaire.entity.TaxGeo;
+import org.centenaire.entity.TaxTheme;
 import org.postgresql.util.PSQLException;
 
 /**
@@ -106,5 +109,20 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	@Override
 	public Dao<LocalType> getLocalTypeDao() {
 		return new PostgreSQLTagLikeDao(conn, "localisation_type_relations", EntityEnum.LOCALISATIONTYPE.getValue());
+	}
+	
+	@Override
+	public Dao<TaxChrono> getTaxChronoDao() {
+		return new PostgreSQLTagLikeDao(conn, "tax_chrono", EntityEnum.TAXCHRONO.getValue());
+	}
+	
+	@Override
+	public Dao<TaxGeo> getTaxGeoDao() {
+		return new PostgreSQLTagLikeDao(conn, "tax_geo", EntityEnum.TAXGEO.getValue());
+	}
+	
+	@Override
+	public Dao<TaxTheme> getTaxThemeDao() {
+		return new PostgreSQLTagLikeDao(conn, "tax_theme", EntityEnum.TAXTHEME.getValue());
 	}
 }

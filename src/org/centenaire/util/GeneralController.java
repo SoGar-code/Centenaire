@@ -56,7 +56,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * 
 	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
-	private int nbChannels = 23;
+	private int nbChannels = 26;
 	
 	/**
 	 * List of channels to use for the Publisher-Subscriber pattern.
@@ -257,8 +257,15 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	/**
 	 * Implementation of Publisher-Subscriber pattern.
 	 * 
-	 * <p>In our specific case, publishers are going to be the 
-	 * methods 'create' and 'update' in the Dao pattern.
+	 * <p>In our specific case, publishers are in particular 
+	 * linked to the methods 'create' and 'update' in the Dao pattern.</p>
+	 * 
+	 * <p>Assignments of channels:
+	 * <ul>
+	 * 		<li>in general, channels correspond to their EntityEnum class index,</li>
+	 * 		<li>except "currentEntity", which is linked to channel 0 (since the 
+	 * 			abstract class "Entity" is not used for notification).</li>
+	 * </ul>
 	 * 
 	 * @see org.centenaire.util.pubsub.Dispatcher
 	 * @see org.centenaire.dao.Dao#create(Object)

@@ -13,6 +13,7 @@ import org.centenaire.dao.abstractDao.AbstractTagLikeDao;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
+import org.centenaire.entity.TagLikeFactory;
 
 /**
  * DAO for a PostgreSQL database, relative to "TagLike" Entity.
@@ -167,7 +168,7 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			T tl = (T) TagLike.newElement(res.getInt("id"), 
+			T tl = (T) TagLikeFactory.newElement(res.getInt("id"), 
 											res.getString("name"), 
 											this.classIndex);
 			res.close();
@@ -227,7 +228,7 @@ public class PostgreSQLTagLikeDao<T extends TagLike> extends AbstractTagLikeDao<
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			while(res.next()){
-				T tl = (T) TagLike.newElement(
+				T tl = (T) TagLikeFactory.newElement(
 						res.getInt("id"),
 						res.getString("name"),
 						this.classIndex

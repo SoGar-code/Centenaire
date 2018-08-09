@@ -1,10 +1,6 @@
 package org.centenaire.dao.abstractDao;
 
-import javax.swing.JOptionPane;
-
-import org.centenaire.dao.ConnectionDialog;
 import org.centenaire.dao.Dao;
-import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
@@ -16,6 +12,9 @@ import org.centenaire.entity.Item;
 import org.centenaire.entity.ItemType;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
+import org.centenaire.entity.TaxChrono;
+import org.centenaire.entity.TaxGeo;
+import org.centenaire.entity.TaxTheme;
 
 /**
  * Factory class for Dao classes
@@ -52,6 +51,12 @@ public abstract class AbstractDaoFactory {
 	public abstract Dao<InstitStatus> getInstitStatusDao();
 	
 	public abstract Dao<LocalType> getLocalTypeDao();
+	
+	public abstract Dao<TaxChrono> getTaxChronoDao();
+
+	public abstract Dao<TaxGeo> getTaxGeoDao();
+	
+	public abstract Dao<TaxTheme> getTaxThemeDao();
 	
 	/**
 	 * To get a Dao class indexed by an integer
@@ -91,6 +96,12 @@ public abstract class AbstractDaoFactory {
 			return getInstitStatusDao();
 		} else if (i == EntityEnum.LOCALISATIONTYPE.getValue()) {
 			return getLocalTypeDao();
+		} else if (i == EntityEnum.TAXCHRONO.getValue()) {
+			return getTaxChronoDao();
+		} else if (i == EntityEnum.TAXGEO.getValue()) {
+			return getTaxGeoDao();
+		} else if (i == EntityEnum.TAXTHEME.getValue()) {
+			return getTaxThemeDao();
 		} else {
 			System.out.println("AbstractDaoFactory.getDao -- type not found!");
 			return null;

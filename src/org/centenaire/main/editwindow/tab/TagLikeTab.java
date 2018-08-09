@@ -54,13 +54,18 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		dao = (Dao<Entity>) gc.getDao(classIndex);
 		
 		// Supported types of 'Entity':
-		EntityEnum[] entityEnumList = {EntityEnum.ITEMTYPE, 
+		EntityEnum[] entityEnumList = {
+				EntityEnum.ITEMTYPE, 
 				EntityEnum.EVENTTYPE,
 				EntityEnum.INSTITTYPE,
 				EntityEnum.TAG,
 				EntityEnum.DISCIPLINES,
 				EntityEnum.INSTITSTATUS,
-				EntityEnum.LOCALISATIONTYPE};
+				EntityEnum.LOCALISATIONTYPE,
+				EntityEnum.TAXCHRONO,
+				EntityEnum.TAXGEO,
+				EntityEnum.TAXCHRONO,
+				};
 		
 		// Creation of 'modifier' pane (CardLayout)
 		//===================================================
@@ -87,8 +92,6 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// associated action
 		entityCombo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("TagLikeTab.entityCombo activated!");
-
 				try {		
 					// recover the currently selected object
 					EntityEnum entityEnum = (EntityEnum) entityCombo.getSelectedItem();

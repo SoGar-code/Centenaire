@@ -65,6 +65,12 @@ public class EntityEditorFactory {
 			return new TagLikeEditor();
 		} else if (classIndex == EntityEnum.LOCALISATIONTYPE.getValue()) {
 			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.TAXCHRONO.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.TAXGEO.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.TAXTHEME.getValue()) {
+			return new TagLikeEditor();
 		} else {
 			System.out.println("EntityEditorFactory.getEntityEditor -- entity not found!");
 			return null;

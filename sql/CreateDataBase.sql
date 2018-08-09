@@ -4,7 +4,7 @@
 
 -- with PostgreSQL (and OS = Windows):
 -- CREATE DATABASE bdd_centenaire;
--- \c bdd_centenaire
+-- \c bdd_centenaire_test
 -- \i path/to/folder/CreateDataBase.sql
 
 
@@ -152,4 +152,22 @@ CREATE TABLE Localisations(
   instit_id integer REFERENCES Institutions,
   loc_type integer references Localisation_Type_relations,
   PRIMARY KEY (event_id, instit_id)
+);
+
+-- taxinomie chronologique
+CREATE TABLE tax_chrono(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- taxinomie géographique
+CREATE TABLE tax_geo(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- taxinomie thématique
+CREATE TABLE tax_theme(
+  id SERIAL PRIMARY KEY,
+  name text
 );
