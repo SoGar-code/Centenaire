@@ -64,7 +64,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				EntityEnum.LOCALISATIONTYPE,
 				EntityEnum.TAXCHRONO,
 				EntityEnum.TAXGEO,
-				EntityEnum.TAXCHRONO,
+				EntityEnum.TAXTHEME,
 				};
 		
 		// Creation of 'modifier' pane (CardLayout)
