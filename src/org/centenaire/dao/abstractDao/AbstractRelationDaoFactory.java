@@ -1,14 +1,11 @@
 package org.centenaire.dao.abstractDao;
 
-import javax.swing.JOptionPane;
-
-import org.centenaire.dao.ConnectionDialog;
-import org.centenaire.dao.Dao;
 import org.centenaire.dao.RelationDao;
-import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
+import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.Tag;
 
@@ -35,7 +32,17 @@ public abstract class AbstractRelationDaoFactory {
 	
 	public abstract RelationDao<Item, Tag> getItemTag();
 	
+	public abstract RelationDao<Event, Tag> getEventTag();
+	
 	public abstract RelationDao<Individual, Item> getAuthor();
+	
+	public abstract RelationDao<Individual, Item> getDirection();
+	
+	public abstract RelationDao<Individual, Event> getOrg();
+	
+	public abstract RelationDao<Individual, Event> getParticipant();
+	
+	public abstract RelationDao<Item, Institution> getAffiliation();
 	
 	/**
 	 * To get a Dao class indexed by an integer
@@ -59,10 +66,23 @@ public abstract class AbstractRelationDaoFactory {
 			return getIndivTag();
 		} else if (i == EntityEnum.ITEMTAG.getValue()) {
 			return getItemTag();
+		} else if (i == EntityEnum.EVENTTAG.getValue()) {
+			return getEventTag();
 		} else if (i == EntityEnum.AUTHOR.getValue()) {
 			return getAuthor();
+		} else if (i == EntityEnum.DIRECTION.getValue()) {
+			return getDirection();
+		} else if (i == EntityEnum.ORG.getValue()) {
+			return getOrg();
+		} else if (i == EntityEnum.PARTICIPANT.getValue()) {
+			return getParticipant();
+		} else if (i == EntityEnum.AFFILIATION.getValue()) {
+			return getAffiliation();
 		} else {
-			System.out.println("AbstractRelationDaoFactory.getRelationDao -- type not found!");
+			String msg = String.format(
+					"AbstractRelationDaoFactory.getRelationDao -- type '%s' not found!",
+					i);
+			System.out.println(msg);
 			return null;
 		}
 	}

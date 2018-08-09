@@ -17,7 +17,12 @@ CREATE TABLE individuals(
   last_name text,
   birth_year integer,
   question_one text,
-  question_two text
+  question_two text,
+  question_three text,
+  question_concern text,
+  question_comittee text,
+  question_contribution text,
+  question_dev text
 );
 
 -- types de productions

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.util.transferHandler;
+package org.centenaire.util.dragndrop;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;

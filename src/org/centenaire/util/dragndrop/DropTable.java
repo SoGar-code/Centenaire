@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.main.questionnaire;
+package org.centenaire.util.dragndrop;
 
 import java.util.LinkedList;
 
@@ -16,7 +16,6 @@ import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.editorsRenderers.ButtonRenderer;
-import org.centenaire.util.transferHandler.TargetHandler;
 
 /**
  * Component used for dropping item and updating relations.
@@ -26,9 +25,26 @@ import org.centenaire.util.transferHandler.TargetHandler;
  *
  */
 public class DropTable<T extends Entity, U extends Entity> extends GTable {
-
-	public DropTable(int classIndexT, int classIndexU, int classIndexRelation, Class[] listClass, String[] title) {
-		super(new DropListTableModel<T, U>(listClass, title, classIndexU, classIndexRelation));
+	
+	/**
+	 * 
+	 * @param classIndexT
+	 * @param classIndexU
+	 * @param classIndexRelation
+	 * @param listClass
+	 * @param title
+	 * @param deleteColumn
+	 * 				defines which column contains the 'delete' button (it should be possible to edit it!).
+	 */
+	public DropTable(
+			int classIndexT, 
+			int classIndexU, 
+			int classIndexRelation, 
+			Class[] listClass, 
+			String[] title,
+			int deleteColumn
+			) {
+		super(new DropListTableModel<T, U>(listClass, title, classIndexU, classIndexRelation, deleteColumn));
 		
 		// Support for Drop
 		this.getTable().setDragEnabled(true);

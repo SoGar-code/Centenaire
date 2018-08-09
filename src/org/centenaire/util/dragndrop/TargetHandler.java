@@ -3,7 +3,7 @@
  * 
  * <p>This package could also be used to support Copy/Cut and Paste.</p>
  */
-package org.centenaire.util.transferHandler;
+package org.centenaire.util.dragndrop;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -16,7 +16,6 @@ import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
 import org.centenaire.entity.Entity;
-import org.centenaire.main.questionnaire.DropListTableModel;
 import org.centenaire.util.GeneralController;
 
 /**

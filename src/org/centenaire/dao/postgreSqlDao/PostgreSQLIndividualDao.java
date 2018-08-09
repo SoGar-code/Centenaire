@@ -275,6 +275,31 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		return setStringContent(indiv, "question_two", content);
 	}
 	
+	@Override
+	public boolean setQ3(Individual indiv, String content) {
+		return setStringContent(indiv, "question_three", content);
+	}
+	
+	@Override
+	public boolean setQuestionConcern(Individual indiv, String content) {
+		return setStringContent(indiv, "question_concern", content);
+	}
+
+	@Override
+	public boolean setQuestionComittee(Individual indiv, String content) {
+		return setStringContent(indiv, "question_comittee", content);
+	}
+
+	@Override
+	public boolean setQuestionContribution(Individual indiv, String content) {
+		return setStringContent(indiv, "question_contribution", content);
+	}
+
+	@Override
+	public boolean setQuestionDev(Individual indiv, String content) {
+		return setStringContent(indiv, "question_dev", content);
+	}
+	
 	public String getStringContent(Individual indiv, String variableName) {
 		try{
 			String query=String.format(
@@ -310,4 +335,28 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		return getStringContent(indiv, "question_two");
 	}
 	
+	@Override
+	public String getQ3(Individual indiv) {
+		return getStringContent(indiv, "question_three");
+	}
+
+	@Override
+	public String getQuestionConcern(Individual indiv) {
+		return getStringContent(indiv, "question_concern");
+	}
+
+	@Override
+	public String getQuestionComittee(Individual indiv) {
+		return getStringContent(indiv, "question_comittee");
+	}
+
+	@Override
+	public String getQuestionContribution(Individual indiv) {
+		return getStringContent(indiv, "question_contribution");
+	}
+
+	@Override
+	public String getQuestionDev(Individual indiv) {
+		return getStringContent(indiv, "question_dev");
+	}
 }

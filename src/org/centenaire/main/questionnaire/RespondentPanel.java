@@ -25,6 +25,7 @@ import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GeneralController;
+import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
 
@@ -164,7 +165,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				EntityEnum.DISCIPLINES.getValue(),
 				EntityEnum.INDIVDISCIPL.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Discipline", "Retirer"}
+				new String[] {"Discipline", "Retirer"},
+				1
 				);
 		
 		// Table of tags
@@ -173,7 +175,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				EntityEnum.TAG.getValue(),
 				EntityEnum.INDIVTAG.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Taxinomie", "Retirer"}
+				new String[] {"Mot-clef", "Retirer"},
+				1
 				);
 		
 		JPanel dropTablePan = new JPanel(new FlowLayout(FlowLayout.CENTER));

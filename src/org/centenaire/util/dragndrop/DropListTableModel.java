@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.main.questionnaire;
+package org.centenaire.util.dragndrop;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +26,7 @@ import org.centenaire.util.ListTableModel;
  */
 public class DropListTableModel<T extends Entity, U extends Entity> extends ListTableModel {
 	private RelationDao<T, U> relationDao;
+	private int deleteColumn;
 	
 	/**
 	 * Constructor for 'DropListTableModel', including the class index of the item displayed.
@@ -38,10 +39,12 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 			Class[] listClass, 
 			String[] title,
 			int classIndexU,
-			int classIndexRelation) {
+			int classIndexRelation, 
+			int deleteColumn) {
 		super(listClass, title, new LinkedList<Entity>());
 		
 		relationDao = (RelationDao<T, U>) gc.getRelationDao(classIndexRelation);
+		this.deleteColumn = deleteColumn;
 
 	}
 	
@@ -50,7 +53,7 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	 */
 	@Override
 	public boolean isCellEditable(int row, int col){
-		return (col == 1);
+		return (col == this.deleteColumn);
 	};
 	
 	/**

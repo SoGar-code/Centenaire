@@ -139,6 +139,8 @@ public class Event extends Entity {
 			return eventType;
 		case 2:
 			return startDate;
+		case 3:
+			return place;
 		default:
 			return "-";
 		}

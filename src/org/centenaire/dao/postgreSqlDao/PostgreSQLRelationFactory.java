@@ -10,7 +10,9 @@ import org.centenaire.dao.abstractDao.AbstractRelationDaoFactory;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
+import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.Tag;
 
@@ -73,6 +75,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 	}
 	
 	@Override
+	public RelationDao<Event, Tag> getEventTag() {
+		return new PostgreSQLRelationDao<Event, Tag>(
+				conn, 
+				"event_tag_relations", 
+				"event_id",
+				"tag_id",
+				EntityEnum.TAG.getValue(),
+				EntityEnum.EVENTTAG.getValue());
+	}
+	
+	@Override
 	public RelationDao<Individual, Item> getAuthor() {
 		return new PostgreSQLRelationDao<Individual, Item>(
 				conn, 
@@ -81,6 +94,50 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				"item_id",
 				EntityEnum.ITEM.getValue(),
 				EntityEnum.ITEMTAG.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Item> getDirection() {
+		return new PostgreSQLRelationDao<Individual, Item>(
+				conn, 
+				"direction", 
+				"indiv_id",
+				"item_id",
+				EntityEnum.ITEM.getValue(),
+				EntityEnum.DIRECTION.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Event> getOrg() {
+		return new PostgreSQLRelationDao<Individual, Event>(
+				conn, 
+				"organizer", 
+				"indiv_id",
+				"event_id",
+				EntityEnum.EVENTS.getValue(),
+				EntityEnum.ORG.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Event> getParticipant() {
+		return new PostgreSQLRelationDao<Individual, Event>(
+				conn, 
+				"participant", 
+				"indiv_id",
+				"event_id",
+				EntityEnum.EVENTS.getValue(),
+				EntityEnum.PARTICIPANT.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, Institution> getAffiliation() {
+		return new PostgreSQLRelationDao<Item, Institution>(
+				conn, 
+				"affiliation", 
+				"item_id",
+				"instit_id",
+				EntityEnum.INSTIT.getValue(),
+				EntityEnum.AFFILIATION.getValue());
 	}
 
 }

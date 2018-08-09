@@ -26,8 +26,8 @@ import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.UpdateEntityPanel;
+import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
-import org.centenaire.util.transferHandler.SourceHandler;
 
 /**
  * Class generating the tabs related to 'TagLike' Entity elements.
