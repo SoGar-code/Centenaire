@@ -237,8 +237,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 					"UPDATE individuals SET %s = ? WHERE id = ?",
 					variableName);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			state.setInt(2, indiv.getIndex());
 			state.setString(1, content);
+			state.setInt(2, indiv.getIndex());
 			
 			int nb_rows = state.executeUpdate();
 			state.close();
@@ -290,6 +290,89 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean setQuestionDev(Individual indiv, String content) {
 		return setStringContent(indiv, "question_dev", content);
+	}
+	
+	/**
+	 * Generic method to set an integer 'content' into a prescribed variable 'variableName'.
+	 * 
+	 * @param indiv
+	 * @param variableName
+	 * @param content
+	 * @return
+	 */
+	public boolean setIntContent(Individual indiv, String variableName, int content) {
+		try{
+			String query=String.format(
+					"UPDATE individuals SET %s = ? WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, content);
+			state.setInt(2, indiv.getIndex());
+			
+			int nb_rows = state.executeUpdate();
+			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.INDIV.getValue());
+			
+			return true;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.setIntContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean setPhdDefenseYear(Individual indiv, int content) {
+		return setIntContent(indiv, "phd_defense_year", content);
+	}
+	
+	/**
+	 * Generic method to set a boolean 'content' into a prescribed variable 'variableName'.
+	 * 
+	 * @param indiv
+	 * @param variableName
+	 * @param content
+	 * @return
+	 */
+	public boolean setBooleanContent(Individual indiv, String variableName, boolean content) {
+		try{
+			String query=String.format(
+					"UPDATE individuals SET %s = ? WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setBoolean(1, content);
+			state.setInt(2, indiv.getIndex());
+			
+			int nb_rows = state.executeUpdate();
+			state.close();
+			
+			// Notify the Dispatcher on a suitable channel.
+			this.publish(EntityEnum.INDIV.getValue());
+			
+			return true;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.setBooleanContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean setPhdOnGreatWar(Individual indiv, boolean content) {
+		return setBooleanContent(indiv, "phd_on_great_war", content);
+	}
+	
+	@Override
+	public boolean setHabilitationOnGreatWar(Individual indiv, boolean content) {
+		return setBooleanContent(indiv, "habilitation_on_great_war", content);
 	}
 	
 	public String getStringContent(Individual indiv, String variableName) {
@@ -351,4 +434,69 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	public String getQuestionDev(Individual indiv) {
 		return getStringContent(indiv, "question_dev");
 	}
+	
+	public int getIntContent(Individual indiv, String variableName) {
+		try{
+			String query=String.format(
+					"SELECT %s FROM individuals WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, indiv.getIndex());
+			ResultSet res = state.executeQuery();
+			res.first();
+			
+			int content = res.getInt(variableName);
+			
+			res.close();
+			state.close();
+			return content;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.getIntContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return -1;
+		} catch (Exception e){
+			e.printStackTrace();
+			return -1;
+		}	
+	}
+
+	@Override
+	public int getPhdDefenseYear(Individual indiv) {
+		return getIntContent(indiv, "phd_defense_year");
+	}
+	
+	public boolean getBooleanContent(Individual indiv, String variableName) {
+		try{
+			String query=String.format(
+					"SELECT %s FROM individuals WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, indiv.getIndex());
+			ResultSet res = state.executeQuery();
+			res.first();
+			
+			boolean content = res.getBoolean(variableName);
+			
+			res.close();
+			state.close();
+			return content;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.getBooleanContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}	
+	}
+	
+	@Override
+	public boolean getPhdOnGreatWar(Individual indiv) {
+		return getBooleanContent(indiv, "phd_on_great_war");
+	}
+
+	@Override
+	public boolean getHabilitationOnGreatWar(Individual indiv) {
+		return getBooleanContent(indiv, "habilitation_on_great_war");
+	};
 }

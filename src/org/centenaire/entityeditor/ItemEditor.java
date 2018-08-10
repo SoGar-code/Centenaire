@@ -1,17 +1,16 @@
 package org.centenaire.entityeditor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.ItemType;
 import org.centenaire.util.EntityCombo;
@@ -33,6 +32,9 @@ public class ItemEditor extends EntityEditor<Item> {
 		super();
 		
 		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		LocalDate localDate = LocalDate.of(2099, 12, 31);
+		Date noEnd = Date.valueOf(localDate);
+		
 		
 		// Name field
 		// =================
@@ -63,7 +65,7 @@ public class ItemEditor extends EntityEditor<Item> {
 		JLabel endDateLabel = new JLabel("Date de fin (AAAA-MM-JJ) : ");
 		endDateField = new GDateField();
 		endDateField.setColumns(12);
-		endDateField.setDate(today);
+		endDateField.setDate(noEnd);
 		
 		endDatePan.add(endDateLabel);
 		endDatePan.add(endDateField);
@@ -129,11 +131,13 @@ public class ItemEditor extends EntityEditor<Item> {
 	public void reset() {
 		
 		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		LocalDate localDate = LocalDate.of(2099, 12, 31);
+		Date noEnd = Date.valueOf(localDate);
 		
 		this.setIndexField(0);
 		titleField.setText("-");
 		startDateField.setDate(today);
-		endDateField.setDate(today);
+		endDateField.setDate(noEnd);
 		itemTypeCombo.setSelectedItem(-1);
 	}
 }

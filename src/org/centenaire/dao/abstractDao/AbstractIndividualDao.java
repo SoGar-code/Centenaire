@@ -39,6 +39,12 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	public abstract boolean setQuestionContribution(Individual indiv, String content);
 	
 	public abstract boolean setQuestionDev(Individual indiv, String content);
+	
+	public abstract boolean setPhdOnGreatWar(Individual indiv, boolean content);
+
+	public abstract boolean setHabilitationOnGreatWar(Individual indiv, boolean content);
+
+	public abstract boolean setPhdDefenseYear(Individual indiv, int content);
 
 	/**
 	 * Get the content of the Q1 variable
@@ -71,4 +77,11 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	public abstract String getQuestionContribution(Individual indiv);
 
 	public abstract String getQuestionDev(Individual indiv);
+
+	public abstract int getPhdDefenseYear(Individual indiv);
+
+	public abstract boolean getPhdOnGreatWar(Individual indiv);
+
+	public abstract boolean getHabilitationOnGreatWar(Individual indiv);
+
 }

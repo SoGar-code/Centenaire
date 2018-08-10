@@ -31,6 +31,9 @@ CREATE TABLE individuals(
   id_lab integer references institutions,
 
   -- extra variables for free text answers
+  phd_defense_year integer,
+  phd_on_great_war boolean,
+  habilitation_on_great_war boolean,
   question_one text,
   question_two text,
   question_three text,
@@ -168,13 +171,13 @@ CREATE TABLE tax_chrono(
   name text
 );
 
--- taxinomie géographique
+-- taxinomie gï¿½ographique
 CREATE TABLE tax_geo(
   id SERIAL PRIMARY KEY,
   name text
 );
 
--- taxinomie thématique
+-- taxinomie thï¿½matique
 CREATE TABLE tax_theme(
   id SERIAL PRIMARY KEY,
   name text

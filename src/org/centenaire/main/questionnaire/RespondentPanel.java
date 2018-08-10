@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
@@ -24,6 +25,7 @@ import org.centenaire.entity.Institution;
 import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
 import org.centenaire.util.EntityCombo;
+import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;
@@ -40,7 +42,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private EntityCombo<Individual> entityCombo;
 	private EntityCombo<Institution> institCombo;
 	private EntityCombo<InstitStatus> statusCombo;
-	private EntityCombo<Institution> laboCombo;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
 	private DropTable<Individual, Tag> dropTableTag;
@@ -48,6 +49,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	private JButton svgButton;
 	private JCheckBox lockBox;
 	private Dao daoIndiv;
+	private GIntegerField phdYearField;
+	private JCheckBox phdOnGreatWarField;
+	private JCheckBox habilitationOnGreatWarField;
 	
 	RespondentPanel(){
 		super();
@@ -67,27 +71,42 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// no selected element
 		entityCombo.setSelectedIndex(-1);
 		
-		// create action listener
+		// create action listener (called when new individual is selected
 		comboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {		
 					// recover the currently selected object
-					Individual entity = (Individual) entityCombo.getSelectedItem();
+					Individual currentIndividual = (Individual) entityCombo.getSelectedItem();
 
 					// update the panel accordingly
-					indivEditor.setObject(entity);
+					indivEditor.setObject(currentIndividual);
 				
 					// enable the save button
 					svgButton.setEnabled(true);
 					
 					// update dropTableTag
-					dropTableTag.updateEntity(entity);
+					dropTableTag.updateEntity(currentIndividual);
 					
 					// update dropTableDiscipline
-					dropTableDiscipline.updateEntity(entity);
+					dropTableDiscipline.updateEntity(currentIndividual);
+					
+					// Set Phd defense year
+					int phdYear = ((AbstractIndividualDao) daoIndiv).getPhdDefenseYear(
+							currentIndividual);
+					phdYearField.setIntegerValue(phdYear);
+					
+					// Save state of CheckBox
+					boolean phdOnGreatWar = ((AbstractIndividualDao) daoIndiv).getPhdOnGreatWar(
+							currentIndividual);
+					phdOnGreatWarField.setSelected(phdOnGreatWar);
+					
+					// Save state of CheckBox
+					boolean habilitationOnGreatWar = ((AbstractIndividualDao) daoIndiv).getHabilitationOnGreatWar(
+							currentIndividual);
+					habilitationOnGreatWarField.setSelected(habilitationOnGreatWar);
 					
 					// Modify currentIndividual in gc.
-					gc.setCurrentIndividual(entity);
+					gc.setCurrentIndividual(currentIndividual);
 					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
@@ -136,7 +155,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		indivEditor.setSize(100, 200);
 		
 		// Institution panel
-		JPanel institPan = new JPanel(new GridLayout(4, 2));
+		JPanel institPan = new JPanel(new GridLayout(5, 2));
 		
 		JLabel institLab = new JLabel("Institution : ");
 		institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
@@ -144,15 +163,25 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JLabel statusLab = new JLabel("Statut : ");
 		statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
 		
-		JLabel laboLab = new JLabel("Labo de recherche : ");
-		laboCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
+		JLabel phdYearLab = new JLabel("Date soutenance (si entre 2012 et 2017) : ");
+		phdYearField = new GIntegerField();
+		
+		JLabel phdOnGreatWarLab = new JLabel("Thèse portant sur la Grande Guerrre : ");
+		phdOnGreatWarField = new JCheckBox();
+
+		JLabel habilitationOnGreatWarLab = new JLabel("HDR portant sur la Grande Guerrre : ");
+		habilitationOnGreatWarField = new JCheckBox();
 		
 		institPan.add(institLab);
 		institPan.add(institCombo);
 		institPan.add(statusLab);
 		institPan.add(statusCombo);
-		institPan.add(laboLab);
-		institPan.add(laboCombo);
+		institPan.add(phdYearLab);
+		institPan.add(phdYearField);
+		institPan.add(phdOnGreatWarLab);
+		institPan.add(phdOnGreatWarField);
+		institPan.add(habilitationOnGreatWarLab);
+		institPan.add(habilitationOnGreatWarField);
 		
 		// Auxiliary 'individual' panel
 		JPanel auxIndivPan = new JPanel(new FlowLayout());
@@ -196,19 +225,32 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		svgButton.setEnabled(false);
 		
 		svgButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				System.out.println("Calling save button");
+			public void actionPerformed(ActionEvent e){			
+				Individual currentIndividual = indivEditor.getObject();
 				
-				Individual obj = indivEditor.getObject();
+				// Save Phd defense year
+				((AbstractIndividualDao) daoIndiv).setPhdDefenseYear(
+						currentIndividual,
+						phdYearField.getIntegerValue());
+				
+				// Save state of CheckBox
+				((AbstractIndividualDao) daoIndiv).setPhdOnGreatWar(
+						currentIndividual,
+						phdOnGreatWarField.isSelected());
+				
+				// Save state of CheckBox
+				((AbstractIndividualDao) daoIndiv).setHabilitationOnGreatWar(
+						currentIndividual,
+						habilitationOnGreatWarField.isSelected());
 			
-				dropTableTag.saveContent(obj);
+				dropTableTag.saveContent(currentIndividual);
 				
-				dropTableDiscipline.saveContent(obj);
+				dropTableDiscipline.saveContent(currentIndividual);
 				
 				// NB: updating individual triggers a 'subscriber update'
 				// including (possibly) a reset of the droptables,
 				// so it has to be done last!
-				daoIndiv.update(obj);
+				daoIndiv.update(currentIndividual);
 			}
 		});
 		
@@ -260,6 +302,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 			Individual newIndiv = (Individual) daoIndiv.find(indiv.getIndex());
 			
 			indivEditor.setObject(newIndiv);
+			
+			
 			
 			// Update entityCombo
 			entityCombo.setEnabled(true);

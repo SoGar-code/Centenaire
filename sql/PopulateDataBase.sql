@@ -17,6 +17,11 @@ INSERT INTO item_type_relations(name) VALUES('Numéro de revue');
 INSERT INTO item_type_relations(name) VALUES('Chapitre de livre');
 INSERT INTO item_type_relations(name) VALUES('Edition de sources');
 INSERT INTO item_type_relations(name) VALUES('Article de presse');
+INSERT INTO item_type_relations(name) VALUES('Blog');
+INSERT INTO item_type_relations(name) VALUES('MOOC');
+INSERT INTO item_type_relations(name) VALUES('Carnet de recherche (en ligne)');
+INSERT INTO item_type_relations(name) VALUES('Autre activité numérique');
+INSERT INTO item_type_relations(name) VALUES('Documentaire (gd public)');
 
 -- create types of events
 INSERT INTO event_type_relations(name) VALUES('Débat grand public');
@@ -43,6 +48,10 @@ INSERT INTO institutional_status(name) VALUES('ATER');
 -- create localisation_type_relations
 INSERT INTO localisation_type_relations(name) VALUES('Financement');
 INSERT INTO localisation_type_relations(name) VALUES('Soutien institutionnel');
+
+-- create default tags (needed for certain questions)
+INSERT INTO tags(name) VALUES('En France');
+INSERT INTO tags(name) VALUES('À l''étranger');
 
 -- create geographical taxonomy
 INSERT INTO tax_geo(name) VALUES('100 Géographie');
@@ -165,3 +174,5 @@ INSERT INTO tax_theme(name) VALUES('– 314a Mémoires et commémorations');
 INSERT INTO tax_theme(name) VALUES('– 314b Environnement/Paysage');
 INSERT INTO tax_theme(name) VALUES('– 314c Archéologie');
 
+-- create default institution
+INSERT INTO institutions(name, place, type) VALUES('Inconnu', '-', 2);
