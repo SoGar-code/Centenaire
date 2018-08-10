@@ -1,8 +1,5 @@
 package org.centenaire.entityeditor;
 
-import java.sql.Date;
-import java.util.Calendar;
-
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,10 +9,7 @@ import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.InstitutionType;
-import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
 import org.centenaire.util.EntityCombo;
-import org.centenaire.util.GDateField;
 import org.centenaire.util.GeneralController;
 
 /**

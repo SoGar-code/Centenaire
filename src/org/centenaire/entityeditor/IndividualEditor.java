@@ -5,9 +5,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.Institution;
+import org.centenaire.entity.InstitutionType;
+import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GIntegerField;
+import org.centenaire.util.GeneralController;
 
 /**
  * Class providing the editor form for 'Individual' Entity class. 
@@ -18,6 +22,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 	JTextField firstNameField;
 	JTextField lastNameField;
 	GIntegerField birthYearField;
+	EntityCombo<Institution> labCombo;
 	
 	public IndividualEditor() {
 		super();
@@ -57,11 +62,25 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		birthDayPan.add(birthYearLabel);
 		birthDayPan.add(birthYearField);
 		
+		// Lab Combo
+		// =======================
+		JPanel labPan = new JPanel();
+		JLabel labLab = new JLabel("Laboratoire (ppal) : ");
+		labCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
+		
+		// subscribe eventTypeCombo to suitable channel
+		GeneralController gc = GeneralController.getInstance();
+		gc.getChannel(EntityEnum.INSTIT.getValue()).addSubscriber(labCombo);
+		
+		labPan.add(labLab);
+		labPan.add(labCombo);
+		
 		// Final assembly
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(firstNamePan);
 		this.add(lastNamePan);
 		this.add(birthDayPan);
+		this.add(labPan);
 
 	}
 
@@ -76,8 +95,9 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		String firstName = this.firstNameField.getText();
 		String lastName = this.lastNameField.getText();
 		int birthYear = this.birthYearField.getIntegerValue();
+		Institution lab = this.labCombo.getSelectedEntity();
 
-		Individual individual = new Individual(firstName, lastName, birthYear);
+		Individual individual = new Individual(firstName, lastName, birthYear, lab);
 		individual.setIndex(index);
 		return individual;
 	}
@@ -91,6 +111,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		firstNameField.setText(obj.getFirst_name());
 		lastNameField.setText(obj.getLast_name());
 		birthYearField.setIntegerValue(obj.getBirth_year());
+		labCombo.setSelectedEntity(obj.getLab());
 	}
 	
 	/**
@@ -101,6 +122,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		firstNameField.setText("-");
 		lastNameField.setText("-");
 		birthYearField.setIntegerValue(1901);
+		labCombo.setSelectedIndex(-1);
 	}
 
 }

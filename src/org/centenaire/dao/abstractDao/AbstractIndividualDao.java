@@ -5,11 +5,6 @@ import org.centenaire.entity.Individual;
 
 public abstract class AbstractIndividualDao extends Dao<Individual> {
 	
-	// Returns an element of type Individual
-	// either an already existing one or
-	// we create and initialize a new one in the database
-	public abstract Individual anyElement();
-	
 	/**
 	 * Set the content of the Q1 variable
 	 * 

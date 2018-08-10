@@ -10,12 +10,27 @@
 
 SET client_encoding = 'Latin1';
 
+CREATE TABLE institution_type_relations(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+CREATE TABLE institutions(
+  id SERIAL PRIMARY KEY,
+  name text,
+  place text,
+  type integer references institution_type_relations
+);
+
 -- Personne
 CREATE TABLE individuals(
   id SERIAL PRIMARY KEY,
   first_name text,
   last_name text,
   birth_year integer,
+  id_lab integer references institutions,
+
+  -- extra variables for free text answers
   question_one text,
   question_two text,
   question_three text,
@@ -53,18 +68,6 @@ CREATE TABLE events(
   start_date date,
   end_date date,
   type integer references event_type_relations
-);
-
-CREATE TABLE institution_type_relations(
-  id SERIAL PRIMARY KEY,
-  name text
-);
-
-CREATE TABLE institutions(
-  id SERIAL PRIMARY KEY,
-  name text,
-  place text,
-  type integer references institution_type_relations
 );
 
 CREATE TABLE tags(

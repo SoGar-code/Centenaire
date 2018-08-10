@@ -67,6 +67,9 @@ public class EntityDialog<T> extends JDialog {
 	    	  
 	    	  GeneralController gc = GeneralController.getInstance();
 	    	  Dao<T> dao = (Dao<T>) gc.getDao(classIndex);
+	    	  
+	    	  // object is created in database,
+	    	  // no (instance) index required!
 	    	  dao.create(currentObject);
 	    	  
 	    	  // Need to notify gc!

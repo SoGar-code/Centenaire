@@ -9,9 +9,13 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.Institution;
+import org.centenaire.util.GeneralController;
 
 /**
  * DAO for a PostgreSQL database, relative to 'Individual' Entity.
@@ -45,11 +49,12 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean create(Individual obj) {
 		try{
-			String query="INSERT INTO individuals(first_name, last_name, birth_year) VALUES(?,?,?)";
+			String query="INSERT INTO individuals(first_name, last_name, birth_year, id_lab) VALUES(?,?,?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			state.setString(1, obj.getFirst_name());
 			state.setString(2, obj.getLast_name());
 			state.setInt(3, obj.getBirth_year());
+			state.setInt(4, obj.getLab().getIndex());
 			state.executeUpdate();
 			
 			// Update of the index (should be 0 up to this point)
@@ -86,12 +91,14 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean update(Individual obj) {
 		try{
-			String query="UPDATE individuals SET first_name = ?, last_name = ?, birth_year = ? WHERE id = ?";
+			String query="UPDATE individuals SET first_name = ?, last_name = ?, "
+					+ "birth_year = ?, id_lab = ? WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setString(1, obj.getFirst_name());
 			state.setString(2, obj.getLast_name());
 			state.setInt(3, obj.getBirth_year());
-			state.setInt(4, obj.getIndex());
+			state.setInt(4, obj.getLab().getIndex());
+			state.setInt(5, obj.getIndex());
 			int nb_rows = state.executeUpdate();
 			state.close();
 			
@@ -146,15 +153,24 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public Individual find(int index) {
 		try{
-			String query="SELECT id, first_name, last_name, birth_year FROM individuals WHERE id = ?";
+			String query="SELECT id, first_name, last_name, birth_year, id_lab FROM individuals WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
-			Individual individual = new Individual(res.getInt("id"),
-											 res.getString("first_name"),
-											 res.getString("last_name"),
-											 res.getInt("birth_year"));
+			
+			// All you need to recover the Institution
+			GeneralController gc = GeneralController.getInstance();
+			Dao<Entity> daoInstit = (Dao<Entity>) gc.getDao(EntityEnum.INSTIT.getValue());
+			Institution lab = (Institution) daoInstit.find(res.getInt("id_lab"));
+			
+			Individual individual = new Individual(
+											res.getInt("id"),
+											res.getString("first_name"),
+											res.getString("last_name"),
+											res.getInt("birth_year"),
+											lab
+											 );
 			res.close();
 			state.close();
 			return individual;
@@ -167,28 +183,29 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return null;
 		}	
 	}
-	
-	// Code to create a new element.
-	// NB: create updates the index
-	public Individual newElement(){
-		Individual individual = Individual.defaultElement();
-		this.create(individual);
-		return individual;
-	}
 
-	
 	public LinkedList<Individual> findAll() {
 		LinkedList<Individual> data = new LinkedList<Individual>();
 		try{
-			String query="SELECT id, first_name, last_name, birth_year FROM individuals ORDER BY last_name";
+			String query="SELECT id, first_name, last_name, birth_year, id_lab FROM individuals ORDER BY last_name";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
+			
+			// All you need to recover the Institution
+			GeneralController gc = GeneralController.getInstance();
+			Dao<Entity> daoInstit = (Dao<Entity>) gc.getDao(EntityEnum.INSTIT.getValue());
+			
 			while(res.next()){
+				// Get the lab first
+				Institution lab = (Institution) daoInstit.find(res.getInt("id_lab"));
+				
+				// Then create the individual
 				Individual individual = new Individual(
 						res.getInt("id"),
 						res.getString("first_name"),
 						res.getString("last_name"),
-						res.getInt("birth_year")
+						res.getInt("birth_year"),
+						lab
 						);
 				data.add(individual);
 			}
@@ -199,31 +216,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		} catch (SQLException e){
 			JOptionPane jop = new JOptionPane();
 			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.findAll -- ERROR!",JOptionPane.ERROR_MESSAGE);
-			return null;
-		} catch (Exception e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public Individual anyElement(){
-		try{
-			String query="SELECT stud, first_name, last_name, birth_year FROM individuals ORDER BY id LIMIT 1";
-			PreparedStatement state = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet res = state.executeQuery();
-			Individual individual;
-			if (res.first()){
-				individual = this.find(res.getInt("id"));
-			} else {
-				individual = this.newElement();
-			}
-			res.close();
-			state.close();
-			return individual;
-		} catch (SQLException e){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.anyElement -- ERROR!", JOptionPane.ERROR_MESSAGE);
 			return null;
 		} catch (Exception e){
 			e.printStackTrace();

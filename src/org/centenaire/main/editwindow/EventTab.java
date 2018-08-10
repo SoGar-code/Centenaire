@@ -13,16 +13,19 @@ import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
+import org.centenaire.entity.Item;
 import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GTable;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.UpdateEntityPanel;
+import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
@@ -76,8 +79,11 @@ public class EventTab extends JPanel implements Subscriber{
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
-		// Enable drag
-		entityList.getTable().setDragEnabled(true);
+
+		// Enable drag and define TransferHandler
+		JTable table = entityList.getTable();
+		table.setDragEnabled(true);
+		table.setTransferHandler(new SourceHandler<Item>(EntityEnum.EVENTS.getValue()));
 		
 		// Creation of 'modifier' pane
 		//===================================================

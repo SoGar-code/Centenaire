@@ -16,14 +16,14 @@ public abstract class EntityEditor<T> extends JPanel {
 	/**
 	 * Index of the Entity object currently displayed.
 	 * 
-	 * <p>Initialized at 0.
+	 * <p>Initialized at 0.</p>
 	 */
 	private int indexField;
 	
 	/**
 	 * Constructor for EntityEditor: should be possible to generate it from a T object.
 	 * 
-	 * <p>Initialize "indexField" with the value 0. Do not forget to update in implementations!
+	 * <p>Initialize "indexField" with the value 0. Do not forget to update in implementations!</p>
 	 * 
 	 * @param obj entity instance of the entity class associated to the editor.
 	 */
@@ -35,7 +35,7 @@ public abstract class EntityEditor<T> extends JPanel {
 	/**
 	 * Recover the T object associated to the current instance.
 	 * 
-	 * <p>This is especially useful when using the panel to edit an element.
+	 * <p>This is especially useful when using the panel to edit an element.</p>
 	 * 
 	 * @return the T object associated to the instance.
 	 */
