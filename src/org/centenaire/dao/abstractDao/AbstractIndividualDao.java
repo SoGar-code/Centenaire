@@ -32,6 +32,8 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	 */
 	public abstract boolean setQ3(Individual indiv, String content);
 	
+	public abstract boolean setNbStudents(Individual indiv, int yearIndex, int content);
+	
 	public abstract boolean setQuestionConcern(Individual indiv, String qIII1String);
 	
 	public abstract boolean setQuestionComittee(Individual indiv, String content);
@@ -69,6 +71,8 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	 * @return
 	 */
 	public abstract String getQ3(Individual indiv);
+	
+	public abstract int getNbStudents(Individual indiv, int yearIndex);
 
 	public abstract String getQuestionConcern(Individual indiv);
 

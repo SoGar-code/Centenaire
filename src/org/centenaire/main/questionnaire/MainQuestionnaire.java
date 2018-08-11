@@ -26,7 +26,7 @@ import org.centenaire.util.pubsub.Subscriber;
  * The JFrame corresponding to the questionnaire part of the system.
  *
  */
-public class Questionnaire extends JFrame implements Subscriber{
+public class MainQuestionnaire extends JFrame implements Subscriber{
 	/**
 	 * List of the questions in this questionnaire
 	 */
@@ -34,7 +34,7 @@ public class Questionnaire extends JFrame implements Subscriber{
 	private RespondentPanel respondent;
 	private Font titleFont = new Font("Serif", Font.BOLD, 18);
 	
-	public Questionnaire() {
+	public MainQuestionnaire() {
 		super();
 		// size: (width, height)
 		this.setSize(980, 600);
@@ -155,20 +155,8 @@ public class Questionnaire extends JFrame implements Subscriber{
 				+ "de master si vous en dirigez un. Effectif moyen "
 				+ "de la participation étudiante à ce séminaire. "
 				+ "Nombre de mémoires de master « Première Guerre mondiale » "
-				+ "(en 2012, 2013, 2014, 2015, 2016, 2017)";
-		QuestionTemplate q_6_e = new QuestionFreeText("6.e", question6eString) {
-			public void saveQuestion() {
-				String q6e = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQ3(indiv, q6e);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String q6e = gc.getIndividualDao().getQ3(indiv);
-				this.setContent(q6e);
-			}
-		};
+				+ "(en 2012, 2013, 2014, 2015, 2016, 2017).";
+		QuestionTemplate q_6_e = new QuestionMasterSeminar("6.e", question6eString);
 		content.add(q_6_e);
 		
 		// add to the list of questions
@@ -337,6 +325,9 @@ public class Questionnaire extends JFrame implements Subscriber{
 		
 		JScrollPane wrapper = new JScrollPane(assembly);
 		wrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		// Speed up scrolling
+		wrapper.getVerticalScrollBar().setUnitIncrement(16);
 		
 		// Subscribe to channel 0 (change of currentIndividual)
 		GeneralController gc = GeneralController.getInstance();

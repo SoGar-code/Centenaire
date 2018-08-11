@@ -375,6 +375,32 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		return setBooleanContent(indiv, "habilitation_on_great_war", content);
 	}
 	
+	/**
+	 * Used to set the number of students in question I.6.e.
+	 * 
+	 * @see org.centenaire.main.questionnaire.QuestionMasterSeminar
+	 */
+	@Override
+	public boolean setNbStudents(Individual indiv, int yearIndex, int content) {
+		if ((yearIndex <6) && (0<=yearIndex)) {
+			String variableName = String.format("nb_stud_%s", yearIndex);
+			setIntContent(indiv, variableName, content);
+			return true;
+		} else {
+			String msg = String.format("PostgreSQLIndividualDao.setNbStudents -- Unknown yearIndex '%s'", yearIndex);
+			System.out.println(msg);
+			return false;
+		}
+	}
+	
+	/**
+	 * Generic method to get a string 'content' from a prescribed variable 'variableName'.
+	 * 
+	 * @param indiv
+	 * @param variableName
+	 * @param content
+	 * @return
+	 */
 	public String getStringContent(Individual indiv, String variableName) {
 		try{
 			String query=String.format(
@@ -498,5 +524,18 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean getHabilitationOnGreatWar(Individual indiv) {
 		return getBooleanContent(indiv, "habilitation_on_great_war");
+	}
+
+	@Override
+	public int getNbStudents(Individual indiv, int yearIndex) {
+		if ((yearIndex <6) && (0<=yearIndex)) {
+			String variableName = String.format("nb_stud_%s", yearIndex);
+			return getIntContent(indiv, variableName);
+		} else {
+			String msg = String.format("PostgreSQLIndividualDao.getNbStudents -- Unknown yearIndex '%s'", yearIndex);
+			System.out.println(msg);
+			return -1;
+		}
+
 	};
 }

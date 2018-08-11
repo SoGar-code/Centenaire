@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import org.centenaire.entity.Individual;
 import org.centenaire.main.editwindow.EditionWindow;
-import org.centenaire.main.questionnaire.Questionnaire;
+import org.centenaire.main.questionnaire.MainQuestionnaire;
 import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GeneralController;
 
@@ -107,7 +107,7 @@ public class Centenaire extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		new Questionnaire();
+		new MainQuestionnaire();
 		new Centenaire();
 	}
 
