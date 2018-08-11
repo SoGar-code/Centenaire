@@ -10,6 +10,18 @@
 
 SET client_encoding = 'Latin1';
 
+-- list 'départements'
+CREATE TABLE departements(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- list countries
+CREATE TABLE countries(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
 CREATE TABLE institution_type_relations(
   id SERIAL PRIMARY KEY,
   name text
@@ -19,6 +31,8 @@ CREATE TABLE institutions(
   id SERIAL PRIMARY KEY,
   name text,
   place text,
+  id_dept integer references departements,
+  id_country integer references countries,
   type integer references institution_type_relations
 );
 
@@ -68,6 +82,8 @@ CREATE TABLE events(
   full_name text,
   short_name text,
   place text,
+  id_dept integer references departements,
+  id_country integer references countries,
   start_date date,
   end_date date,
   type integer references event_type_relations
@@ -179,18 +195,6 @@ CREATE TABLE tax_geo(
 
 -- taxinomie thématique
 CREATE TABLE tax_theme(
-  id SERIAL PRIMARY KEY,
-  name text
-);
-
--- list 'départements'
-CREATE TABLE departements(
-  id SERIAL PRIMARY KEY,
-  name text
-);
-
--- list countries
-CREATE TABLE countries(
   id SERIAL PRIMARY KEY,
   name text
 );

@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
@@ -49,14 +51,18 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public boolean create(Event obj) {
 		try{
-			String query="INSERT INTO events(full_name, short_name, place, start_date, end_date, type) VALUES(?,?,?,?,?,?)";
+			String query="INSERT INTO "
+					+ "events(full_name, short_name, place, id_dept, id_country, start_date, end_date, type)"
+					+ " VALUES(?,?,?,?,?,?,?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			state.setString(1, obj.getFullName());
 			state.setString(2, obj.getShortName());
 			state.setString(3, obj.getPlace());
-			state.setDate(4, obj.getStartDate());
-			state.setDate(5, obj.getEndDate());
-			state.setInt(6, obj.getEventType().getIndex());
+			state.setInt(4, obj.getDept().getIndex());
+			state.setInt(5, obj.getCountry().getIndex());
+			state.setDate(6, obj.getStartDate());
+			state.setDate(7, obj.getEndDate());
+			state.setInt(8, obj.getEventType().getIndex());
 			
 			// Run the query
 			state.executeUpdate();
@@ -95,15 +101,18 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public boolean update(Event obj) {
 		try{
-			String query="UPDATE events SET full_name = ?, short_name = ?, place = ?, start_date = ?, end_date = ?, type = ? WHERE id = ?";
+			String query="UPDATE events SET full_name = ?, short_name = ?, place = ?,"
+					+ "id_dept = ?, id_country = ?, start_date = ?, end_date = ?, type = ? WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setString(1, obj.getFullName());
 			state.setString(2, obj.getShortName());
 			state.setString(3, obj.getPlace());
-			state.setDate(4, obj.getStartDate());
-			state.setDate(5, obj.getEndDate());
-			state.setInt(6, obj.getEventType().getIndex());
-			state.setInt(7, obj.getIndex());
+			state.setInt(4, obj.getDept().getIndex());
+			state.setInt(5, obj.getCountry().getIndex());
+			state.setDate(6, obj.getStartDate());
+			state.setDate(7, obj.getEndDate());
+			state.setInt(8, obj.getEventType().getIndex());
+			state.setInt(9, obj.getIndex());
 			
 			state.close();
 			
@@ -158,14 +167,24 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	@Override
 	public Event find(int index) {
 		try{
-			String query="SELECT id, full_name, short_name, place, start_date, end_date, type FROM events WHERE id = ?";
+			String query="SELECT id, full_name, short_name, place, id_dept, id_country, start_date, end_date, type"
+					+ " FROM events WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
 			
-			// All you need to recover the EventType
 			GeneralController gc = GeneralController.getInstance();
+			
+			// All you need to recover the Departement
+			Dao<Entity> daoDept = (Dao<Entity>) gc.getDao(EntityEnum.DEPT.getValue());
+			Departement dept = (Departement) daoDept.find(res.getInt("id_dept"));	
+			
+			// All you need to recover the Country
+			Dao<Entity> daoCountry = (Dao<Entity>) gc.getDao(EntityEnum.COUNTRY.getValue());
+			Country country = (Country) daoCountry.find(res.getInt("id_country"));	
+			
+			// All you need to recover the EventType
 			Dao<Entity> daoEventType = (Dao<Entity>) gc.getDao(EntityEnum.EVENTTYPE.getValue());
 			EventType eventType = (EventType) daoEventType.find(res.getInt("type"));
 			
@@ -174,6 +193,8 @@ public class PostgreSQLEventDao extends Dao<Event> {
 									 res.getString("full_name"),
 									 res.getString("short_name"),
 									 res.getString("place"),
+									 dept,
+									 country,
 									 res.getDate("start_date"),
 									 res.getDate("end_date"),
 									 eventType
@@ -194,15 +215,21 @@ public class PostgreSQLEventDao extends Dao<Event> {
 	public LinkedList<Event> findAll() {
 		LinkedList<Event> data = new LinkedList<Event>();
 		try{
-			String query="SELECT id, full_name, short_name, place, start_date, end_date, type FROM events ORDER BY start_date";
+			String query="SELECT id, full_name, short_name, place, id_dept, id_country, start_date, end_date, type"
+					+ " FROM events ORDER BY start_date";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			
-			// All you need to recover the EventType
 			GeneralController gc = GeneralController.getInstance();
+			
+			// All you need to recover the EventType
+			Dao<Entity> daoDept = (Dao<Entity>) gc.getDao(EntityEnum.DEPT.getValue());
+			Dao<Entity> daoCountry = (Dao<Entity>) gc.getDao(EntityEnum.COUNTRY.getValue());
 			Dao<Entity> daoEventType = (Dao<Entity>) gc.getDao(EntityEnum.EVENTTYPE.getValue());
 			
 			while(res.next()){
+				Departement dept = (Departement) daoDept.find(res.getInt("id_dept"));
+				Country country = (Country) daoCountry.find(res.getInt("id_country"));
 				EventType eventType = (EventType) daoEventType.find(res.getInt("type"));
 				
 				// Create a suitable Event
@@ -210,6 +237,8 @@ public class PostgreSQLEventDao extends Dao<Event> {
 										 res.getString("full_name"),
 										 res.getString("short_name"),
 										 res.getString("place"),
+										 dept,
+										 country,
 										 res.getDate("start_date"),
 										 res.getDate("end_date"),
 										 eventType

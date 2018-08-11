@@ -107,8 +107,8 @@ public class Centenaire extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		new Centenaire();
 		new Questionnaire();
+		new Centenaire();
 	}
 
 }

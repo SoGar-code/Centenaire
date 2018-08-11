@@ -10,24 +10,57 @@ package org.centenaire.entity;
 public class Institution extends Entity {
 	private String name;
 	private String place;
+	private Departement dept;
+	private Country country;
 	private InstitutionType institType;
 	
-	public Institution(int index, String name, String place, InstitutionType institType) {
+	public Institution(
+			int index, 
+			String name, 
+			String place, 
+			Departement dept,
+			Country country,
+			InstitutionType institType) {
 		super(index);
 		this.classIndex = EntityEnum.INSTIT.getValue();
 		
 		this.name = name;
 		this.place = place;
+		this.dept = dept;
+		this.country = country;
 		this.institType = institType;
 	}
 	
-	public Institution(String name, String place, InstitutionType institType) {
+	public Institution(
+			String name, 
+			String place, 
+			Departement dept,
+			Country country,
+			InstitutionType institType) {
 		super();
 		this.classIndex = EntityEnum.INSTIT.getValue();
 		
 		this.name = name;
 		this.place = place;
+		this.dept = dept;
+		this.country = country;
 		this.institType = institType;
+	}
+
+	public Departement getDept() {
+		return dept;
+	}
+
+	public void setDept(Departement dept) {
+		this.dept = dept;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	public String getName() {

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.EventType;
@@ -25,6 +27,8 @@ public class EventEditor extends EntityEditor<Event> {
 	JTextArea fullNameField;
 	JTextField shortNameField;
 	JTextField placeField;
+	EntityCombo<Departement> deptCombo;
+	EntityCombo<Country> countryCombo;
 	GDateField startDateField;
 	GDateField endDateField;
 	EntityCombo<EventType> eventTypeCombo;
@@ -33,6 +37,8 @@ public class EventEditor extends EntityEditor<Event> {
 		super();
 		
 		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		
+		GeneralController gc = GeneralController.getInstance();
 		
 		// Full name field
 		// =================
@@ -71,6 +77,30 @@ public class EventEditor extends EntityEditor<Event> {
 		placePan.add(placeLabel);
 		placePan.add(placeField);
 		
+		// Departement Combo
+		// =======================
+		JPanel deptPan = new JPanel();
+		JLabel deptLab = new JLabel("Département : ");
+		deptCombo = new EntityCombo<Departement>(EntityEnum.DEPT.getValue());
+		
+		// subscribe eventTypeCombo to suitable channel
+		gc.getChannel(EntityEnum.DEPT.getValue()).addSubscriber(deptCombo);
+		
+		deptPan.add(deptLab);
+		deptPan.add(deptCombo);
+		
+		// Country Combo
+		// =======================
+		JPanel countryPan = new JPanel();
+		JLabel countryLab = new JLabel("Pays : ");
+		countryCombo = new EntityCombo<Country>(EntityEnum.COUNTRY.getValue());
+		
+		// subscribe eventTypeCombo to suitable channel
+		gc.getChannel(EntityEnum.COUNTRY.getValue()).addSubscriber(countryCombo);
+		
+		countryPan.add(countryLab);
+		countryPan.add(countryCombo);
+		
 		// Start date field
 		// ================
 		JPanel startDatePan = new JPanel();
@@ -100,7 +130,6 @@ public class EventEditor extends EntityEditor<Event> {
 		eventTypeCombo = new EntityCombo<EventType>(EntityEnum.EVENTTYPE.getValue());
 		
 		// subscribe eventTypeCombo to suitable channel
-		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(EntityEnum.EVENTTYPE.getValue()).addSubscriber(eventTypeCombo);
 		
 		eventTypePan.add(eventTypeLabel);
@@ -111,6 +140,8 @@ public class EventEditor extends EntityEditor<Event> {
 		this.add(fullNamePan);
 		this.add(shortNamePan);
 		this.add(placePan);
+		this.add(deptPan);
+		this.add(countryPan);
 		this.add(startDatePan);
 		this.add(endDatePan);
 		this.add(eventTypePan);
@@ -127,6 +158,8 @@ public class EventEditor extends EntityEditor<Event> {
 		String fullName = this.fullNameField.getText();
 		String shortName = this.shortNameField.getText();
 		String place = this.placeField.getText();
+		Departement dept = this.deptCombo.getSelectedEntity();
+		Country country = this.countryCombo.getSelectedEntity();
 		Date startDate = this.startDateField.getDate();
 		Date endDate = this.endDateField.getDate();
 		EventType eventType = this.eventTypeCombo.getSelectedEntity();
@@ -134,6 +167,8 @@ public class EventEditor extends EntityEditor<Event> {
 		Event event = new Event(fullName,
 								shortName,
 								place, 
+								dept,
+								country,
 								startDate, 
 								endDate, 
 								eventType);
@@ -150,6 +185,8 @@ public class EventEditor extends EntityEditor<Event> {
 		fullNameField.setText(obj.getFullName());
 		shortNameField.setText(obj.getShortName());
 		placeField.setText(obj.getPlace());
+		deptCombo.setSelectedEntity(obj.getDept());
+		countryCombo.setSelectedEntity(obj.getCountry());
 		startDateField.setDate(obj.getStartDate());
 		endDateField.setDate(obj.getEndDate());
 		eventTypeCombo.setSelectedEntity(obj.getEventType());
@@ -166,6 +203,8 @@ public class EventEditor extends EntityEditor<Event> {
 		fullNameField.setText("-");
 		shortNameField.setText("-");
 		placeField.setText("-");
+		deptCombo.setSelectedItem(-1);
+		countryCombo.setSelectedItem(-1);
 		startDateField.setDate(today);
 		endDateField.setDate(today);
 		eventTypeCombo.setSelectedItem(-1);

@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Institution;
@@ -48,11 +50,13 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 	@Override
 	public boolean create(Institution obj) {
 		try{
-			String query="INSERT INTO institutions(name, place, type) VALUES(?,?,?)";
+			String query="INSERT INTO institutions(name, place, id_dept, id_country, type) VALUES(?,?,?,?,?)";
 			PreparedStatement state = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			state.setString(1, obj.getName());
 			state.setString(2, obj.getPlace());
-			state.setInt(3, obj.getInstitType().getIndex());
+			state.setInt(3, obj.getDept().getIndex());
+			state.setInt(4, obj.getCountry().getIndex());
+			state.setInt(5, obj.getInstitType().getIndex());
 			
 			// Run the query
 			state.executeUpdate();
@@ -91,12 +95,15 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 	@Override
 	public boolean update(Institution obj) {
 		try{
-			String query="UPDATE institutions SET name = ?, place = ?, type = ? WHERE id = ?";
+			String query="UPDATE institutions SET name = ?, place = ?, id_dept = ?,"
+					+ " id_country = ?, type = ? WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setString(1, obj.getName());
 			state.setString(2, obj.getPlace());
-			state.setInt(3, obj.getInstitType().getIndex());
-			state.setInt(4, obj.getIndex());
+			state.setInt(3, obj.getDept().getIndex());
+			state.setInt(4, obj.getCountry().getIndex());
+			state.setInt(5, obj.getInstitType().getIndex());
+			state.setInt(6, obj.getIndex());
 
 			state.close();
 			
@@ -151,14 +158,23 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 	@Override
 	public Institution find(int index) {
 		try{
-			String query="SELECT id, name, place, type FROM institutions WHERE id = ?";
+			String query="SELECT id, name, place, id_dept, id_country, type FROM institutions WHERE id = ?";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, index);
 			ResultSet res = state.executeQuery();
 			res.first();
 			
-			// All you need to recover the EventType
 			GeneralController gc = GeneralController.getInstance();
+			
+			// All you need to recover the Departement
+			Dao<Entity> daoDept = (Dao<Entity>) gc.getDao(EntityEnum.DEPT.getValue());
+			Departement dept = (Departement) daoDept.find(res.getInt("id_dept"));	
+			
+			// All you need to recover the Country
+			Dao<Entity> daoCountry = (Dao<Entity>) gc.getDao(EntityEnum.COUNTRY.getValue());
+			Country country = (Country) daoCountry.find(res.getInt("id_country"));	
+			
+			// All you need to recover the EventType
 			Dao<Entity> daoInstitType = (Dao<Entity>) gc.getDao(EntityEnum.INSTITTYPE.getValue());
 			InstitutionType institType = (InstitutionType) daoInstitType.find(res.getInt("type"));
 			
@@ -166,6 +182,8 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 			Institution instit = new Institution(res.getInt("id"),
 							 					 res.getString("name"),
 							 					 res.getString("place"),
+							 					 dept,
+							 					 country,
 							 					 institType
 							 					 );
 			res.close();
@@ -184,21 +202,28 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 	public LinkedList<Institution> findAll() {
 		LinkedList<Institution> data = new LinkedList<Institution>();
 		try{
-			String query="SELECT id, name, place, type FROM institutions ORDER BY name";
+			String query="SELECT id, name, place, id_dept, id_country, type FROM institutions ORDER BY name";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			
-			// All you need to recover the EventType
 			GeneralController gc = GeneralController.getInstance();
+			
+			// All you need to recover the EventType
+			Dao<Entity> daoDept = (Dao<Entity>) gc.getDao(EntityEnum.DEPT.getValue());
+			Dao<Entity> daoCountry = (Dao<Entity>) gc.getDao(EntityEnum.COUNTRY.getValue());
 			Dao<Entity> daoInstitType = (Dao<Entity>) gc.getDao(EntityEnum.INSTITTYPE.getValue());
 			
 			while(res.next()){
+				Departement dept = (Departement) daoDept.find(res.getInt("id_dept"));
+				Country country = (Country) daoCountry.find(res.getInt("id_country"));	
 				InstitutionType institType = (InstitutionType) daoInstitType.find(res.getInt("type"));
 				
 				// Create a suitable object
 				Institution instit = new Institution(res.getInt("id"),
 								 					 res.getString("name"),
 								 					 res.getString("place"),
+								 					 dept,
+								 					 country,
 								 					 institType
 								 					 );
 				data.add(instit);

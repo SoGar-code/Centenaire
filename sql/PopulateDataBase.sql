@@ -278,4 +278,4 @@ INSERT INTO countries(name) VALUES('France');
 INSERT INTO countries(name) VALUES('Belgique');
 
 -- create default institution
-INSERT INTO institutions(name, place, type) VALUES('Inconnu', '-', 2);
+INSERT INTO institutions(name, place, id_dept, id_country, type) VALUES('Inconnu', '-', 1, 1, 2);

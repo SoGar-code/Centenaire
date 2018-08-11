@@ -13,6 +13,8 @@ public class Event extends Entity {
 	private String full_name;
 	private String short_name;
 	private String place;
+	private Departement dept;
+	private Country country;
 	private Date startDate;
 	private Date endDate;
 	private EventType eventType;
@@ -38,7 +40,9 @@ public class Event extends Entity {
 	public Event(int index, 
 					String full_name, 
 					String short_name,
-					String place, 
+					String place,
+					Departement dept,
+					Country country,
 					Date startDate, 
 					Date endDate, 
 					EventType eventType) {
@@ -48,6 +52,8 @@ public class Event extends Entity {
 		this.full_name = full_name;
 		this.short_name = short_name;
 		this.place = place;
+		this.dept = dept;
+		this.country = country;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.eventType = eventType;
@@ -73,6 +79,8 @@ public class Event extends Entity {
 					String full_name, 
 					String short_name,
 					String place, 
+					Departement dept,
+					Country country,
 					Date startDate, 
 					Date endDate, 
 					EventType eventType) {
@@ -82,9 +90,27 @@ public class Event extends Entity {
 		this.full_name = full_name;
 		this.short_name = short_name;
 		this.place = place;
+		this.dept = dept;
+		this.country = country;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.eventType = eventType;
+	}
+
+	public Departement getDept() {
+		return dept;
+	}
+
+	public void setDept(Departement dept) {
+		this.dept = dept;
+	}
+
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
 	}
 
 	public String getFullName() {

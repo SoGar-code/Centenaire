@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Institution;
@@ -20,10 +22,14 @@ import org.centenaire.util.GeneralController;
 public class InstitutionEditor extends EntityEditor<Institution> {
 	JTextField nameField;
 	JTextField placeField;
+	EntityCombo<Departement> deptCombo;
+	EntityCombo<Country> countryCombo;
 	EntityCombo<InstitutionType> institutionTypeCombo;
 
 	public InstitutionEditor() {
 		super();
+		
+		GeneralController gc = GeneralController.getInstance();
 		
 		// Name field
 		// =================
@@ -49,6 +55,30 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		placePan.add(placeLabel);
 		placePan.add(placeField);
 		
+		// Departement Combo
+		// =======================
+		JPanel deptPan = new JPanel();
+		JLabel deptLab = new JLabel("Département : ");
+		deptCombo = new EntityCombo<Departement>(EntityEnum.DEPT.getValue());
+		
+		// subscribe eventTypeCombo to suitable channel
+		gc.getChannel(EntityEnum.DEPT.getValue()).addSubscriber(deptCombo);
+		
+		deptPan.add(deptLab);
+		deptPan.add(deptCombo);
+		
+		// Country Combo
+		// =======================
+		JPanel countryPan = new JPanel();
+		JLabel countryLab = new JLabel("Pays : ");
+		countryCombo = new EntityCombo<Country>(EntityEnum.COUNTRY.getValue());
+		
+		// subscribe eventTypeCombo to suitable channel
+		gc.getChannel(EntityEnum.COUNTRY.getValue()).addSubscriber(countryCombo);
+		
+		countryPan.add(countryLab);
+		countryPan.add(countryCombo);
+		
 		// Institution Type Combo
 		// =======================
 		JPanel institutionTypePan = new JPanel();
@@ -56,7 +86,6 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		institutionTypeCombo = new EntityCombo<InstitutionType>(EntityEnum.INSTITTYPE.getValue());
 		
 		// subscribe eventTypeCombo to suitable channel
-		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(EntityEnum.INSTITTYPE.getValue()).addSubscriber(institutionTypeCombo);
 		
 		institutionTypePan.add(institutionTypeLabel);
@@ -66,6 +95,8 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(namePan);
 		this.add(placePan);
+		this.add(deptPan);
+		this.add(countryPan);
 		this.add(institutionTypePan);
 	}
 
@@ -79,10 +110,14 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		int index = this.getIndexField();
 		String name = this.nameField.getText();
 		String place = this.placeField.getText();
+		Departement dept = this.deptCombo.getSelectedEntity();
+		Country country = this.countryCombo.getSelectedEntity();
 		InstitutionType institutionType = this.institutionTypeCombo.getSelectedEntity();
 
 		Institution item = new Institution(name, 
-										   place, 
+										   place,
+										   dept,
+										   country,
 										   institutionType);
 		item.setIndex(index);
 		return item;
@@ -96,6 +131,8 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		this.setIndexField(obj.getIndex());
 		nameField.setText(obj.getName());
 		placeField.setText(obj.getPlace());
+		deptCombo.setSelectedEntity(obj.getDept());
+		countryCombo.setSelectedEntity(obj.getCountry());
 		institutionTypeCombo.setSelectedEntity(obj.getInstitType());
 	}
 	
@@ -107,6 +144,8 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 		this.setIndexField(0);
 		nameField.setText("-");
 		placeField.setText("-");
+		deptCombo.setSelectedItem(-1);
+		countryCombo.setSelectedItem(-1);
 		institutionTypeCombo.setSelectedItem(-1);
 	}
 }
