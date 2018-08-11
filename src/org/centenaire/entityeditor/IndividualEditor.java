@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.InstitutionType;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
@@ -123,6 +122,16 @@ public class IndividualEditor extends EntityEditor<Individual> {
 		lastNameField.setText("-");
 		birthYearField.setIntegerValue(1901);
 		labCombo.setSelectedIndex(-1);
+	}
+	
+	/**
+	 * Choose if the EntityEditor can be edited (default=true).
+	 */
+	public void setEnabled(boolean isEditable) {
+		firstNameField.setEnabled(isEditable);
+		lastNameField.setEnabled(isEditable);
+		birthYearField.setEnabled(isEditable);
+		labCombo.setEnabled(isEditable);
 	}
 
 }

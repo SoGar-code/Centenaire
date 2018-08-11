@@ -153,6 +153,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		indivEditor = new IndividualEditor();
 		// Choose size (width, height)
 		indivEditor.setSize(100, 200);
+		// disable the editor 
+		indivEditor.setEnabled(false);
 		
 		// Institution panel
 		JPanel institPan = new JPanel(new GridLayout(5, 2));
@@ -226,31 +228,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){			
-				Individual currentIndividual = indivEditor.getObject();
-				
-				// Save Phd defense year
-				((AbstractIndividualDao) daoIndiv).setPhdDefenseYear(
-						currentIndividual,
-						phdYearField.getIntegerValue());
-				
-				// Save state of CheckBox
-				((AbstractIndividualDao) daoIndiv).setPhdOnGreatWar(
-						currentIndividual,
-						phdOnGreatWarField.isSelected());
-				
-				// Save state of CheckBox
-				((AbstractIndividualDao) daoIndiv).setHabilitationOnGreatWar(
-						currentIndividual,
-						habilitationOnGreatWarField.isSelected());
-			
-				dropTableTag.saveContent(currentIndividual);
-				
-				dropTableDiscipline.saveContent(currentIndividual);
-				
-				// NB: updating individual triggers a 'subscriber update'
-				// including (possibly) a reset of the droptables,
-				// so it has to be done last!
-				daoIndiv.update(currentIndividual);
+				saveQuestion();
 			}
 		});
 		
@@ -334,11 +312,37 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	}
 	
 	/**
-	 * Save the values of 'institPan'
+	 * Save the current content of this panel.
 	 * 
+	 * <p>This method mimics the one in 'QuestionTemplate'.</p>
+	 * 
+	 * @see org.centenaire.main.questionnaire.QuestionTemplate
 	 */
-	public void saveInstitPan(Individual currentIndiv) {
-//		Discipline discipl = disciplineCombo.getSelectedEntity();
+	public void saveQuestion() {
+		Individual currentIndividual = indivEditor.getObject();
 		
+		// Save Phd defense year
+		((AbstractIndividualDao) daoIndiv).setPhdDefenseYear(
+				currentIndividual,
+				phdYearField.getIntegerValue());
+		
+		// Save state of CheckBox
+		((AbstractIndividualDao) daoIndiv).setPhdOnGreatWar(
+				currentIndividual,
+				phdOnGreatWarField.isSelected());
+		
+		// Save state of CheckBox
+		((AbstractIndividualDao) daoIndiv).setHabilitationOnGreatWar(
+				currentIndividual,
+				habilitationOnGreatWarField.isSelected());
+	
+		dropTableTag.saveContent(currentIndividual);
+		
+		dropTableDiscipline.saveContent(currentIndividual);
+		
+		// NB: updating individual triggers a 'subscriber update'
+		// including (possibly) a reset of the droptables,
+		// so it has to be done last!
+		daoIndiv.update(currentIndividual);
 	}
 }

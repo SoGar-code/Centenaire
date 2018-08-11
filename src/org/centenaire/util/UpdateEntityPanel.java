@@ -4,20 +4,15 @@
 package org.centenaire.util;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entity.Entity;
 import org.centenaire.entityeditor.EntityEditor;
 import org.centenaire.entityeditor.EntityEditorFactory;
 import org.centenaire.util.pubsub.Subscriber;
@@ -111,8 +106,6 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				System.out.println("Calling save button");
-				
 				T obj = updatePanel.getObject();
 				
 				dao.update(obj);
@@ -140,7 +133,7 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	 */
 	public void updateSubscriber(int channelIndex) {
 		// Check if the provided channelIndex matches the current classIndex
-		//if (channelIndex == this.classIndex) {
+		if (channelIndex == this.classIndex) {
 			// Need to update svgButton, entityCombo and updatePanel.
 			
 			// Disable svgButton (entityCombo is reset upon being notified...).
@@ -157,7 +150,7 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 			
 			// reset updatePanel
 			updatePanel.reset();
-		//}
+		}
 
 	}
 	

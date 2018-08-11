@@ -3,11 +3,16 @@
  */
 package org.centenaire.main.questionnaire;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +27,11 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class Questionnaire extends JFrame implements Subscriber{
+	/**
+	 * List of the questions in this questionnaire
+	 */
 	private LinkedList<QuestionTemplate> questions = new LinkedList<QuestionTemplate>();
+	private RespondentPanel respondent;
 	private Font titleFont = new Font("Serif", Font.BOLD, 18);
 	
 	public Questionnaire() {
@@ -35,7 +44,7 @@ public class Questionnaire extends JFrame implements Subscriber{
 		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		
 		// Respondent panel
-		JPanel respondent = new RespondentPanel();
+		respondent = new RespondentPanel();
 		content.add(respondent);
 		
 		// Title I separator
@@ -301,8 +310,32 @@ public class Questionnaire extends JFrame implements Subscriber{
 		// add to the list of questions
 		questions.add(q_III_4);
 		
+		// Overall save button
+		JButton saveButton = new JButton("Tout sauvegarder");
+		saveButton.setBackground(Color.GREEN);
 		
-		JScrollPane wrapper = new JScrollPane(content);
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Save the content of all questions
+				for (QuestionTemplate question: questions) {
+					question.saveQuestion();
+				}
+				
+				// Save the content of 'RespondentPanel'
+				respondent.saveQuestion();
+			}
+		});
+		
+		JPanel saveButtonPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		saveButtonPan.add(saveButton);
+		
+		// Fit everything in a single panel
+		JPanel assembly = new JPanel(new BorderLayout());
+		assembly.add(content, BorderLayout.CENTER);
+		assembly.add(saveButtonPan, BorderLayout.SOUTH);
+		
+		
+		JScrollPane wrapper = new JScrollPane(assembly);
 		wrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		// Subscribe to channel 0 (change of currentIndividual)
