@@ -171,14 +171,26 @@ CREATE TABLE tax_chrono(
   name text
 );
 
--- taxinomie gï¿½ographique
+-- taxinomie géographique
 CREATE TABLE tax_geo(
   id SERIAL PRIMARY KEY,
   name text
 );
 
--- taxinomie thï¿½matique
+-- taxinomie thématique
 CREATE TABLE tax_theme(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- list 'départements'
+CREATE TABLE departements(
+  id SERIAL PRIMARY KEY,
+  name text
+);
+
+-- list countries
+CREATE TABLE countries(
   id SERIAL PRIMARY KEY,
   name text
 );

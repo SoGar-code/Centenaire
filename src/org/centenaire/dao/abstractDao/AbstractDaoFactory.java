@@ -1,6 +1,8 @@
 package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
@@ -58,6 +60,10 @@ public abstract class AbstractDaoFactory {
 	
 	public abstract Dao<TaxTheme> getTaxThemeDao();
 	
+	public abstract Dao<Departement> getDeptDao();
+	
+	public abstract Dao<Country> getCountryDao();
+	
 	/**
 	 * To get a Dao class indexed by an integer
 	 * 
@@ -102,6 +108,10 @@ public abstract class AbstractDaoFactory {
 			return getTaxGeoDao();
 		} else if (i == EntityEnum.TAXTHEME.getValue()) {
 			return getTaxThemeDao();
+		} else if (i == EntityEnum.DEPT.getValue()) {
+			return getDeptDao();
+		} else if (i == EntityEnum.COUNTRY.getValue()) {
+			return getCountryDao();
 		} else {
 			System.out.println("AbstractDaoFactory.getDao -- type not found!");
 			return null;

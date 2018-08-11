@@ -10,8 +10,6 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractTagLikeDao;
-import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Individual;
 import org.centenaire.entity.TagLike;
 import org.centenaire.entity.TagLikeFactory;
 

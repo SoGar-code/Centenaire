@@ -29,6 +29,8 @@ public enum EntityEnum {
 	TAXCHRONO(23, "Taxinomie chronologique"),
 	TAXGEO(24, "Taxinomie géographique"),
 	TAXTHEME(25, "Taxinomie thématique"),
+	DEPT(26, "Département"),
+	COUNTRY(27, "Pays"),
 	
 	// Relation classes (with label)
 	INDIVINSTIT(12, "Institut de rattachement"),
@@ -45,7 +47,7 @@ public enum EntityEnum {
 	PARTICIPANT(21, "Participant"),
 	AFFILIATION(22, "Affiliation");
 	
-	// NB: max = 25 (see TAXTHEME)
+	// NB: max = 27 (see COUNTRY)
 	
 	private final int classIndex;
 	private final String name;

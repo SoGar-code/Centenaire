@@ -71,8 +71,13 @@ public class EntityEditorFactory {
 			return new TagLikeEditor();
 		} else if (classIndex == EntityEnum.TAXTHEME.getValue()) {
 			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.DEPT.getValue()) {
+			return new TagLikeEditor();
+		} else if (classIndex == EntityEnum.COUNTRY.getValue()) {
+			return new TagLikeEditor();
 		} else {
-			System.out.println("EntityEditorFactory.getEntityEditor -- entity not found!");
+			String msg = String.format("EntityEditorFactory.getEntityEditor -- entity '%s' not found!", classIndex);
+			System.out.println(msg);
 			return null;
 		}
 				

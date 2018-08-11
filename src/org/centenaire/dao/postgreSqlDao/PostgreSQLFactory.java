@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractDaoFactory;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.entity.Country;
+import org.centenaire.entity.Departement;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
@@ -124,5 +126,15 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 	@Override
 	public Dao<TaxTheme> getTaxThemeDao() {
 		return new PostgreSQLTagLikeDao(conn, "tax_theme", EntityEnum.TAXTHEME.getValue());
+	}
+
+	@Override
+	public Dao<Departement> getDeptDao() {
+		return new PostgreSQLTagLikeDao(conn, "departements", EntityEnum.DEPT.getValue());
+	}
+
+	@Override
+	public Dao<Country> getCountryDao() {
+		return new PostgreSQLTagLikeDao(conn, "countries", EntityEnum.COUNTRY.getValue());
 	}
 }

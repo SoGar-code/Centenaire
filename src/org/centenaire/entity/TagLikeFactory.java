@@ -32,13 +32,19 @@ public class TagLikeFactory {
 			LocalType tl = new LocalType(index, name);
 			return tl;
 		} else if (classIndex == EntityEnum.TAXCHRONO.getValue()) {
-			LocalType tl = new LocalType(index, name);
+			TaxChrono tl = new TaxChrono(index, name);
 			return tl;
 		} else if (classIndex == EntityEnum.TAXGEO.getValue()) {
-			LocalType tl = new LocalType(index, name);
+			TaxGeo tl = new TaxGeo(index, name);
 			return tl;
 		} else if (classIndex == EntityEnum.TAXTHEME.getValue()) {
-			LocalType tl = new LocalType(index, name);
+			TaxTheme tl = new TaxTheme(index, name);
+			return tl;
+		} else if (classIndex == EntityEnum.DEPT.getValue()) {
+			Departement tl = new Departement(index, name);
+			return tl;
+		} else if (classIndex == EntityEnum.COUNTRY.getValue()) {
+			Country tl = new Country(index, name);
 			return tl;
 		} else {
 			String msg = String.format("TagLikeFactory.newElement -- TagLike classIndex '%s' not found!", classIndex);
