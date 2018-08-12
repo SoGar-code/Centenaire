@@ -30,12 +30,21 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class MainQuestionnaire extends JFrame implements Subscriber{
+	private EntityCombo<Individual> entityCombo;
+	private ActionListener comboListener;
+	
+	/**
+	 * Panel with information about the respondent
+	 */
+	private RespondentPanel respondent;
+	
 	/**
 	 * List of the questions in this questionnaire
 	 */
-	private EntityCombo<Individual> entityCombo;
 	private LinkedList<QuestionTemplate> questions = new LinkedList<QuestionTemplate>();
-	private RespondentPanel respondent;
+	
+	private GeneralController gc = GeneralController.getInstance();
+	
 	private Font titleFont = new Font("Serif", Font.BOLD, 18);
 	
 	public MainQuestionnaire() {
@@ -48,6 +57,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		
 		// Combo panel
+		// ============
 		JPanel comboPan = new JPanel();
 		JLabel respondentLab = new JLabel("Répondant : ");
 		
@@ -58,6 +68,26 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		entityCombo.setSelectedIndex(-1);
 		comboPan.add(respondentLab);
 		comboPan.add(entityCombo);
+		
+		// Create listener for entityCombo
+		comboListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				try {		
+					// recover the currently selected object
+					Individual currentIndividual = (Individual) entityCombo.getSelectedItem();
+					
+					// Modify currentIndividual in gc
+					gc.setCurrentIndividual(currentIndividual);
+					
+				} catch (ClassCastException except) {
+					String msg = "MainQuestionnaire comboListener -- error when casting entity,\n"
+							+ "not updating the panel!";
+					System.out.println(msg);
+				}
+			}
+		};
+		
+		entityCombo.addActionListener(comboListener);
 		
 		// Respondent panel
 		respondent = new RespondentPanel();
@@ -326,7 +356,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				}
 				
 				// Save the content of 'RespondentPanel'
-				respondent.saveQuestion();
+				respondent.savePanel();
 			}
 		});
 		
@@ -346,8 +376,10 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		assembly.add(saveButtonPan, BorderLayout.SOUTH);
 		
 		// Subscribe to channel 0 (change of currentIndividual)
-		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(0).addSubscriber(this);
+		
+		// Subscribe to channel 1 (change in 'Individual' table of the database)
+		gc.getChannel(EntityEnum.INDIV.getValue());
 	
 		this.setContentPane(assembly);
 		this.setVisible(true);
@@ -356,8 +388,13 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 	/**
 	 * Update questionnaire panel, implementing Subscriber part of Pub-sub pattern
 	 * 
-	 * <p>At the moment, this method is intended to define what to do when
+	 * <p>This method defines what to do when
 	 * the currentIndividual changes (watch this on channel 0!).</p>
+	 * 
+	 * <p>It also provides the update when changes happen on the 'Individual' table.</p>
+	 * 
+	 * <p>In any case, the different questions and their components should have their 
+	 * own updates when changes happen on other tables.</p>
 	 * 
 	 * @see org.centenaire.util.pubsub
 	 */
@@ -369,6 +406,31 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		if (indexClass == 0) {
 			for (QuestionTemplate question: questions) {
 				question.setQuestion();
+			}
+			
+			respondent.setPanel();
+		}
+		
+		// When the 'Individual' channel is called
+		if (indexClass == EntityEnum.INDIV.getValue()) {
+			// Save current individual
+			Individual oldIndividual = entityCombo.getSelectedEntity();
+			
+			// remove action listener
+			entityCombo.removeActionListener(comboListener);
+
+			// update the combo using the predefined method
+			entityCombo.updateSubscriber(indexClass);
+			
+			// put the action listener back again
+			entityCombo.addActionListener(comboListener);
+			
+			// Get new selected individual 
+			Individual newIndividual = entityCombo.getSelectedEntity();
+			
+			// If they are different, change currentIndividual (triggers update!)
+			if (oldIndividual.getIndex() != newIndividual.getIndex()) {
+				gc.setCurrentIndividual(newIndividual);
 			}
 		}
 	}

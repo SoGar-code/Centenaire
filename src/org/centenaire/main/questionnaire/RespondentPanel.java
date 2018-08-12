@@ -40,115 +40,27 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class RespondentPanel extends JPanel implements Subscriber{
-	GeneralController gc = GeneralController.getInstance();
-	private EntityCombo<Individual> entityCombo;
-	private DropTable<Individual, DoubleEntity<Institution, InstitStatus>> dropTableInstitStatus;
-	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
-	private DropTable<Individual, Tag> dropTableTag;
-	private DropTable<Individual, Discipline> dropTableDiscipline;
-	private JButton svgButton;
-	private JCheckBox lockBox;
-	private Dao daoIndiv;
 	private GIntegerField phdYearField;
 	private JCheckBox phdOnGreatWarField;
 	private JCheckBox habilitationOnGreatWarField;
+	
+	private DropTable<Individual, DoubleEntity<Institution, InstitStatus>> dropTableInstitStatus;
+	
+	private DropTable<Individual, Tag> dropTableTag;
+	private DropTable<Individual, Discipline> dropTableDiscipline;
+	
+	private JButton svgButton;
+
+	// Inner workings
+	GeneralController gc = GeneralController.getInstance();
+	private Dao daoIndiv;
 	
 	RespondentPanel(){
 		super();
 		
 		// Generic data objects
 		daoIndiv = gc.getIndividualDao();
-		
-		// Top panel
-		// ===============
-		
-		// Respondent label
-		JLabel respondentLab = new JLabel("Répondant : ");
-		
-		// EntityCombo. NB: needs to subscribe to the entity channel!
-		entityCombo = new EntityCombo<Individual>(EntityEnum.INDIV.getValue());
-		
-		// no selected element
-		entityCombo.setSelectedIndex(-1);
-		
-		// create action listener (called when new individual is selected
-		comboListener = new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				try {		
-					// recover the currently selected object
-					Individual currentIndividual = (Individual) entityCombo.getSelectedItem();
-
-					// update the panel accordingly
-					indivEditor.setObject(currentIndividual);
-				
-					// enable the save button
-					svgButton.setEnabled(true);
-					
-					// update dropTableInstitStatus
-					//dropTableInstitStatus.updateEntity(currentIndividual);
-					
-					// update dropTableTag
-					dropTableTag.updateEntity(currentIndividual);
-					
-					// update dropTableDiscipline
-					dropTableDiscipline.updateEntity(currentIndividual);
-					
-					// Set Phd defense year
-					int phdYear = ((AbstractIndividualDao) daoIndiv).getPhdDefenseYear(
-							currentIndividual);
-					phdYearField.setIntegerValue(phdYear);
-					
-					// Save state of CheckBox
-					boolean phdOnGreatWar = ((AbstractIndividualDao) daoIndiv).getPhdOnGreatWar(
-							currentIndividual);
-					phdOnGreatWarField.setSelected(phdOnGreatWar);
-					
-					// Save state of CheckBox
-					boolean habilitationOnGreatWar = ((AbstractIndividualDao) daoIndiv).getHabilitationOnGreatWar(
-							currentIndividual);
-					habilitationOnGreatWarField.setSelected(habilitationOnGreatWar);
-					
-					// Modify currentIndividual in gc.
-					gc.setCurrentIndividual(currentIndividual);
-					
-				} catch (ClassCastException except) {
-					String msg = "UpdateEntityPanel -- error when casting entity,\n"
-							+ "not updating the panel!";
-					System.out.println(msg);
-				}
-			}
-		};
-		
-		// Link entityCombo and listener
-		entityCombo.addActionListener(comboListener);
-		
-		// New checkBox
-		lockBox = new JCheckBox("Verrouiller");
-		
-		// Add action listener
-		lockBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				entityCombo.setEnabled(!lockBox.isSelected());
-				
-				if (!lockBox.isSelected()) {
-					// unplug listener
-					entityCombo.removeActionListener(comboListener);
-					
-					// update content (as if 'individual' had changed)
-					entityCombo.updateSubscriber(EntityEnum.INDIV.getValue());
-					
-					// replug listener
-					entityCombo.addActionListener(comboListener);
-				}
-			}
-		});
-		
-		// Creating and populating top panel
-		JPanel topPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		topPan.add(respondentLab);
-		topPan.add(entityCombo);
-		topPan.add(lockBox);
 		
 		// Center panel
 		// ======================
@@ -161,7 +73,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		indivEditor.setEnabled(false);
 		
 		// Institution panel
-		JPanel institPan = new JPanel(new GridLayout(3, 2));
+		GridLayout gl = new GridLayout(3, 2);
+		gl.setVgap(10);
+		JPanel institPan = new JPanel(gl);
 		
 		JLabel phdYearLab = new JLabel("Date soutenance (si entre 2012 et 2017) : ");
 		phdYearField = new GIntegerField();
@@ -241,7 +155,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){			
-				saveQuestion();
+				savePanel();
 			}
 		});
 		
@@ -251,61 +165,34 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// Final assembly
 		// ===============
 		this.setLayout(new BorderLayout());
-		this.add(topPan, BorderLayout.NORTH);
 		this.add(centerPan, BorderLayout.CENTER);
 		this.add(bottomPan, BorderLayout.SOUTH);
 		
-		// register for Individual channel
+		// subscribe to 'Individual' channel
 		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(this);
 	}
 	
 	/**
-	 * Method implementing the Subscriber interface in the current class
+	 * Method implementing the Subscriber interface in the current class.
+	 * 
+	 * <p>In this method, we are only concerned with updates from the 'Individual' channel.</p>
 	 * 
 	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
 	public void updateSubscriber(int channelIndex) {
-		// unplug listener
-		entityCombo.removeActionListener(comboListener);
 		
-		// when 'lock' is not selected, update entityCombo
-		if (!lockBox.isSelected()) {
-
-			// Update entityCombo
-			entityCombo.updateSubscriber(channelIndex);
+		// only (directly) concerned with updates on 'Individual' channel
+		if (channelIndex == EntityEnum.INDIV.getValue()) {
+			// In that case, update content
+			Individual currentIndividual = gc.getCurrentIndividual();
 			
-			// Reset indivEditor
-			indivEditor.reset();
-			
-			// Reset dropTableTag
-			dropTableTag.reset();
-
-			// Reset dropTableDiscipline
-			dropTableDiscipline.reset();
-			
-		} else {
-			
-			// When 'lock' is selected, update indivEditor with current selected individual
-			Individual indiv = (Individual) entityCombo.getSelectedItem();
-			
-			// Find latest 'version' of this individual
-			Individual newIndiv = (Individual) daoIndiv.find(indiv.getIndex());
-			
-			indivEditor.setObject(newIndiv);
-			
-			
-			
-			// Update entityCombo
-			entityCombo.setEnabled(true);
-			entityCombo.setSelectedItem(newIndiv);
-			entityCombo.setEnabled(false);
+			if (currentIndividual != null) {
+				this.setPanel();
+			} else {
+				this.resetPanel();
+			}
 		}
-		
-		// replug listener
-		entityCombo.addActionListener(comboListener);
-		
-		// Should do something about tagListTableModel ...
 	}
 	
 	/**
@@ -331,8 +218,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	 * 
 	 * @see org.centenaire.main.questionnaire.QuestionTemplate
 	 */
-	public void saveQuestion() {
-		Individual currentIndividual = indivEditor.getObject();
+	public void savePanel() {
+		// Recover currentIndividual
+		Individual currentIndividual = gc.getCurrentIndividual();
 		
 		// Save Phd defense year
 		((AbstractIndividualDao) daoIndiv).setPhdDefenseYear(
@@ -358,6 +246,58 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// NB: updating individual triggers a 'subscriber update'
 		// including (possibly) a reset of the droptables,
 		// so it has to be done last!
-		daoIndiv.update(currentIndividual);
+		//daoIndiv.update(currentIndividual);
+	}
+	
+	/**
+	 * Method called to set the content of the panel (in particular when the currentIndividual changes).
+	 */
+	public void setPanel() {
+		// Recover currentIndividual
+		Individual currentIndividual = gc.getCurrentIndividual();
+		
+		// update the panel accordingly
+		indivEditor.setObject(currentIndividual);
+		
+		// Set Phd defense year
+		int phdYear = ((AbstractIndividualDao) daoIndiv).getPhdDefenseYear(
+				currentIndividual);
+		phdYearField.setIntegerValue(phdYear);
+		
+		// Set state of CheckBox
+		boolean phdOnGreatWar = ((AbstractIndividualDao) daoIndiv).getPhdOnGreatWar(
+				currentIndividual);
+		phdOnGreatWarField.setSelected(phdOnGreatWar);
+		
+		// Set state of CheckBox
+		boolean habilitationOnGreatWar = ((AbstractIndividualDao) daoIndiv).getHabilitationOnGreatWar(
+				currentIndividual);
+		habilitationOnGreatWarField.setSelected(habilitationOnGreatWar);
+		
+		// update dropTableInstitStatus
+		//dropTableInstitStatus.updateEntity(currentIndividual);
+		
+		// update dropTableTag
+		dropTableTag.updateEntity(currentIndividual);
+		
+		// update dropTableDiscipline
+		dropTableDiscipline.updateEntity(currentIndividual);
+		
+	}
+	
+	public void resetPanel() {
+		indivEditor.reset();
+		
+		phdYearField.setIntegerValue(0);
+		
+		phdOnGreatWarField.setSelected(false);
+		
+		habilitationOnGreatWarField.setSelected(false);
+		
+		dropTableInstitStatus.reset();
+		
+		dropTableTag.reset();
+		
+		dropTableDiscipline.reset();
 	}
 }
