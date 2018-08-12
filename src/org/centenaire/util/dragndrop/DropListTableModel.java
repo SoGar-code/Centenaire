@@ -8,10 +8,9 @@ import java.util.List;
 
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Individual;
-import org.centenaire.entity.Tag;
+import org.centenaire.entity.InstitStatus;
 import org.centenaire.util.ListTableModel;
+import org.centenaire.util.editorsRenderers.Delete;
 
 /**
  * Table Model specific for coding the "relations" in the database.
@@ -50,10 +49,16 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	
 	/**
 	 * Define when a cell is editable.
+	 * 
+	 * <p>This is defined using a list of 'editable classes'.</p>
 	 */
 	@Override
 	public boolean isCellEditable(int row, int col){
-		return (col == this.deleteColumn);
+		List<Class> editableClass = new LinkedList<Class>();
+		editableClass.add(Delete.class);
+		editableClass.add(InstitStatus.class);
+		
+		return (editableClass.contains(listClass[col]));
 	};
 	
 	/**

@@ -30,6 +30,7 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	 * 
 	 * @param classIndexT
 	 * @param classIndexU
+	 * 					class index of the class being displayed
 	 * @param classIndexRelation
 	 * @param listClass
 	 * @param title
@@ -54,6 +55,7 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 		// Include editors 
 		// ================
 		
+		// == InstitStatus ==
 		// Create EntityCombo and subscribe to suitable channel
 		EntityCombo<InstitStatus> institStatusEditor = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
 		GeneralController gc = GeneralController.getInstance();

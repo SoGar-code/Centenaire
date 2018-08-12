@@ -40,7 +40,7 @@ public class TargetHandler<T> extends TransferHandler {
 	 * 
 	 */
 	private int classIndex;
-	private DataFlavor linkedListFlavor;
+	protected DataFlavor linkedListFlavor;
 	
 	/**
 	 * Constructor taking only the class index as input.
@@ -116,18 +116,12 @@ public class TargetHandler<T> extends TransferHandler {
 	/**
 	 * Action called on a successful drop, to initiate the transfer to the target component. 
 	 */
-	public boolean importData(TransferHandler.TransferSupport support) {
-		String msg = "Calling importData!";
-		System.out.println(msg);
-				
+	public boolean importData(TransferHandler.TransferSupport support) {			
 		boolean test = support.isDataFlavorSupported(linkedListFlavor);
 		
 		if (!test) {
 			return false;
 		}
-		
-		String msg1 = "Component recovered!";
-		System.out.println(msg1);
 		
 		// Fetch transferable and its data
 		Transferable t = support.getTransferable();

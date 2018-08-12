@@ -28,6 +28,7 @@ import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.DropTable;
+import org.centenaire.util.dragndrop.TargetHandlerDouble;
 import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
 
@@ -40,8 +41,7 @@ import org.centenaire.util.pubsub.Subscriber;
 public class RespondentPanel extends JPanel implements Subscriber{
 	GeneralController gc = GeneralController.getInstance();
 	private EntityCombo<Individual> entityCombo;
-	private EntityCombo<Institution> institCombo;
-	private EntityCombo<InstitStatus> statusCombo;
+	private DropTable<Individual, Institution> dropTableInstitStatus;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
 	private DropTable<Individual, Tag> dropTableTag;
@@ -157,13 +157,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		indivEditor.setEnabled(false);
 		
 		// Institution panel
-		JPanel institPan = new JPanel(new GridLayout(5, 2));
-		
-		JLabel institLab = new JLabel("Institution : ");
-		institCombo = new EntityCombo<Institution>(EntityEnum.INSTIT.getValue());
-		
-		JLabel statusLab = new JLabel("Statut : ");
-		statusCombo = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
+		JPanel institPan = new JPanel(new GridLayout(3, 2));
 		
 		JLabel phdYearLab = new JLabel("Date soutenance (si entre 2012 et 2017) : ");
 		phdYearField = new GIntegerField();
@@ -174,10 +168,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JLabel habilitationOnGreatWarLab = new JLabel("HDR portant sur la Grande Guerrre : ");
 		habilitationOnGreatWarField = new JCheckBox();
 		
-		institPan.add(institLab);
-		institPan.add(institCombo);
-		institPan.add(statusLab);
-		institPan.add(statusCombo);
 		institPan.add(phdYearLab);
 		institPan.add(phdYearField);
 		institPan.add(phdOnGreatWarLab);
@@ -189,6 +179,24 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JPanel auxIndivPan = new JPanel(new FlowLayout());
 		auxIndivPan.add(indivEditor);
 		auxIndivPan.add(institPan);
+		
+		// Table of institutional affiliation
+		// ===================================
+		dropTableInstitStatus = new DropTable<Individual,Institution>(
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.INSTIT.getValue(),
+				EntityEnum.INDIVINSTIT.getValue(),
+				new Class[] {String.class, InstitStatus.class, Delete.class},
+				new String[] {"Institution", "Statut", "Retirer"},
+				2
+				);
+		// Replace the default TargetHandler:
+		dropTableInstitStatus.getTable().setTransferHandler(
+				new TargetHandlerDouble<Institution, InstitStatus>(EntityEnum.INSTIT.getValue()));
+		
+		
+		// DropTable panel
+		// ================
 		
 		// Table of discipline
 		dropTableDiscipline = new DropTable<Individual, Discipline>(
@@ -218,6 +226,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		JPanel centerPan = new JPanel();
 		centerPan.setLayout(new BoxLayout(centerPan, BoxLayout.PAGE_AXIS));
 		centerPan.add(auxIndivPan);
+		centerPan.add(dropTableInstitStatus);
 		centerPan.add(dropTablePan);
 		
 		// Bottom panel
