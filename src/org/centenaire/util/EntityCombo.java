@@ -102,21 +102,30 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 		// In case nothing was found...
 		if (!foundEntity) {
 			this.setSelectedIndex(-1);
-		}
-			
+		}		
+	}
+	
+	/**
+	 * Reset the combo (selected element).
+	 */
+	public void reset() {
+		this.setSelectedIndex(-1);
 	}
 	
 	/**
 	 * Default implementation of the Subscriber interface for this class.
 	 * 
 	 * <p>In details, this fetches the new list of Entity elements
-	 * and removes any selection in the comboBox.</p>
+	 * and try to keep the same selection in the comboBox.</p>
 	 * 
 	 * @see org.centenaire.util.pubsub.Subscriber
 	 */
 	@Override
 	public void updateSubscriber(int channelIndex) {
-		// list of Entity elements		
+		// Recover the current selected Entity
+		T currentEntity = this.getSelectedEntity();
+		
+		// Update the list of Entity elements
 		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		
 		// Create combo to select Entity
@@ -124,7 +133,12 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 		this.removeAllItems();
 		this.setModel(new DefaultComboBoxModel<T>(entityVect));
 		
-		// Cancel selection
-		this.setSelectedIndex(-1);
+		// try to set the combo back to the same selected Entity
+		if (currentEntity != null) {
+			this.setSelectedEntity(currentEntity);
+		} else {
+			// Cancel selection
+			this.setSelectedIndex(-1);
+		}
 	}
 }

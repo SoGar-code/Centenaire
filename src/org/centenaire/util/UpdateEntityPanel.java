@@ -65,6 +65,9 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		// Create new EntityCombo
 		entityCombo = new EntityCombo<T>(classIndex);
 		
+		// Start with no element selected
+		entityCombo.setSelectedIndex(-1);
+		
 		// create action listener
 		comboListener = new ActionListener() {
 			public void actionPerformed(ActionEvent e){
@@ -129,6 +132,9 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	 * 
 	 * <p>It updates the combo as well as the EntityEditor panel.</p>
 	 * 
+	 * <p>Since in the 'save' button, the current object is saved, 
+	 * the method below is in particular called when 'save' is called.</p>
+	 * 
 	 * @see org.centenaire.general.Subscriber
 	 */
 	public void updateSubscriber(int channelIndex) {
@@ -144,6 +150,9 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 
 			// update the combo using the predefined method
 			entityCombo.updateSubscriber(channelIndex);
+			
+			// also  reset the combo
+			entityCombo.reset();
 			
 			// put the action listener back again
 			entityCombo.addActionListener(comboListener);

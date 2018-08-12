@@ -48,8 +48,6 @@ public class IndividualTab extends JPanel implements Subscriber{
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("IndividualTab.newEntity activated!");
-
 				EntityDialog<Individual> ed = new EntityDialog<Individual>(EntityEnum.INDIV.getValue());
 				
 				// Open the dialog (where new individual is created)...

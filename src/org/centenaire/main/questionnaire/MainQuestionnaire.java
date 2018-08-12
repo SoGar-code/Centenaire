@@ -18,7 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
+import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.pubsub.Subscriber;
 
@@ -30,6 +33,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 	/**
 	 * List of the questions in this questionnaire
 	 */
+	private EntityCombo<Individual> entityCombo;
 	private LinkedList<QuestionTemplate> questions = new LinkedList<QuestionTemplate>();
 	private RespondentPanel respondent;
 	private Font titleFont = new Font("Serif", Font.BOLD, 18);
@@ -42,6 +46,18 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		JPanel content = new JPanel();
 		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+		
+		// Combo panel
+		JPanel comboPan = new JPanel();
+		JLabel respondentLab = new JLabel("Répondant : ");
+		
+		// EntityCombo. NB: needs to subscribe to the entity channel!
+		entityCombo = new EntityCombo<Individual>(EntityEnum.INDIV.getValue());
+		
+		// no selected element
+		entityCombo.setSelectedIndex(-1);
+		comboPan.add(respondentLab);
+		comboPan.add(entityCombo);
 		
 		// Respondent panel
 		respondent = new RespondentPanel();
@@ -315,25 +331,25 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		});
 		
 		JPanel saveButtonPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		saveButtonPan.add(saveButton);
+		saveButtonPan.add(saveButton);		
 		
-		// Fit everything in a single panel
-		JPanel assembly = new JPanel(new BorderLayout());
-		assembly.add(content, BorderLayout.CENTER);
-		assembly.add(saveButtonPan, BorderLayout.SOUTH);
-		
-		
-		JScrollPane wrapper = new JScrollPane(assembly);
+		JScrollPane wrapper = new JScrollPane(content);
 		wrapper.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		// Speed up scrolling
 		wrapper.getVerticalScrollBar().setUnitIncrement(16);
 		
+		// Fit everything in a single panel
+		JPanel assembly = new JPanel(new BorderLayout());
+		assembly.add(comboPan, BorderLayout.NORTH);
+		assembly.add(wrapper, BorderLayout.CENTER);
+		assembly.add(saveButtonPan, BorderLayout.SOUTH);
+		
 		// Subscribe to channel 0 (change of currentIndividual)
 		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(0).addSubscriber(this);
 	
-		this.setContentPane(wrapper);
+		this.setContentPane(assembly);
 		this.setVisible(true);
 	}
 
