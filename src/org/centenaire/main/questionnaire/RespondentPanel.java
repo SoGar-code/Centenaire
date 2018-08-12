@@ -105,8 +105,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				EntityEnum.INSTIT.getValue(),
 				EntityEnum.INDIVINSTIT.getValue(),
 				new Class[] {String.class, InstitStatus.class, Delete.class},
-				new String[] {"Institution", "Statut", "Retirer"},
-				2
+				new String[] {"Institution", "Statut", "Retirer"}
 				);
 		// Replace the default TargetHandler:
 		dropTableInstitStatus.getTable().setTransferHandler(
@@ -122,8 +121,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				EntityEnum.DISCIPLINES.getValue(),
 				EntityEnum.INDIVDISCIPL.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Discipline", "Retirer"},
-				1
+				new String[] {"Discipline", "Retirer"}
 				);
 		
 		// Table of tags
@@ -132,8 +130,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				EntityEnum.TAG.getValue(),
 				EntityEnum.INDIVTAG.getValue(),
 				new Class[] {String.class, Delete.class},
-				new String[] {"Mot-clef", "Retirer"},
-				1
+				new String[] {"Mot-clef", "Retirer"}
 				);
 		
 		JPanel dropTablePan = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -151,7 +148,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		// ==============
 		// Save button and its action
 		svgButton = new JButton("Sauvegarder");
-		svgButton.setEnabled(false);
 		
 		svgButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){			
@@ -196,22 +192,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	}
 	
 	/**
-	 * Set the values of 'institPan' according to 'currentIndiv'
-	 * 
-	 * @param currentIndiv
-	 */
-	public void updateInstitPanel(Individual currentIndiv) {
-		// Recover suitable discipline
-//		RelationDao<Individual, Discipline> indivDiscipl = (RelationDao<Individual, Discipline>) gc.getRelationDao(EntityEnum.INDIVDISCIPL.getValue());
-//		List<Discipline> disciplList = indivDiscipl.findAll(currentIndiv);
-//		disciplineCombo.setSelectedEntity(disciplList.get(0));
-//		
-//		private EntityCombo<Institution> institCombo;
-//		private EntityCombo<InstitStatus> statusCombo;
-//		private EntityCombo<Institution> laboCombo;
-	}
-	
-	/**
 	 * Save the current content of this panel.
 	 * 
 	 * <p>This method mimics the one in 'QuestionTemplate'.</p>
@@ -237,7 +217,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				currentIndividual,
 				habilitationOnGreatWarField.isSelected());
 		
-		// dropTableInstitStatus.saveContent(currentIndividual);
+		dropTableInstitStatus.saveContent(currentIndividual);
 	
 		dropTableTag.saveContent(currentIndividual);
 		
@@ -275,7 +255,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		habilitationOnGreatWarField.setSelected(habilitationOnGreatWar);
 		
 		// update dropTableInstitStatus
-		//dropTableInstitStatus.updateEntity(currentIndividual);
+		dropTableInstitStatus.updateEntity(currentIndividual);
 		
 		// update dropTableTag
 		dropTableTag.updateEntity(currentIndividual);

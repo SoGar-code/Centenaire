@@ -29,8 +29,7 @@ public class QuestionTheses extends QuestionTemplate {
 				EntityEnum.ITEM.getValue(),
 				EntityEnum.DIRECTION.getValue(),
 				new Class[] {String.class, String.class, Date.class, Delete.class},
-				new String[] {"Titre", "Type", "Date de début", "Retirer"},
-				3
+				new String[] {"Titre", "Type", "Date de début", "Retirer"}
 				);
 		
 		main.add(dropTableItems);

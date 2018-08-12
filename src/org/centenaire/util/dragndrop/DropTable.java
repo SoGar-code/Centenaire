@@ -42,10 +42,9 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 			int classIndexU, 
 			int classIndexRelation, 
 			Class[] listClass, 
-			String[] title,
-			int deleteColumn
+			String[] title
 			) {
-		super(new DropListTableModel<T, U>(listClass, title, classIndexU, classIndexRelation, deleteColumn));
+		super(new DropListTableModel<T, U>(listClass, title, classIndexU, classIndexRelation));
 		
 		// Support for Drop
 		this.getTable().setDragEnabled(true);
@@ -79,7 +78,9 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	 * 
 	 */
 	public void updateEntity(T currentEntity) {
-		((DropListTableModel) this.getModel()).updateEntity(currentEntity);
+		DropListTableModel<T, U> tableModel = (DropListTableModel<T, U>) this.getModel();
+		
+		tableModel.updateEntity(currentEntity);
 	}
 	
 	/**

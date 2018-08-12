@@ -25,7 +25,6 @@ import org.centenaire.util.editorsRenderers.Delete;
  */
 public class DropListTableModel<T extends Entity, U extends Entity> extends ListTableModel {
 	private RelationDao<T, U> relationDao;
-	private int deleteColumn;
 	
 	/**
 	 * Constructor for 'DropListTableModel', including the class index of the item displayed.
@@ -38,12 +37,10 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 			Class[] listClass, 
 			String[] title,
 			int classIndexU,
-			int classIndexRelation, 
-			int deleteColumn) {
+			int classIndexRelation) {
 		super(listClass, title, new LinkedList<Entity>());
 		
 		relationDao = (RelationDao<T, U>) gc.getRelationDao(classIndexRelation);
-		this.deleteColumn = deleteColumn;
 
 	}
 	

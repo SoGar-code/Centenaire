@@ -82,7 +82,7 @@ public abstract class AbstractRelationDaoFactory {
 			return getParticipant();
 		} else if (i == EntityEnum.AFFILIATION.getValue()) {
 			return getAffiliation();
-		} else if (i == EntityEnum.INSTITSTATUS.getValue()) {
+		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
 			return getInstitStatus();
 		} else {
 			String msg = String.format(
