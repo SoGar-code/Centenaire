@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.Discipline;
+import org.centenaire.entity.DoubleEntity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
@@ -41,7 +42,7 @@ import org.centenaire.util.pubsub.Subscriber;
 public class RespondentPanel extends JPanel implements Subscriber{
 	GeneralController gc = GeneralController.getInstance();
 	private EntityCombo<Individual> entityCombo;
-	private DropTable<Individual, Institution> dropTableInstitStatus;
+	private DropTable<Individual, DoubleEntity<Institution, InstitStatus>> dropTableInstitStatus;
 	private ActionListener comboListener;
 	private IndividualEditor indivEditor;
 	private DropTable<Individual, Tag> dropTableTag;
@@ -83,6 +84,9 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				
 					// enable the save button
 					svgButton.setEnabled(true);
+					
+					// update dropTableInstitStatus
+					//dropTableInstitStatus.updateEntity(currentIndividual);
 					
 					// update dropTableTag
 					dropTableTag.updateEntity(currentIndividual);
@@ -182,7 +186,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		
 		// Table of institutional affiliation
 		// ===================================
-		dropTableInstitStatus = new DropTable<Individual,Institution>(
+		dropTableInstitStatus = new DropTable<Individual, DoubleEntity<Institution, InstitStatus>>(
 				EntityEnum.INDIV.getValue(),
 				EntityEnum.INSTIT.getValue(),
 				EntityEnum.INDIVINSTIT.getValue(),
@@ -344,6 +348,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		((AbstractIndividualDao) daoIndiv).setHabilitationOnGreatWar(
 				currentIndividual,
 				habilitationOnGreatWarField.isSelected());
+		
+		// dropTableInstitStatus.saveContent(currentIndividual);
 	
 		dropTableTag.saveContent(currentIndividual);
 		

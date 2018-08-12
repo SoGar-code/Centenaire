@@ -2,9 +2,11 @@ package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Discipline;
+import org.centenaire.entity.DoubleEntity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.Tag;
@@ -44,6 +46,8 @@ public abstract class AbstractRelationDaoFactory {
 	
 	public abstract RelationDao<Item, Institution> getAffiliation();
 	
+	public abstract RelationDao<Individual, DoubleEntity<Institution, InstitStatus>> getInstitStatus();
+	
 	/**
 	 * To get a Dao class indexed by an integer
 	 * 
@@ -78,6 +82,8 @@ public abstract class AbstractRelationDaoFactory {
 			return getParticipant();
 		} else if (i == EntityEnum.AFFILIATION.getValue()) {
 			return getAffiliation();
+		} else if (i == EntityEnum.INSTITSTATUS.getValue()) {
+			return getInstitStatus();
 		} else {
 			String msg = String.format(
 					"AbstractRelationDaoFactory.getRelationDao -- type '%s' not found!",

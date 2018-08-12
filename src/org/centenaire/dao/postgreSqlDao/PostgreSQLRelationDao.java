@@ -27,11 +27,11 @@ import org.centenaire.entity.Entity;
  * @see org.centenaire.util.pubsub.Publisher
  */
 public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends RelationDao<T, U> {
-	private String databaseName;
-	private String variableTName;
-	private String variableUName;
-	private int classIndexU;
-	private int classIndex;
+	protected String databaseName;
+	protected String variableTName;
+	protected String variableUName;
+	protected int classIndexU;
+	protected int classIndex;
 	
 	/**
 	 * Constructor of Dao for relations.

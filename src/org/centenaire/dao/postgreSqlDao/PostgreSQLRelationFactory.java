@@ -7,11 +7,12 @@ import java.sql.Connection;
 
 import org.centenaire.dao.RelationDao;
 import org.centenaire.dao.abstractDao.AbstractRelationDaoFactory;
-import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationDao;
 import org.centenaire.entity.Discipline;
+import org.centenaire.entity.DoubleEntity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.Tag;
@@ -138,6 +139,19 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				"instit_id",
 				EntityEnum.INSTIT.getValue(),
 				EntityEnum.AFFILIATION.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, DoubleEntity<Institution, InstitStatus>> getInstitStatus() {
+		return new PostgreSQLLabelRelationDao<Individual, Institution, InstitStatus>(
+				conn, 
+				"individual_institution_relations", 
+				"indiv_id",
+				"instit_id",
+				"instit_status",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.INSTIT.getValue(),
+				EntityEnum.INDIVINSTIT.getValue());
 	}
 
 }
