@@ -173,6 +173,27 @@ CREATE TABLE affiliation(
   PRIMARY KEY (item_id, instit_id)
 );
 
+-- expertise productions
+CREATE TABLE expert_item(
+  indiv_id integer REFERENCES Individuals,
+  item_id integer REFERENCES Items,
+  PRIMARY KEY (indiv_id, item_id)
+);
+
+-- expertise événements
+CREATE TABLE expert_event(
+  indiv_id integer REFERENCES Individuals,
+  event_id integer REFERENCES Events,
+  PRIMARY KEY (indiv_id, event_id)
+);
+
+-- expertise institution
+CREATE TABLE expert_institutions(
+  indiv_id integer REFERENCES Individuals,
+  instit_id integer REFERENCES Institutions,
+  PRIMARY KEY (indiv_id, instit_id)
+);
+
 -- two possible values: "financement", "soutien institutionnel"
 CREATE TABLE localisation_type_relations(
   id SERIAL PRIMARY KEY,

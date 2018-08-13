@@ -45,9 +45,12 @@ public enum EntityEnum {
 	DIRECTION(19, "Direction"),
 	ORG(20, "Organisation"),
 	PARTICIPANT(21, "Participant"),
-	AFFILIATION(22, "Affiliation");
+	AFFILIATION(22, "Affiliation"),
+	EXPITEM(28, "Expertise - production"),
+	EXPEVENT(29, "Expertise - événement"),
+	EXPINSTIT(30, "Expertise - institution");
 	
-	// NB: max = 27 (see COUNTRY)
+	// NB: max = 30 (see EXPINSTIT)
 	
 	private final int classIndex;
 	private final String name;

@@ -48,6 +48,12 @@ public abstract class AbstractRelationDaoFactory {
 	
 	public abstract RelationDao<Individual, DoubleEntity<Institution, InstitStatus>> getInstitStatus();
 	
+	public abstract RelationDao<Individual, Item> getExpItem();
+	
+	public abstract RelationDao<Individual, Event> getExpEvent();
+	
+	public abstract RelationDao<Individual, Institution> getExpInstit();
+	
 	/**
 	 * To get a Dao class indexed by an integer
 	 * 
@@ -84,6 +90,12 @@ public abstract class AbstractRelationDaoFactory {
 			return getAffiliation();
 		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
 			return getInstitStatus();
+		} else if (i == EntityEnum.EXPITEM.getValue()) {
+			return getExpItem();
+		} else if (i == EntityEnum.EXPEVENT.getValue()) {
+			return getExpEvent();
+		} else if (i == EntityEnum.EXPINSTIT.getValue()) {
+			return getExpInstit();
 		} else {
 			String msg = String.format(
 					"AbstractRelationDaoFactory.getRelationDao -- type '%s' not found!",

@@ -154,4 +154,37 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.INDIVINSTIT.getValue());
 	}
 
+	@Override
+	public RelationDao<Individual, Item> getExpItem() {
+		return new PostgreSQLRelationDao<Individual, Item>(
+				conn, 
+				"expert_item", 
+				"indiv_id",
+				"item_id",
+				EntityEnum.ITEM.getValue(),
+				EntityEnum.EXPITEM.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Event> getExpEvent() {
+		return new PostgreSQLRelationDao<Individual, Event>(
+				conn, 
+				"expert_event", 
+				"indiv_id",
+				"event_id",
+				EntityEnum.EVENTS.getValue(),
+				EntityEnum.EXPEVENT.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Institution> getExpInstit() {
+		return new PostgreSQLRelationDao<Individual, Institution>(
+				conn, 
+				"expert_institutions", 
+				"indiv_id",
+				"instit_id",
+				EntityEnum.INSTIT.getValue(),
+				EntityEnum.EXPINSTIT.getValue());
+	}
+
 }
