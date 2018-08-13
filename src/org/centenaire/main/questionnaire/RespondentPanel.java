@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,15 +20,16 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.DoubleEntity;
+import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Tag;
 import org.centenaire.entityeditor.IndividualEditor;
-import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
+import org.centenaire.util.dragndrop.DropListTableModel;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.dragndrop.TargetHandlerDouble;
 import org.centenaire.util.editorsRenderers.Delete;
@@ -199,8 +201,17 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	 * @see org.centenaire.main.questionnaire.QuestionTemplate
 	 */
 	public void savePanel() {
+		//printDataState();
 		// Recover currentIndividual
 		Individual currentIndividual = gc.getCurrentIndividual();
+		
+		// It seems that saving the drop tables should be done first 
+		// (in order to avoid inopportune updates?)
+		dropTableInstitStatus.saveContent(currentIndividual);
+		
+		dropTableTag.saveContent(currentIndividual);
+		
+		dropTableDiscipline.saveContent(currentIndividual);
 		
 		// Save Phd defense year
 		((AbstractIndividualDao) daoIndiv).setPhdDefenseYear(
@@ -216,17 +227,6 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		((AbstractIndividualDao) daoIndiv).setHabilitationOnGreatWar(
 				currentIndividual,
 				habilitationOnGreatWarField.isSelected());
-		
-		dropTableInstitStatus.saveContent(currentIndividual);
-	
-		dropTableTag.saveContent(currentIndividual);
-		
-		dropTableDiscipline.saveContent(currentIndividual);
-		
-		// NB: updating individual triggers a 'subscriber update'
-		// including (possibly) a reset of the droptables,
-		// so it has to be done last!
-		//daoIndiv.update(currentIndividual);
 	}
 	
 	/**
@@ -279,5 +279,17 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		dropTableTag.reset();
 		
 		dropTableDiscipline.reset();
+	}
+	
+	public void printDataState() {
+		DropListTableModel model = (DropListTableModel) dropTableInstitStatus.getModel(); 
+		LinkedList<Entity> data = model.getData();
+		String msg0 = "[";
+		for (Entity row: data) {
+			msg0 += row.toString()+",";
+		}
+		msg0 += "]";
+		
+		System.out.println("dropTableInstitStatus: "+msg0);
 	}
 }

@@ -64,5 +64,10 @@ public class DoubleEntity<T extends Entity, U> extends Entity {
 			;
 		}
 	}
+	
+	public String toString() {
+		String msg = String.format("Double[%s, %s]", objT.toString(), objU.toString());
+		return msg;
+	}
 
 }

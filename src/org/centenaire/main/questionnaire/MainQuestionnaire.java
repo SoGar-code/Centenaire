@@ -350,13 +350,13 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Save the content of 'RespondentPanel'
+				respondent.savePanel();
+				
 				// Save the content of all questions
 				for (QuestionTemplate question: questions) {
 					question.saveQuestion();
 				}
-				
-				// Save the content of 'RespondentPanel'
-				respondent.savePanel();
 			}
 		});
 		
@@ -404,11 +404,11 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// When channel 0 is called (change of currentIndividual)
 		// set the questions with what is already known
 		if (indexClass == 0) {
+			respondent.setPanel();
+			
 			for (QuestionTemplate question: questions) {
 				question.setQuestion();
 			}
-			
-			respondent.setPanel();
 		}
 		
 		// When the 'Individual' channel is called

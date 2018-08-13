@@ -70,7 +70,8 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	 * Save the content of the table.
 	 */
 	public void saveContent(T currentEntity) {
-		((DropListTableModel) this.getModel()).saveContent(currentEntity);
+		DropListTableModel<T, U> model = (DropListTableModel<T, U>) this.getModel();
+		model.saveContent(currentEntity);
 	}
 
 	/**

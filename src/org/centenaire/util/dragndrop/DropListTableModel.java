@@ -116,7 +116,7 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	 */
 	public void saveContent(T currentEntity) {
 		// Recover the current content of the model
-		List<Entity> entityList = this.getData();
+		List<Entity> entityList = this.data;
 		
 		// Delete all previous relations associated to this individual
 		relationDao.deleteAll(currentEntity);

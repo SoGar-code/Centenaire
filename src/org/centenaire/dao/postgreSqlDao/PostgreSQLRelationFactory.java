@@ -149,8 +149,8 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				"indiv_id",
 				"instit_id",
 				"instit_status",
-				EntityEnum.INDIV.getValue(),
 				EntityEnum.INSTIT.getValue(),
+				EntityEnum.INSTITSTATUS.getValue(),
 				EntityEnum.INDIVINSTIT.getValue());
 	}
 
