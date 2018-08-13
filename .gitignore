@@ -17,3 +17,6 @@ bin/
 
 # ignore auxiliary.sql
 sql/auxiliary.sql
+
+# ignore doc
+doc/

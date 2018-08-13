@@ -226,6 +226,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	/**
 	 * Generic method to set a string 'content' into a prescribed variable 'variableName'.
 	 * 
+	 * <p>This method does <em>not</em> trigger an update on the 'Individual' channel.</p>
+	 * 
 	 * @param indiv
 	 * @param variableName
 	 * @param content
@@ -242,9 +244,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			
 			int nb_rows = state.executeUpdate();
 			state.close();
-			
-			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.INDIV.getValue());
 			
 			return true;
 		} catch (SQLException e){
@@ -295,6 +294,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	/**
 	 * Generic method to set an integer 'content' into a prescribed variable 'variableName'.
 	 * 
+	 * <p>This method does <em>not</em> trigger an update on the 'Individual' channel.</p>
+	 * 
 	 * @param indiv
 	 * @param variableName
 	 * @param content
@@ -311,9 +312,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			
 			int nb_rows = state.executeUpdate();
 			state.close();
-			
-			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.INDIV.getValue());
 			
 			return true;
 		} catch (SQLException e){
@@ -334,6 +332,8 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	/**
 	 * Generic method to set a boolean 'content' into a prescribed variable 'variableName'.
 	 * 
+	 * <p>This method does <em>not</em> trigger an update on the 'Individual' channel.</p>
+	 * 
 	 * @param indiv
 	 * @param variableName
 	 * @param content
@@ -350,9 +350,6 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			
 			int nb_rows = state.executeUpdate();
 			state.close();
-			
-			// Notify the Dispatcher on a suitable channel.
-			this.publish(EntityEnum.INDIV.getValue());
 			
 			return true;
 		} catch (SQLException e){
