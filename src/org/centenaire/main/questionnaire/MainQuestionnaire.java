@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
@@ -18,11 +19,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.EntityEnum;
+import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.Institution;
+import org.centenaire.entity.Item;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GeneralController;
+import org.centenaire.util.dragndrop.DropTable;
+import org.centenaire.util.editorsRenderers.Delete;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
@@ -152,7 +157,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Question I.3 (initial implementation)
 		// ====================================
 		String question3String = "Publications du répondant";
-		QuestionTemplate questionItem = new QuestionItem("3", question3String);
+		QuestionTemplate questionItem = new QuestionDrop("3", question3String);
 		content.add(questionItem);
 		
 		// add to the list of questions
@@ -179,7 +184,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Question I.5 
 		// ====================================
 		String question5String = "Activités numériques du répondant (productions)";
-		QuestionTemplate questionItemBis = new QuestionItem("5", question5String);
+		QuestionTemplate questionItemBis = new QuestionDrop("5", question5String);
 		content.add(questionItemBis);
 		
 		// add to the list of questions
@@ -233,13 +238,57 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Question II.1 (initial implementation)
 		// ====================================
 		String questionII_1 = "Activités de vulgarisation du répondant";
-		QuestionTemplate questionVulg = new QuestionItem("1.a/b/c/d/e/f", questionII_1);
-		content.add(questionVulg);
-		
+		QuestionTemplate questionVulg = new QuestionDrop("1.a/b/c/d/e/f", questionII_1);
 		content.add(questionVulg);
 		
 		// add to the list of questions
 		questions.add(questionVulg);
+		
+		// Question II.2
+		// ===============
+		String questionII_2_a = "Activités d'expertise scientifique du répondant - Productions";
+		DropTable<Individual, Item> tableExpItem = new DropTable<Individual, Item>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.ITEM.getValue(), 
+				EntityEnum.EXPITEM.getValue(), 
+				new Class[] {String.class, String.class, Date.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Retirer"}
+				);
+		QuestionTemplate questionExpItem = new QuestionDrop("2.a", questionII_2_a, tableExpItem);
+		content.add(questionExpItem);
+		
+		// add to the list of questions
+		questions.add(questionExpItem);
+		
+		
+		String questionII_2_b = "Activités d'expertise scientifique du répondant - Evénements";
+		DropTable<Individual, Event> tableExpEvent = new DropTable<Individual, Event>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.EVENTS.getValue(), 
+				EntityEnum.EXPEVENT.getValue(), 
+				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Lieu", "Retirer"}
+				);
+		QuestionTemplate questionExpEvent = new QuestionDrop("2.b", questionII_2_b, tableExpEvent);
+		content.add(questionExpEvent);
+		
+		// add to the list of questions
+		questions.add(questionExpEvent);
+		
+		
+		String questionII_2_c = "Activités d'expertise scientifique du répondant - Institutions";
+		DropTable<Individual, Institution> tableExpInstit = new DropTable<Individual, Institution>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.INSTIT.getValue(), 
+				EntityEnum.EXPINSTIT.getValue(), 
+				new Class[] {String.class, String.class, Delete.class}, 
+				new String[] {"Institution", "Type", "Retirer"}
+				);
+		QuestionTemplate questionExpInstit = new QuestionDrop("2.c", questionII_2_c, tableExpInstit);
+		content.add(questionExpInstit);
+		
+		// add to the list of questions
+		questions.add(questionExpInstit);
 		
 		// Title III separator
 		// ===================

@@ -13,10 +13,18 @@ import org.centenaire.util.dragndrop.DropListTableModel;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;
 
-public class QuestionItem extends QuestionTemplate {
-	private DropTable<Individual, Item> dropTableItems;
+public class QuestionDrop extends QuestionTemplate {
+	private DropTable dropTable;
 	
-	public QuestionItem(String numbering, String questionString){
+	/**
+	 * Original constructor, with predefined 'dropTable' (about items).
+	 * 
+	 * @param numbering
+	 *				string providing the numbering of the question
+	 * @param questionString
+	 * 				string providing the content of the question itself.
+	 */
+	public QuestionDrop(String numbering, String questionString){
 		super(numbering);
 
 		this.setQuestionLab(questionString);
@@ -24,7 +32,7 @@ public class QuestionItem extends QuestionTemplate {
 		JPanel main = this.getMain();
 
 		// Table of items
-		dropTableItems = new DropTable<Individual, Item>(
+		dropTable = new DropTable<Individual, Item>(
 				EntityEnum.INDIV.getValue(),
 				EntityEnum.ITEM.getValue(),
 				EntityEnum.AUTHOR.getValue(),
@@ -32,26 +40,48 @@ public class QuestionItem extends QuestionTemplate {
 				new String[] {"Titre", "Type", "Date de début", "Retirer"}
 				);
 		
-		main.add(dropTableItems);
+		main.add(dropTable);
+		
+	}
+	
+	/**
+	 * Constructor requesting a 'dropTable'.
+	 * 
+	 * @param numbering
+	 *				string providing the numbering of the question
+	 * @param questionString
+	 * 				string providing the content of the question itself.
+	 */
+	public QuestionDrop(String numbering, String questionString, DropTable dropTable){
+		super(numbering);
+
+		this.setQuestionLab(questionString);
+		
+		JPanel main = this.getMain();
+
+		// Table of items
+		this.dropTable = dropTable;
+		
+		main.add(this.dropTable);
 		
 	}
 
 	@Override
 	public void saveQuestion() {
 		Individual currentIndividual = gc.getCurrentIndividual();
-		this.dropTableItems.saveContent(currentIndividual);
+		this.dropTable.saveContent(currentIndividual);
 	}
 
 	@Override
 	public void setQuestion() {
 		Individual currentIndividual = gc.getCurrentIndividual();
-		this.dropTableItems.updateEntity(currentIndividual);
+		this.dropTable.updateEntity(currentIndividual);
 	}
 
 	@Override
 	public void resetQuestion() {
 		LinkedList<Entity> listItem = new LinkedList<Entity>();
-		((DropListTableModel) this.dropTableItems.getModel()).setData(listItem);
+		((DropListTableModel) this.dropTable.getModel()).setData(listItem);
 
 	}
 

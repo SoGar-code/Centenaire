@@ -52,7 +52,7 @@ public class GTable extends JScrollPane{
 		table = new JTable();
 		table.setModel(model);
 		
-		// Avoid Droping issues with empty tables (cf. Java tutorial "Empty Table Drop")
+		// Avoid Dropping issues with empty tables (cf. Java tutorial "Empty Table Drop")
 		table.setFillsViewportHeight(true);
 		
 		table.setRowHeight(30);
@@ -79,35 +79,6 @@ public class GTable extends JScrollPane{
 		// since the only constructor involves a ListTableModel, 
 		// the cast below should be safe...
 		return (ListTableModel) this.table.getModel();
-	}
-	
-	public void updateComboIndividual(){
-		// Method called by GeneralPanel when currentEntity==0 (Students)
-		// when "Save/update" button is pushed.
-		// Only for the Mark tab
-	    LinkedList<Individual> listStudent = gc.getIndividualDao().findAll();
-	    JComboBox<Individual> comboStudent = new JComboBox<Individual>(listStudent.toArray(new Individual[listStudent.size()]));
-	    table.setDefaultEditor(Individual.class, new DefaultCellEditor(comboStudent));
-	}
-	
-	public void updateComboSemester(){
-		// Method called by GeneralPanel when currentEntity==2 (Semester)
-		// when "Save/update" button is pushed.
-		// Exams tab and Mark tab
-	    LinkedList<Tag> listSemester = gc.getTagDao().findAll();
-	    JComboBox<Tag> comboSemester = new JComboBox<Tag>(listSemester.toArray(new Tag[listSemester.size()]));
-	    this.table.setDefaultEditor(TagLike.class, new DefaultCellEditor(comboSemester));
-	}
-	
-	public void updateCombo(int index){
-		switch(index){
-			case 0:
-				updateComboIndividual();
-				break;
-			case 2:
-				updateComboSemester();
-				break;
-		}
 	}
 	
 	/**
