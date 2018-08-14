@@ -8,9 +8,9 @@
 -- \i path/to/folder/CreateDataBase.sql
 
 
-SET client_encoding = 'Latin1';
+SET client_encoding = 'UTF-8';
 
--- list 'd�partements'
+-- list 'départements'
 CREATE TABLE departements(
   id SERIAL PRIMARY KEY,
   name text
@@ -58,6 +58,14 @@ CREATE TABLE individuals(
   nb_stud_4 int,
   nb_stud_5 int,
   question_instit_non_sci text,
+  question_soc_med_expectation text,
+  question_twitter_evolution text,
+  twitter_account boolean,
+  facebook_account boolean,
+  twitter_start_year int,
+  facebook_start_year int,
+  tweets_per_week int,
+  successful_tweet text,
   question_concern text,
   question_comittee text,
   question_contribution text,
@@ -181,7 +189,7 @@ CREATE TABLE expert_item(
   PRIMARY KEY (indiv_id, item_id)
 );
 
--- expertise �v�nements
+-- expertise événements
 CREATE TABLE expert_event(
   indiv_id integer REFERENCES Individuals,
   event_id integer REFERENCES Events,
@@ -215,13 +223,13 @@ CREATE TABLE tax_chrono(
   name text
 );
 
--- taxinomie g�ographique
+-- taxinomie géographique
 CREATE TABLE tax_geo(
   id SERIAL PRIMARY KEY,
   name text
 );
 
--- taxinomie th�matique
+-- taxinomie thématique
 CREATE TABLE tax_theme(
   id SERIAL PRIMARY KEY,
   name text

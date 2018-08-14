@@ -29,7 +29,7 @@ public class QuestionParticipationConf extends QuestionTemplate {
 				EntityEnum.EVENTS.getValue(),
 				EntityEnum.PARTICIPANT.getValue(),
 				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
-				new String[] {"Titre", "Type", "Date de début", "Lieu", "Retirer"}
+				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
 				);
 		
 		main.add(dropTableEvent);

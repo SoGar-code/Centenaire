@@ -267,7 +267,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				EntityEnum.EVENTS.getValue(), 
 				EntityEnum.EXPEVENT.getValue(), 
 				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
-				new String[] {"Titre", "Type", "Date de début", "Lieu", "Retirer"}
+				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
 				);
 		QuestionTemplate questionExpEvent = new QuestionDrop("2.b", questionII_2_b, tableExpEvent);
 		content.add(questionExpEvent);
@@ -291,6 +291,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		questions.add(questionExpInstit);
 		
 		// Question II.3
+		// ==============
 		String questionII_3_a = "Conférences, tables-rondes, débats grand-publics "
 				+ "auxquelles vous avez été invité en France";
 		DropTable<Individual, Event> tableGdPublicParticipation = new DropTable<Individual, Event>(
@@ -298,7 +299,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				EntityEnum.EVENTS.getValue(), 
 				EntityEnum.PARTICIPANT.getValue(), 
 				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
-				new String[] {"Titre", "Type", "Date de début", "Lieu", "Retirer"}
+				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
 				);
 		QuestionTemplate questionGdPublicParticipation = new QuestionDrop("3.a", questionII_3_a, tableGdPublicParticipation);
 		content.add(questionGdPublicParticipation);
@@ -307,6 +308,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		questions.add(questionGdPublicParticipation);
 		
 		// Question II.4
+		// ==============
 		String questionII_4 = "Avec quelles organisations, associations, "
 				+ "institutions non-scientifiques avez-vous été amené "
 				+ "à travailler le plus souvent et le plus étroitement ?"
@@ -327,6 +329,15 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 			}
 		};
 		content.add(questionInstitNonSci);
+		
+		// Question II.5
+		// ===============
+		String questionII_5 = "Nouveaux médias";
+		QuestionTemplate questionSocialMedia = new QuestionSocialMedia("5", questionII_5);
+		content.add(questionSocialMedia);
+		
+		// add to the list of questions
+		questions.add(questionSocialMedia);
 		
 		// Title III separator
 		// ===================
