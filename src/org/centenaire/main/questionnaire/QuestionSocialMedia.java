@@ -12,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import org.centenaire.dao.abstractDao.AbstractIndividualDao;
 import org.centenaire.entity.Individual;
+import org.centenaire.util.GFloatField;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 
@@ -21,7 +23,7 @@ public class QuestionSocialMedia extends QuestionTemplate {
 	private JTextArea twitterEvolutionArea;
 	private List<JCheckBox> socialMediaAccount;
 	private List<GIntegerField> socialMediaStartYear;
-	private GIntegerField twitterNbField;
+	private GFloatField twitterNbField;
 	private JComboBox<String> comboDuration;
 	private JTextArea successfulTweetArea;
 	
@@ -110,7 +112,7 @@ public class QuestionSocialMedia extends QuestionTemplate {
 				+ "par mois/semaine ?");
 		
 		JPanel twitterNbPan = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		twitterNbField = new GIntegerField();
+		twitterNbField = new GFloatField();
 		twitterNbField.setColumns(5);
 		JLabel sepLab = new JLabel(" par ");
 		comboDuration = new JComboBox<String>(new String[] {"mois", "semaine"});
@@ -151,59 +153,90 @@ public class QuestionSocialMedia extends QuestionTemplate {
 		
 	}
 
-	public String getStringContent() {
-		return socMedExpectationArea.getText();
-	}
-	
-	public void setStringContent(String content) {
-		socMedExpectationArea.setText(content);
-	}
-	
-	/**
-	 * Set number in prescribed student number field
-	 * 
-	 * @param accountIndex
-	 * 				which year 
-	 * @return
-	 */
-	public int getIntContent(int accountIndex) {
-		return socialMediaStartYear.get(accountIndex).getIntegerValue();
-	}
-	
-	public void setIntContent(int yearIndex, int content) {
-		socialMediaStartYear.get(yearIndex).setIntegerValue(content);
-	}
-
 	@Override
 	public void saveQuestion() {
-		String q3 = this.getStringContent();
 		Individual indiv = gc.getCurrentIndividual();
-		gc.getIndividualDao().setQ3(indiv, q3);
+		AbstractIndividualDao indivDao = gc.getIndividualDao();
+		
+		String socMedExpectation = socMedExpectationArea.getText();
+		indivDao.setQuestionSocMedExpectation(indiv, socMedExpectation);
+		
+		String twitterEvolution = twitterEvolutionArea.getText(); 
+		indivDao.setQuestionTwitterEvolution(indiv, twitterEvolution);
 		
 		for (int accountIndex=0; accountIndex<nbAccounts; accountIndex++) {
-			int aux = socialMediaStartYear.get(accountIndex).getIntegerValue();
-			gc.getIndividualDao().setNbStudents(indiv, accountIndex, aux);
+			
+			boolean socMedAccount = socialMediaAccount.get(accountIndex).isSelected();
+			indivDao.setSocMedAccount(indiv, accountIndex, socMedAccount);
+			
+			int socMedAccountYear = socialMediaStartYear.get(accountIndex).getIntegerValue();
+			indivDao.setSocMedAccountYear(indiv, accountIndex, socMedAccountYear);
 		}
+		
+		int durationInt = comboDuration.getSelectedIndex();
+		float tweetsPerWeek = 0;
+		switch (durationInt) {
+			// If 'month' is selected
+			case 0:
+				float rawTwitterNb = twitterNbField.getFloatValue();
+				tweetsPerWeek = (float) (rawTwitterNb/4.5);
+				break;
+			// if 'week' is selected
+			case 1:
+				tweetsPerWeek = twitterNbField.getFloatValue();
+				break;
+			default:
+				String msg = String.format("Unknown duration '%s' in combo!", durationInt);
+				System.out.println(msg);
+				tweetsPerWeek = -1;
+		}
+		indivDao.setTweetsPerWeek(indiv, tweetsPerWeek);
+		
+		String successfulTweet = successfulTweetArea.getText();
+		indivDao.setSuccessfulTweet(indiv, successfulTweet);
 	}
 
 	@Override
 	public void setQuestion() {
 		Individual indiv = gc.getCurrentIndividual();
-		String q3 = gc.getIndividualDao().getQ3(indiv);
-		this.setStringContent(q3);
+		AbstractIndividualDao indivDao = gc.getIndividualDao();
+		
+		String socMedExpectation = indivDao.getQuestionSocMedExpectation(indiv);
+		socMedExpectationArea.setText(socMedExpectation);
+		
+		String twitterEvolution = indivDao.getQuestionTwitterEvolution(indiv);
+		twitterEvolutionArea.setText(twitterEvolution);
 		
 		for (int accountIndex=0; accountIndex<nbAccounts; accountIndex++) {
-			 int aux = gc.getIndividualDao().getNbStudents(indiv, accountIndex);
-			 socialMediaStartYear.get(accountIndex).setIntegerValue(aux);
+			
+			boolean socMedAccount = indivDao.getSocMedAccount(indiv, accountIndex);
+			socialMediaAccount.get(accountIndex).setSelected(socMedAccount);
+			
+			int socMedAccountYear = indivDao.getSocMedAccountYear(indiv, accountIndex);
+			socialMediaStartYear.get(accountIndex).setIntegerValue(socMedAccountYear);
 		}
+		
+		float twitterNb = indivDao.getTweetsPerWeek(indiv);
+		twitterNbField.setFloatValue(twitterNb);
+		comboDuration.setSelectedIndex(1);
+		
+		String successfulTweet = indivDao.getSuccessfulTweet(indiv);
+		successfulTweetArea.setText(successfulTweet);
 	}
 	
 	@Override
-	public void resetQuestion() {
-		setStringContent("");
+	public void resetQuestion() {	
+		socMedExpectationArea.setText("");
+		twitterEvolutionArea.setText("");
 		
 		for (int accountIndex=0; accountIndex<nbAccounts; accountIndex++) {
+			socialMediaAccount.get(accountIndex).setSelected(false);
 			socialMediaStartYear.get(accountIndex).setIntegerValue(0);
 		}
+		
+		twitterNbField.setFloatValue(0);
+		comboDuration.setSelectedIndex(-1);
+		
+		successfulTweetArea.setText("");
 	}
 }

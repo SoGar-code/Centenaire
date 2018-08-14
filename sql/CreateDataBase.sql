@@ -64,7 +64,7 @@ CREATE TABLE individuals(
   facebook_account boolean,
   twitter_start_year int,
   facebook_start_year int,
-  tweets_per_week int,
+  tweets_per_week real,
   successful_tweet text,
   question_concern text,
   question_comittee text,

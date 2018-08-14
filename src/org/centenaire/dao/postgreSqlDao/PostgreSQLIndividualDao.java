@@ -324,6 +324,39 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		}
 	}
 	
+	/**
+	 * Generic method to set a float 'content' into a prescribed variable 'variableName'.
+	 * 
+	 * <p>This method does <em>not</em> trigger an update on the 'Individual' channel.</p>
+	 * 
+	 * @param indiv
+	 * @param variableName
+	 * @param content
+	 * @return
+	 */
+	public boolean setFloatContent(Individual indiv, String variableName, float content) {
+		try{
+			String query=String.format(
+					"UPDATE individuals SET %s = ? WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setFloat(1, content);
+			state.setInt(2, indiv.getIndex());
+			
+			int nb_rows = state.executeUpdate();
+			state.close();
+			
+			return true;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.setFloatContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	@Override
 	public boolean setPhdDefenseYear(Individual indiv, int content) {
 		return setIntContent(indiv, "phd_defense_year", content);
@@ -393,6 +426,47 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public boolean setQuestionInstitNonSci(Individual indiv, String qII4String) {
 		return setStringContent(indiv, "question_instit_non_sci", qII4String);
+	}
+	
+
+	@Override
+	public boolean setQuestionSocMedExpectation(Individual indiv, String socMedExpectation) {
+		return setStringContent(indiv, "question_soc_med_expectation", socMedExpectation);
+	}
+
+	@Override
+	public boolean setQuestionTwitterEvolution(Individual indiv, String twitterEvol) {
+		return setStringContent(indiv, "question_twitter_evolution", twitterEvol);
+	}
+
+	@Override
+	public boolean setTwitterAccount(Individual indiv, boolean twitterAccount) {
+		return setBooleanContent(indiv, "twitter_account", twitterAccount);
+	}
+
+	@Override
+	public boolean setFacebookAccount(Individual indiv, boolean facebookAccount) {
+		return setBooleanContent(indiv, "facebook_account", facebookAccount);
+	}
+
+	@Override
+	public boolean setTwitterAccountYear(Individual indiv, int twitterAccountYear) {
+		return setIntContent(indiv, "twitter_start_year", twitterAccountYear);
+	}
+
+	@Override
+	public boolean setFacebookAccountYear(Individual indiv, int facebookAccountYear) {
+		return setIntContent(indiv, "facebook_start_year", facebookAccountYear);
+	}
+
+	@Override
+	public boolean setTweetsPerWeek(Individual indiv, float tweetsPerWeek) {
+		return setFloatContent(indiv, "tweets_per_week", tweetsPerWeek);
+	}
+
+	@Override
+	public boolean setSuccessfulTweet(Individual indiv, String successfulTweet) {
+		return setStringContent(indiv, "successful_tweet", successfulTweet);
 	}
 	
 	/**
@@ -487,6 +561,31 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return -1;
 		}	
 	}
+	
+	public float getFloatContent(Individual indiv, String variableName) {
+		try{
+			String query=String.format(
+					"SELECT %s FROM individuals WHERE id = ?",
+					variableName);
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setInt(1, indiv.getIndex());
+			ResultSet res = state.executeQuery();
+			res.first();
+			
+			float content = res.getFloat(variableName);
+			
+			res.close();
+			state.close();
+			return content;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLIndividualDao.getIntContent -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return -1;
+		} catch (Exception e){
+			e.printStackTrace();
+			return -1;
+		}	
+	}
 
 	@Override
 	public int getPhdDefenseYear(Individual indiv) {
@@ -544,5 +643,46 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 	@Override
 	public String getQuestionInstitNonSci(Individual indiv) {
 		return getStringContent(indiv, "question_instit_non_sci");
+	}
+
+	@Override
+	public String getQuestionSocMedExpectation(Individual indiv) {
+		return getStringContent(indiv, "question_soc_med_expectation");
+	}
+
+	@Override
+	public String getQuestionTwitterEvolution(Individual indiv) {
+		return getStringContent(indiv, "question_twitter_evolution");
+	}
+
+	@Override
+	public boolean getTwitterAccount(Individual indiv) {
+		return getBooleanContent(indiv, "twitter_account");
+	}
+
+	@Override
+	public boolean getFacebookAccount(Individual indiv) {
+		return getBooleanContent(indiv, "facebook_account");
 	};
+	
+	@Override
+	public int getTwitterAccountYear(Individual indiv) {
+		return getIntContent(indiv, "twitter_start_year");
+	}
+
+	@Override
+	public int getFacebookAccountYear(Individual indiv) {
+		return getIntContent(indiv, "facebook_start_year");
+	}
+
+	@Override
+	public float getTweetsPerWeek(Individual indiv) {
+		return getFloatContent(indiv, "tweets_per_week");
+	}
+
+	@Override
+	public String getSuccessfulTweet(Individual indiv) {
+		return getStringContent(indiv, "successful_tweet");
+	}
+
 }
