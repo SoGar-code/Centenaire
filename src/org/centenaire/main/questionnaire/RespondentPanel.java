@@ -75,9 +75,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 		indivEditor.setEnabled(false);
 		
 		// Institution panel
-		GridLayout gl = new GridLayout(3, 2);
-		gl.setVgap(10);
-		JPanel institPan = new JPanel(gl);
+		JPanel institPan = new JPanel(new GridLayout(3, 2, 10, 10));
 		
 		JLabel phdYearLab = new JLabel("Date soutenance (si entre 2012 et 2017) : ");
 		phdYearField = new GIntegerField();
@@ -135,9 +133,8 @@ public class RespondentPanel extends JPanel implements Subscriber{
 				new String[] {"Mot-clef", "Retirer"}
 				);
 		
-		JPanel dropTablePan = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel dropTablePan = new JPanel(new GridLayout(1,2,10,10));
 		dropTablePan.add(dropTableDiscipline);
-		dropTablePan.add(new JLabel(" "));
 		dropTablePan.add(dropTableTag);
 		
 		JPanel centerPan = new JPanel();

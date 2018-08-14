@@ -9,6 +9,7 @@ import java.util.List;
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.InstitStatus;
+import org.centenaire.entity.LocalType;
 import org.centenaire.util.ListTableModel;
 import org.centenaire.util.editorsRenderers.Delete;
 
@@ -54,9 +55,12 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 		List<Class> editableClass = new LinkedList<Class>();
 		editableClass.add(Delete.class);
 		editableClass.add(InstitStatus.class);
+		editableClass.add(LocalType.class);
 		
 		return (editableClass.contains(listClass[col]));
 	};
+	
+	
 	
 	/**
 	 * Include additional rows in data.

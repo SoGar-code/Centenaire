@@ -12,9 +12,9 @@ import javax.swing.JTable;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.InstitStatus;
+import org.centenaire.entity.LocalType;
 import org.centenaire.util.EntityCombo;
 import org.centenaire.util.GTable;
-import org.centenaire.util.GeneralController;
 import org.centenaire.util.editorsRenderers.ButtonRenderer;
 
 /**
@@ -53,17 +53,25 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 		
 		// Include editors 
 		// ================
+		JTable table = this.getTable();
 		
 		// == InstitStatus ==
 		// Create EntityCombo and subscribe to suitable channel
 		EntityCombo<InstitStatus> institStatusEditor = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
-		GeneralController gc = GeneralController.getInstance();
 		gc.getChannel(EntityEnum.INSTITSTATUS.getValue()).addSubscriber(institStatusEditor);
 		
 		// Set Editor for InstitStatus
-		JTable table = this.getTable();
 	    table.setDefaultEditor(InstitStatus.class, new DefaultCellEditor(institStatusEditor));
 	    table.setDefaultRenderer(InstitStatus.class, new ButtonRenderer());
+	    
+		// == LocalType ==
+		// Create EntityCombo and subscribe to suitable channel
+		EntityCombo<LocalType> localTypeEditor = new EntityCombo<LocalType>(EntityEnum.LOCALISATIONTYPE.getValue());
+		gc.getChannel(EntityEnum.LOCALISATIONTYPE.getValue()).addSubscriber(localTypeEditor);
+		
+		// Set Editor for LocalType
+	    table.setDefaultEditor(LocalType.class, new DefaultCellEditor(localTypeEditor));
+	    table.setDefaultRenderer(LocalType.class, new ButtonRenderer());
 	}
 	
 	/**

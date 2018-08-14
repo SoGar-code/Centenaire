@@ -34,6 +34,8 @@ INSERT INTO event_type_relations(name) VALUES('Intervention TV');
 -- create types of institutions
 INSERT INTO institution_type_relations(name) VALUES('Université');
 INSERT INTO institution_type_relations(name) VALUES('Laboratoire');
+INSERT INTO institution_type_relations(name) VALUES('Musée');
+INSERT INTO institution_type_relations(name) VALUES('Archive');
 INSERT INTO institution_type_relations(name) VALUES('Association');
 INSERT INTO institution_type_relations(name) VALUES('Organisation non-scientifique');
 

@@ -15,6 +15,7 @@ import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
+import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
 
 /**
@@ -185,6 +186,19 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				"instit_id",
 				EntityEnum.INSTIT.getValue(),
 				EntityEnum.EXPINSTIT.getValue());
+	}
+
+	@Override
+	public RelationDao<Event, DoubleEntity<Institution, LocalType>> getFinancialSupport() {
+		return new PostgreSQLLabelRelationDao<Event, Institution, LocalType>(
+				conn, 
+				"Localisations", 
+				"event_id",
+				"instit_id",
+				"loc_type",
+				EntityEnum.INSTIT.getValue(),
+				EntityEnum.LOCALISATIONTYPE.getValue(),
+				EntityEnum.LOCALISATION.getValue());
 	}
 
 }

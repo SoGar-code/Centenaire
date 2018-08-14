@@ -55,7 +55,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 	public MainQuestionnaire() {
 		super();
 		// size: (width, height)
-		this.setSize(980, 600);
+		this.setSize(960, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel content = new JPanel();
@@ -165,7 +165,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.4.a. (initial implementation)
 		// ====================================
-		String question4aString = "Colloques organisés par le répondant";
+		String question4aString = "Colloques organisés par le répondant.";
 		QuestionTemplate questionOrgConf = new QuestionOrgConf("4.a", question4aString);
 		content.add(questionOrgConf);
 		
@@ -174,7 +174,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Questions I.4.b/c (initial implementation)
 		// ====================================
-		String question4bString = "Colloques auxquels le répondant à participé";
+		String question4bString = "Colloques auxquels le répondant a participé.";
 		QuestionTemplate questionParticipationConf = new QuestionParticipationConf("4.b/c", question4bString);
 		content.add(questionParticipationConf);
 		
@@ -183,7 +183,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.5 
 		// ====================================
-		String question5String = "Activités numériques du répondant (productions)";
+		String question5String = "Activités numériques du répondant (productions).";
 		QuestionTemplate questionItemBis = new QuestionDrop("5", question5String);
 		content.add(questionItemBis);
 		
@@ -216,16 +216,19 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Question I.7
 		// =============
 		
-		String question7 = "Institutions partenaires ayant concouru "
+		String question7String = "Institutions partenaires ayant concouru "
 				+ "financièrement aux différentes opérations de recherche "
-				+ "(notamment colloques) que vous avez organisées";
-		QuestionTemplate q_7 = new QuestionFreeText("7", question7);
-		((QuestionFreeText) q_7).setContent("-- ici, implémentation de la question 7 "
-				+ "(pas reliée pour le moment !) --");
-		content.add(q_7);
+				+ "(notamment colloques) que vous avez organisées."
+				+ "\n\nNB : 1. dans cette interface, seuls les événements "
+				+ " mentionnés à la question I.4.a sont pris en compte (après sauvegarde)."
+				+ "\n         2. chaque événement doit être renseigné et sauvegardé "
+				+ "séparément.";
+		QuestionTemplate question7 = new QuestionFinancialSupport("7", question7String);
+		content.add(question7);
 		
 		// add to the list of questions
-		questions.add(q_7);
+		// set it high in the list to avoid interactions with the update of the ORG relation.
+		questions.addFirst(question7);
 		
 		// Title II separator
 		// ===================

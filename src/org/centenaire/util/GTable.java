@@ -34,7 +34,7 @@ import org.centenaire.util.editorsRenderers.FloatRenderer;
  * NB: the delete function is implemented in ButtonDeleteEditor.
  */
 public class GTable extends JScrollPane{
-	private GeneralController gc = GeneralController.getInstance();
+	protected GeneralController gc = GeneralController.getInstance();
 	private JTable table;
 
 	public GTable(ListTableModel model) {

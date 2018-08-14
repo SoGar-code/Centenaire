@@ -6,12 +6,16 @@ package org.centenaire.util;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
+import org.centenaire.entity.Event;
+import org.centenaire.main.questionnaire.QuestionFinancialSupport;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
@@ -24,9 +28,10 @@ import org.centenaire.util.pubsub.Subscriber;
  *
  */
 public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
+	protected final static Logger LOGGER = Logger.getLogger(EntityCombo.class.getName());
+	
 	private final int classIndex;
 	private Dao<T> dao;
-	private ActionListener comboListener;
 
 	/**
 	 * Constructor for the EntityCombo class.
@@ -50,7 +55,8 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		
 		// Create combo to select Entity
-		T[] entityVect = (T[]) listEntity.toArray();
+		Vector<T> entityVect = new Vector<T>(listEntity);
+		
 		this.setModel(new DefaultComboBoxModel<T>(entityVect));
 		this.setPreferredSize(new Dimension(200,30));
 	}
@@ -82,27 +88,32 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 		int listSize = model.getSize();
 		int listIndex = 0;
 		
-		do {
-			// Consider an object in the list
-			T currentEntity = model.getElementAt(listIndex);
-			
-			int currentIndex = ((Entity) currentEntity).getIndex();
-			
-			// If the current element and the requested element have the same (entity) index...
-			if (entityIndex == currentIndex) {
-				// then we have found what we were looking for!
-				this.setSelectedIndex(listIndex);
-				foundEntity = true;
-				System.out.println("EntityCombo.setSelectedEntity -- found something!");
-				break;
+		try {
+			do {
+				// Consider an object in the list
+				T currentEntity = model.getElementAt(listIndex);
+				
+				int currentIndex = ((Entity) currentEntity).getIndex();
+				
+				// If the current element and the requested element have the same (entity) index...
+				if (entityIndex == currentIndex) {
+					// then we have found what we were looking for!
+					this.setSelectedIndex(listIndex);
+					foundEntity = true;
+					LOGGER.info("EntityCombo.setSelectedEntity -- found something!");
+					break;
+				}
+				listIndex++;
+			} while (!foundEntity && (listIndex < listSize));
+	
+			// In case nothing was found...
+			if (!foundEntity) {
+				this.setSelectedIndex(-1);
 			}
-			listIndex++;
-		} while (!foundEntity && (listIndex < listSize));
-
-		// In case nothing was found...
-		if (!foundEntity) {
+		}
+		catch (NullPointerException e){
 			this.setSelectedIndex(-1);
-		}		
+		}
 	}
 	
 	/**
@@ -140,5 +151,9 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 			// Cancel selection
 			this.setSelectedIndex(-1);
 		}
+	}
+	
+	public Dao<T> getDao(){
+		return this.dao;
 	}
 }

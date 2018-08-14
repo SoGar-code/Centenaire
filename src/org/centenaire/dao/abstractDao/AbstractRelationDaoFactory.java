@@ -9,6 +9,7 @@ import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
+import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
 
 /**
@@ -47,6 +48,8 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Item, Institution> getAffiliation();
 	
 	public abstract RelationDao<Individual, DoubleEntity<Institution, InstitStatus>> getInstitStatus();
+	
+	public abstract RelationDao<Event, DoubleEntity<Institution, LocalType>> getFinancialSupport();
 	
 	public abstract RelationDao<Individual, Item> getExpItem();
 	
@@ -90,6 +93,8 @@ public abstract class AbstractRelationDaoFactory {
 			return getAffiliation();
 		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
 			return getInstitStatus();
+		} else if (i == EntityEnum.LOCALISATION.getValue()) {
+			return getFinancialSupport();
 		} else if (i == EntityEnum.EXPITEM.getValue()) {
 			return getExpItem();
 		} else if (i == EntityEnum.EXPEVENT.getValue()) {
