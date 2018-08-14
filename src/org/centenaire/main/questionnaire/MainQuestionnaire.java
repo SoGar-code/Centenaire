@@ -290,6 +290,44 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// add to the list of questions
 		questions.add(questionExpInstit);
 		
+		// Question II.3
+		String questionII_3_a = "Conférences, tables-rondes, débats grand-publics "
+				+ "auxquelles vous avez été invité en France";
+		DropTable<Individual, Event> tableGdPublicParticipation = new DropTable<Individual, Event>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.EVENTS.getValue(), 
+				EntityEnum.PARTICIPANT.getValue(), 
+				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Lieu", "Retirer"}
+				);
+		QuestionTemplate questionGdPublicParticipation = new QuestionDrop("3.a", questionII_3_a, tableGdPublicParticipation);
+		content.add(questionGdPublicParticipation);
+		
+		// add to the list of questions
+		questions.add(questionGdPublicParticipation);
+		
+		// Question II.4
+		String questionII_4 = "Avec quelles organisations, associations, "
+				+ "institutions non-scientifiques avez-vous été amené "
+				+ "à travailler le plus souvent et le plus étroitement ?"
+				+ "\n\nNB : dans le cadre de cette interface, ces institutions "
+				+ "doivent être renseignées dans le tableau des relations du répondant. "
+				+ "Ici ne devraient apparaître (en texte libre) que des précisions à ce sujet.";
+		QuestionTemplate questionInstitNonSci = new QuestionFreeText("4", questionII_4) {
+			public void saveQuestion() {
+				String qII4String = this.getContent();
+				Individual indiv = gc.getCurrentIndividual();
+				gc.getIndividualDao().setQuestionInstitNonSci(indiv, qII4String);
+			}
+			
+			public void setQuestion() {
+				Individual indiv = gc.getCurrentIndividual();
+				String qII4String = gc.getIndividualDao().getQuestionInstitNonSci(indiv);
+				this.setContent(qII4String);
+			}
+		};
+		content.add(questionInstitNonSci);
+		
 		// Title III separator
 		// ===================
 		JPanel titleIIIPan = new JPanel(new FlowLayout(FlowLayout.LEFT));

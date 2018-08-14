@@ -390,6 +390,11 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 		}
 	}
 	
+	@Override
+	public boolean setQuestionInstitNonSci(Individual indiv, String qII4String) {
+		return setStringContent(indiv, "question_instit_non_sci", qII4String);
+	}
+	
 	/**
 	 * Generic method to get a string 'content' from a prescribed variable 'variableName'.
 	 * 
@@ -534,5 +539,10 @@ public class PostgreSQLIndividualDao extends AbstractIndividualDao {
 			return -1;
 		}
 
+	}
+
+	@Override
+	public String getQuestionInstitNonSci(Individual indiv) {
+		return getStringContent(indiv, "question_instit_non_sci");
 	};
 }

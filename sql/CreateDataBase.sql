@@ -10,7 +10,7 @@
 
 SET client_encoding = 'Latin1';
 
--- list 'départements'
+-- list 'dï¿½partements'
 CREATE TABLE departements(
   id SERIAL PRIMARY KEY,
   name text
@@ -57,6 +57,7 @@ CREATE TABLE individuals(
   nb_stud_3 int,
   nb_stud_4 int,
   nb_stud_5 int,
+  question_instit_non_sci text,
   question_concern text,
   question_comittee text,
   question_contribution text,
@@ -180,7 +181,7 @@ CREATE TABLE expert_item(
   PRIMARY KEY (indiv_id, item_id)
 );
 
--- expertise événements
+-- expertise ï¿½vï¿½nements
 CREATE TABLE expert_event(
   indiv_id integer REFERENCES Individuals,
   event_id integer REFERENCES Events,
@@ -214,13 +215,13 @@ CREATE TABLE tax_chrono(
   name text
 );
 
--- taxinomie géographique
+-- taxinomie gï¿½ographique
 CREATE TABLE tax_geo(
   id SERIAL PRIMARY KEY,
   name text
 );
 
--- taxinomie thématique
+-- taxinomie thï¿½matique
 CREATE TABLE tax_theme(
   id SERIAL PRIMARY KEY,
   name text

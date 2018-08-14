@@ -15,8 +15,9 @@ bin/
 # avoid .classpath file
 .classpath
 
-# ignore auxiliary.sql
+# ignore auxiliary.sql and extra_pop.sql
 sql/auxiliary.sql
+sql/extra_pop.sql
 
 # ignore doc
 doc/
