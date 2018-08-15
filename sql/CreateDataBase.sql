@@ -234,3 +234,24 @@ CREATE TABLE tax_theme(
   id SERIAL PRIMARY KEY,
   name text
 );
+
+-- Item chronological taxonomy relation
+CREATE TABLE item_tax_chrono_relations(
+  item_id integer REFERENCES Items,
+  tax_chrono_id integer REFERENCES tax_chrono,
+  PRIMARY KEY (item_id, tax_chrono_id)
+);
+
+-- Item geographical taxonomy relation
+CREATE TABLE item_tax_geo_relations(
+  item_id integer REFERENCES Items,
+  tax_geo_id integer REFERENCES tax_geo,
+  PRIMARY KEY (item_id, tax_geo_id)
+);
+
+-- Item thematic taxonomy relation
+CREATE TABLE item_tax_theme_relations(
+  item_id integer REFERENCES Items,
+  tax_theme_id integer REFERENCES tax_theme,
+  PRIMARY KEY (item_id, tax_theme_id)
+);

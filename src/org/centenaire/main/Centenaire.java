@@ -1,6 +1,7 @@
 package org.centenaire.main;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -40,6 +41,8 @@ public class Centenaire extends JFrame{
 		this.setTitle("BdD Centenaire");
 		this.setSize(700, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 		
 		Color secondColor = Color.lightGray;
 		

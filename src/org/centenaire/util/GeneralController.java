@@ -221,6 +221,10 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 		return rdf.getRelationDao(indexClass);
 	}
 	
+	public RelationDao<?, ?> getInvertedRelationDao(int indexClass){
+		return rdf.getInvertedRelationDao(indexClass);
+	}
+	
 	//=================================
 	// Listeners and observable
 	//=================================

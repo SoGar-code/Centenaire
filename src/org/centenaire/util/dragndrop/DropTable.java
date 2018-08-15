@@ -12,6 +12,7 @@ import javax.swing.DropMode;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
+import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.InstitStatus;
@@ -34,6 +35,7 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	/**
 	 * 
 	 * @param classIndexT
+	 * 					class of the entity used as reference for selecting rows (as in 'findAll(Entity)').
 	 * @param classIndexU
 	 * 					class index of the class being displayed
 	 * @param classIndexRelation
@@ -41,6 +43,8 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	 * @param title
 	 * @param deleteColumn
 	 * 				defines which column contains the 'delete' button (it should be possible to edit it!).
+	 * 
+	 * @see org.centenaire.dao.RelationDao#findAll(Entity)
 	 */
 	public DropTable(
 			int classIndexT, 
@@ -56,27 +60,49 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 		this.getTable().setDropMode(DropMode.INSERT);
 		this.getTable().setTransferHandler(new TargetHandler<U>(classIndexU));
 		
-		// Include editors 
-		// ================
-		JTable table = this.getTable();
-		
-		// == InstitStatus ==
-		// Create EntityCombo and subscribe to suitable channel
-		EntityCombo<InstitStatus> institStatusEditor = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
-		gc.getChannel(EntityEnum.INSTITSTATUS.getValue()).addSubscriber(institStatusEditor);
-		
-		// Set Editor for InstitStatus
-	    table.setDefaultEditor(InstitStatus.class, new DefaultCellEditor(institStatusEditor));
-	    table.setDefaultRenderer(InstitStatus.class, new ButtonRenderer());
+		// set editors and renderers
+		this.setEditorsAndRenderers();
 	    
-		// == LocalType ==
-		// Create EntityCombo and subscribe to suitable channel
-		EntityCombo<LocalType> localTypeEditor = new EntityCombo<LocalType>(EntityEnum.LOCALISATIONTYPE.getValue());
-		gc.getChannel(EntityEnum.LOCALISATIONTYPE.getValue()).addSubscriber(localTypeEditor);
+	    // Set column width
+	    // =================
+	    
+	    // Define colMap
+	    colMap = new HashMap<Class, Integer>();
+	    colMap.put(Delete.class, 75);
+	    
+	    // set column width accordingly
+	    this.setColumnsWidth(listClass);
+	}
+	
+	/**
+	 * 
+	 * @param classIndexT
+	 * 					class of the entity used as reference for selecting rows (as in 'findAll(Entity)').
+	 * @param classIndexU
+	 * 					class index of the class being displayed
+	 * @param classIndexRelation
+	 * @param listClass
+	 * @param title
+	 * @param deleteColumn
+	 * 				defines which column contains the 'delete' button (it should be possible to edit it!).
+	 * 
+	 * @see org.centenaire.dao.RelationDao#findAll(Entity)
+	 */
+	public DropTable(
+			int classIndexU, 
+			Class[] listClass, 
+			String[] title,
+			RelationDao<T,U> relationDao
+			) {
+		super(new DropListTableModel<T, U>(listClass, title, relationDao));
 		
-		// Set Editor for LocalType
-	    table.setDefaultEditor(LocalType.class, new DefaultCellEditor(localTypeEditor));
-	    table.setDefaultRenderer(LocalType.class, new ButtonRenderer());
+		// Support for Drop
+		this.getTable().setDragEnabled(true);
+		this.getTable().setDropMode(DropMode.INSERT);
+		this.getTable().setTransferHandler(new TargetHandler<U>(classIndexU));
+		
+		// set editors and renderers
+		this.setEditorsAndRenderers();
 	    
 	    // Set column width
 	    // =================
@@ -122,6 +148,8 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	 * the types specified in the constructor.</p>
 	 */
 	public void setColumnsWidth(Class[] listClass) {
+		
+		
 		TableColumnModel tCM = this.getTable().getColumnModel();
 		
 		int n = listClass.length;
@@ -143,6 +171,37 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 
 	public void setColMap(Map<Class, Integer> colMap) {
 		this.colMap = colMap;
+	}
+	
+	/**
+	 * Method to create suitable editors and renderers.
+	 * 
+	 */
+	public void setEditorsAndRenderers() {
+		JTable table = this.getTable();
+		
+		// InstitStatus
+		// ==============
+		
+		// Create EntityCombo and subscribe to suitable channel
+		EntityCombo<InstitStatus> institStatusEditor = new EntityCombo<InstitStatus>(EntityEnum.INSTITSTATUS.getValue());
+		gc.getChannel(EntityEnum.INSTITSTATUS.getValue()).addSubscriber(institStatusEditor);
+		
+		// Set Editor for InstitStatus
+	    table.setDefaultEditor(InstitStatus.class, new DefaultCellEditor(institStatusEditor));
+	    table.setDefaultRenderer(InstitStatus.class, new ButtonRenderer());
+	    
+	    
+		// LocalType
+	    // ===========
+	    
+		// Create EntityCombo and subscribe to suitable channel
+		EntityCombo<LocalType> localTypeEditor = new EntityCombo<LocalType>(EntityEnum.LOCALISATIONTYPE.getValue());
+		gc.getChannel(EntityEnum.LOCALISATIONTYPE.getValue()).addSubscriber(localTypeEditor);
+		
+		// Set Editor for LocalType
+	    table.setDefaultEditor(LocalType.class, new DefaultCellEditor(localTypeEditor));
+	    table.setDefaultRenderer(LocalType.class, new ButtonRenderer());
 	}
 	
 }

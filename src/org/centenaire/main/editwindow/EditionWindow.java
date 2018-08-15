@@ -1,6 +1,7 @@
 package org.centenaire.main.editwindow;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;

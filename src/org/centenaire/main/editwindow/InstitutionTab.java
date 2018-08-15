@@ -83,7 +83,7 @@ public class InstitutionTab extends JPanel implements Subscriber{
 		// Enable drag and define TransferHandler
 		JTable table = entityList.getTable();
 		table.setDragEnabled(true);
-		table.setTransferHandler(new SourceHandler<Item>(EntityEnum.INSTIT.getValue()));
+		table.setTransferHandler(new SourceHandler<Institution>(EntityEnum.INSTIT.getValue()));
 		
 		// Creation of 'modifier' pane
 		//===================================================

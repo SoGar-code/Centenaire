@@ -5,16 +5,23 @@ package org.centenaire.entity.util;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.entity.Entity;
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.editor.EntityEditor;
 import org.centenaire.entity.editor.EntityEditorFactory;
+import org.centenaire.entity.relationeditor.RelationEditor;
+import org.centenaire.entity.relationeditor.RelationEditorFactory;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.pubsub.Subscriber;
 
@@ -45,8 +52,10 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	private EntityCombo<T> entityCombo;
 
 	private JButton svgButton;
+	private JButton relationEditorButton;
 	
 	private ActionListener comboListener;
+	private Set<Integer> editableRelation = new HashSet<Integer>();
 	
 	/**
 	 * Generate an update panel for the Entity class T.
@@ -56,6 +65,10 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 	public UpdateEntityPanel(int classIndex) {
 		super();
 		this.classIndex = classIndex;
+		
+		// define editableRelation
+		editableRelation.add(EntityEnum.EVENTS.getValue());
+		editableRelation.add(EntityEnum.ITEM.getValue());
 		
 		// recover the GeneralController
 		GeneralController gc = GeneralController.getInstance();
@@ -81,6 +94,10 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 				
 					// enable the save button
 					svgButton.setEnabled(true);
+					
+					// enable the relation edition button
+					relationEditorButton.setEnabled(true);
+					
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
 							+ "not updating the panel!";
@@ -115,11 +132,43 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 				dao.update(obj);
 			}
 		});
+		
+		
+		// Relation editor button and its action
+		relationEditorButton = new JButton("Déf. relations");
+		relationEditorButton.setEnabled(false);
+		relationEditorButton.addActionListener(new ActionListener() {
+
+			// Call suitable relationEditor
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Recover selected entity
+				Entity currentEntity = (Entity) entityCombo.getSelectedEntity();
+				
+				if (currentEntity != null) {
+					RelationEditor relEditor = RelationEditorFactory.getRelationEditor(classIndex, currentEntity);
+					relEditor.showEntityDialog();
+				}
+			}
+		});
+		
+		// Create bottom panel with right and left sides.
+		JPanel bottomPan = new JPanel(new GridLayout(1,2));
+		
+		// In bottomLeftPan, include button only in suitable cases.
+		JPanel bottomLeftPan = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		if (editableRelation.contains(classIndex)) {
+			bottomLeftPan.add(relationEditorButton);
+		}
+		
+		JPanel bottomRightPan = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		bottomRightPan.add(svgButton);
+		
+
 
 		
-		// Create bottom panel
-		JPanel bottomPan = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		bottomPan.add(svgButton);
+		bottomPan.add(bottomLeftPan);
+		bottomPan.add(bottomRightPan);
 		
 		// Final assembly
 		this.setLayout(new BorderLayout());

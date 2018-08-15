@@ -31,8 +31,11 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	 * Constructor for 'DropListTableModel', including the class index of the item displayed.
 	 * 
 	 * @param listClass
+	 * 			list of classes used for choosing editors and column width.
 	 * @param title
+	 * 			list of titles of the different columns in the table.
 	 * @param classIndexU
+	 * 			classIndex of the type of Entity used as rows.
 	 */
 	public DropListTableModel(
 			Class[] listClass, 
@@ -43,6 +46,25 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 		
 		relationDao = (RelationDao<T, U>) gc.getRelationDao(classIndexRelation);
 
+	}
+	
+	/**
+	 * Constructor for 'DropListTableModel', including the class index of the item displayed.
+	 * 
+	 * @param listClass
+	 * 			list of classes used for choosing editors and column width.
+	 * @param title
+	 * 			list of titles of the different columns in the table.
+	 * @param relationDao
+	 * 			relationDao to use to populate, update and save the table.
+	 */
+	public DropListTableModel(
+			Class[] listClass, 
+			String[] title,
+			RelationDao<T, U> relationDao) {
+		super(listClass, title, new LinkedList<Entity>());
+		
+		this.relationDao = relationDao;
 	}
 	
 	/**
@@ -74,8 +96,7 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	 * 
 	 */
 	public void addAll(List<Entity> moreData) {
-		// Recover current data and its size
-		int dataSize = this.data.size();
+		// Recover current data
 		LinkedList<Integer> indexList = new LinkedList<Integer>();
 		
 		// populate 'indexList'
@@ -117,6 +138,14 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	
 	/**
 	 * Save the content of the Table Model.
+	 * 
+	 * <p>This is done by:
+	 * <ul>
+	 * 		<li>deleting all former relations for 'currentEntity', </li>
+	 * 		<li>creating all relations as available in the table at that point.</p>
+	 * </ul>
+	 * To evaluate the currently existing relations, the attribute 'relationDao' is used.
+	 * </p>
 	 */
 	public void saveContent(T currentEntity) {
 		// Recover the current content of the model
@@ -129,5 +158,13 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 		for (Entity entity: entityList) {
 			relationDao.create(currentEntity, (U) entity);
 		}
+	}
+	
+	public RelationDao<T, U> getRelationDao() {
+		return relationDao;
+	}
+
+	public void setRelationDao(RelationDao<T, U> relationDao) {
+		this.relationDao = relationDao;
 	}
 }

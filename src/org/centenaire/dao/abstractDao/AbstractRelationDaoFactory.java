@@ -11,6 +11,9 @@ import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
+import org.centenaire.entity.TaxChrono;
+import org.centenaire.entity.TaxGeo;
+import org.centenaire.entity.TaxTheme;
 
 /**
  * Factory class for RelationDao classes
@@ -38,8 +41,10 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Event, Tag> getEventTag();
 	
 	public abstract RelationDao<Individual, Item> getAuthor();
+	public abstract RelationDao<Item, Individual> getItemAuthor();
 	
 	public abstract RelationDao<Individual, Item> getDirection();
+	public abstract RelationDao<Item, Individual> getItemDirection();
 	
 	public abstract RelationDao<Individual, Event> getOrg();
 	
@@ -52,18 +57,25 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Event, DoubleEntity<Institution, LocalType>> getFinancialSupport();
 	
 	public abstract RelationDao<Individual, Item> getExpItem();
+	public abstract RelationDao<Item, Individual> getItemExp();
 	
 	public abstract RelationDao<Individual, Event> getExpEvent();
 	
 	public abstract RelationDao<Individual, Institution> getExpInstit();
+
+	public abstract RelationDao<Item, TaxChrono> getItemTaxChrono();
+	
+	public abstract RelationDao<Item, TaxGeo> getItemTaxGeo();
+	
+	public abstract RelationDao<Item, TaxTheme> getItemTaxTheme();
 	
 	/**
-	 * To get a Dao class indexed by an integer
+	 * To get a Relation Dao class indexed by an integer
 	 * 
 	 * @param i
 	 * 			index of the class under consideration.
 	 * 
-	 * @return suitable requested DAO element.
+	 * @return suitable requested RelationDAO element.
 	 * 
 	 * @see org.centenaire.entity.Entity#getClassIndex()
 	 */
@@ -101,9 +113,60 @@ public abstract class AbstractRelationDaoFactory {
 			return getExpEvent();
 		} else if (i == EntityEnum.EXPINSTIT.getValue()) {
 			return getExpInstit();
+		} else if (i == EntityEnum.ITEMTAXCHRONO.getValue()) {
+			return getItemTaxChrono();
+		} else if (i == EntityEnum.ITEMTAXGEO.getValue()) {
+			return getItemTaxGeo();
+		} else if (i == EntityEnum.ITEMTAXTHEME.getValue()) {
+			return getItemTaxTheme();
 		} else {
 			String msg = String.format(
 					"AbstractRelationDaoFactory.getRelationDao -- type '%s' not found!",
+					i);
+			System.out.println(msg);
+			return null;
+		}
+	}
+	
+	/**
+	 * To get an inverted Relation Dao class indexed by an integer.
+	 * 
+	 * <p>The 'inverted' relation Dao are not as common as 'regular' relation Dao.</p>
+	 * 
+	 * @param i
+	 * 			index of the (inverted) class under consideration.
+	 * 
+	 * @return suitable requested (inverted) relation DAO element.
+	 * 
+	 * @see org.centenaire.entity.Entity#getClassIndex()
+	 */
+	public RelationDao getInvertedRelationDao(int i){
+		if (i == EntityEnum.ENTITY.getValue()) {
+			String msg = "AbstractRelationDaoFactory.getRelationDao -- classIndex 0 is for "
+					+ "the abstract Entity class! So no DAO...";
+			System.out.println(msg);
+			return null;
+		} else if (i == EntityEnum.AUTHOR.getValue()) {
+			return getItemAuthor();
+		} else if (i == EntityEnum.DIRECTION.getValue()) {
+			return getItemDirection();
+//		} else if (i == EntityEnum.ORG.getValue()) {
+//			return getOrg();
+//		} else if (i == EntityEnum.PARTICIPANT.getValue()) {
+//			return getParticipant();
+//		} else if (i == EntityEnum.AFFILIATION.getValue()) {
+//			return getAffiliation();
+//		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
+//			return getInstitStatus();
+//		} else if (i == EntityEnum.LOCALISATION.getValue()) {
+//			return getFinancialSupport();
+		} else if (i == EntityEnum.EXPITEM.getValue()) {
+			return getItemExp();
+//		} else if (i == EntityEnum.EXPEVENT.getValue()) {
+//			return getExpEvent();
+		} else {
+			String msg = String.format(
+					"AbstractRelationDaoFactory.getInvertedRelationDao -- type '%s' not found!",
 					i);
 			System.out.println(msg);
 			return null;

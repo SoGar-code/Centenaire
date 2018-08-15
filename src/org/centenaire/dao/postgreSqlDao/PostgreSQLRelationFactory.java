@@ -17,6 +17,9 @@ import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
+import org.centenaire.entity.TaxChrono;
+import org.centenaire.entity.TaxGeo;
+import org.centenaire.entity.TaxTheme;
 
 /**
  * Concrete implementation of 'AbstractRelationDaoFactory'.
@@ -97,6 +100,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.ITEM.getValue(),
 				EntityEnum.ITEMTAG.getValue());
 	}
+	
+	@Override
+	public RelationDao<Item, Individual> getItemAuthor() {
+		return new PostgreSQLRelationDao<Item, Individual>(
+				conn, 
+				"author", 
+				"item_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.ITEMTAG.getValue());
+	}
 
 	@Override
 	public RelationDao<Individual, Item> getDirection() {
@@ -106,6 +120,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				"indiv_id",
 				"item_id",
 				EntityEnum.ITEM.getValue(),
+				EntityEnum.DIRECTION.getValue());
+	}
+	
+	@Override
+	public RelationDao<Item, Individual> getItemDirection() {
+		return new PostgreSQLRelationDao<Item, Individual>(
+				conn, 
+				"direction", 
+				"item_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
 				EntityEnum.DIRECTION.getValue());
 	}
 
@@ -165,6 +190,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.ITEM.getValue(),
 				EntityEnum.EXPITEM.getValue());
 	}
+	
+	@Override
+	public RelationDao<Item, Individual> getItemExp() {
+		return new PostgreSQLRelationDao<Item, Individual>(
+				conn, 
+				"expert_item", 
+				"item_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.EXPITEM.getValue());
+	}
 
 	@Override
 	public RelationDao<Individual, Event> getExpEvent() {
@@ -199,6 +235,39 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.INSTIT.getValue(),
 				EntityEnum.LOCALISATIONTYPE.getValue(),
 				EntityEnum.LOCALISATION.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, TaxChrono> getItemTaxChrono() {
+		return new PostgreSQLRelationDao<Item, TaxChrono>(
+				conn, 
+				"item_tax_chrono_relations", 
+				"item_id",
+				"tax_chrono_id",
+				EntityEnum.TAXCHRONO.getValue(),
+				EntityEnum.ITEMTAXCHRONO.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, TaxGeo> getItemTaxGeo() {
+		return new PostgreSQLRelationDao<Item, TaxGeo>(
+				conn, 
+				"item_tax_geo_relations", 
+				"item_id",
+				"tax_geo_id",
+				EntityEnum.TAXGEO.getValue(),
+				EntityEnum.ITEMTAXGEO.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, TaxTheme> getItemTaxTheme() {
+		return new PostgreSQLRelationDao<Item, TaxTheme>(
+				conn, 
+				"item_tax_theme_relations", 
+				"item_id",
+				"tax_theme_id",
+				EntityEnum.TAXTHEME.getValue(),
+				EntityEnum.ITEMTAXTHEME.getValue());
 	}
 
 }

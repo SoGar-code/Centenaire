@@ -80,7 +80,7 @@ public class ConnectionDialog extends JDialog{
 		//selectionPan.add(typeLabel);
 		//selectionPan.add(typeCombo);
 		
-	    JButton cancelBouton = new JButton("Cancel");
+	    JButton cancelBouton = new JButton("Annuler");
 	    cancelBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
 	    	// ends the dialog and stops the program:

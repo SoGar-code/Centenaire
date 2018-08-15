@@ -43,7 +43,7 @@ public class EntityDialog<T> extends JDialog {
 	public EntityDialog(int classIndex) {
 		super();
 		this.setTitle("Création d'un nouvel objet");
-		this.setModal(true);
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setSize(400, 400);
 		this.setLocationRelativeTo(null);
 		
@@ -52,7 +52,7 @@ public class EntityDialog<T> extends JDialog {
 		// Control panel, with buttons
 		JPanel controlPan = new JPanel();
 		
-	    JButton cancelBouton = new JButton("Cancel");
+	    JButton cancelBouton = new JButton("Annuler");
 	    cancelBouton.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent arg0) {
 	    	  // ends dialog by making the box invisible
