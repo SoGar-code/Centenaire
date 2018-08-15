@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;

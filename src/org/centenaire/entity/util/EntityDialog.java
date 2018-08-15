@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.util;
+package org.centenaire.entity.util;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -12,8 +12,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entityeditor.EntityEditor;
-import org.centenaire.entityeditor.EntityEditorFactory;
+import org.centenaire.entity.editor.EntityEditor;
+import org.centenaire.entity.editor.EntityEditorFactory;
+import org.centenaire.util.GeneralController;
 
 /**
  * Dialog box to create a new Entity

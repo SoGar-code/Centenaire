@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import javax.swing.JPanel;
 

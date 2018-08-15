@@ -1,4 +1,4 @@
-package org.centenaire.util;
+package org.centenaire.entity.util;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import org.centenaire.entity.Entity;
+import org.centenaire.util.GeneralController;
 import org.centenaire.util.observer.Observer;
 
 /**

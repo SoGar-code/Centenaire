@@ -26,7 +26,7 @@ import org.centenaire.entity.Individual;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Tag;
-import org.centenaire.entityeditor.IndividualEditor;
+import org.centenaire.entity.editor.IndividualEditor;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.DropListTableModel;

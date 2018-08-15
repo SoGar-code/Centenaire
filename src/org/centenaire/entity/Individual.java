@@ -64,7 +64,7 @@ public class Individual extends Entity{
 	/**
 	 * This method is used in ListTableModel
 	 * 
-	 * @see org.centenaire.util.ListTableModel
+	 * @see org.centenaire.entity.util.ListTableModel
 	 * 
 	 */
 	@Override
@@ -82,7 +82,7 @@ public class Individual extends Entity{
 	/**
 	 * This method is used in ListTableModel
 	 * 
-	 * @see org.centenaire.util.ListTableModel
+	 * @see org.centenaire.entity.util.ListTableModel
 	 * 
 	 */
 	@Override

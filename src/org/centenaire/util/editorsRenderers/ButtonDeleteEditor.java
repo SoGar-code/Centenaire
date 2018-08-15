@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
+import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.util.GeneralController;
-import org.centenaire.util.ListTableModel;
 
 public class ButtonDeleteEditor extends DefaultCellEditor {
 	/*

@@ -20,11 +20,11 @@ import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Item;
-import org.centenaire.util.EntityDialog;
-import org.centenaire.util.GTable;
+import org.centenaire.entity.util.EntityDialog;
+import org.centenaire.entity.util.GTable;
+import org.centenaire.entity.util.ListTableModel;
+import org.centenaire.entity.util.UpdateEntityPanel;
 import org.centenaire.util.GeneralController;
-import org.centenaire.util.ListTableModel;
-import org.centenaire.util.UpdateEntityPanel;
 import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
 

@@ -3,19 +3,23 @@
  */
 package org.centenaire.util.dragndrop;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.DropMode;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.LocalType;
-import org.centenaire.util.EntityCombo;
-import org.centenaire.util.GTable;
+import org.centenaire.entity.util.EntityCombo;
+import org.centenaire.entity.util.GTable;
 import org.centenaire.util.editorsRenderers.ButtonRenderer;
+import org.centenaire.util.editorsRenderers.Delete;
 
 /**
  * Component used for dropping item and updating relations.
@@ -25,6 +29,7 @@ import org.centenaire.util.editorsRenderers.ButtonRenderer;
  *
  */
 public class DropTable<T extends Entity, U extends Entity> extends GTable {
+	private Map<Class, Integer> colMap;
 	
 	/**
 	 * 
@@ -72,6 +77,16 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 		// Set Editor for LocalType
 	    table.setDefaultEditor(LocalType.class, new DefaultCellEditor(localTypeEditor));
 	    table.setDefaultRenderer(LocalType.class, new ButtonRenderer());
+	    
+	    // Set column width
+	    // =================
+	    
+	    // Define colMap
+	    colMap = new HashMap<Class, Integer>();
+	    colMap.put(Delete.class, 75);
+	    
+	    // set column width accordingly
+	    this.setColumnsWidth(listClass);
 	}
 	
 	/**
@@ -98,6 +113,36 @@ public class DropTable<T extends Entity, U extends Entity> extends GTable {
 	public void reset() {
 		LinkedList<Entity> listEntity = new LinkedList<Entity>();
 		this.getModel().setData(listEntity);
+	}
+	
+	/**
+	 * Set the widths of columns in the table.
+	 * 
+	 * <p>This method sets column width based on
+	 * the types specified in the constructor.</p>
+	 */
+	public void setColumnsWidth(Class[] listClass) {
+		TableColumnModel tCM = this.getTable().getColumnModel();
+		
+		int n = listClass.length;
+		for (int index = 0; index < n; index++) {
+			Class colClass = listClass[index];
+
+			// If the key is among the specified classes,
+			// set an upper bound on width
+			if (colMap.containsKey(colClass)) {
+				int colWidth = colMap.get(colClass);
+				tCM.getColumn(index).setMaxWidth(colWidth);
+			}
+		}
+	}
+
+	public Map<Class, Integer> getColMap() {
+		return colMap;
+	}
+
+	public void setColMap(Map<Class, Integer> colMap) {
+		this.colMap = colMap;
 	}
 	
 }

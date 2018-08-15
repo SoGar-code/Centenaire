@@ -20,6 +20,8 @@ import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationFactory;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Tag;
+import org.centenaire.entity.util.GTable;
+import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.util.observer.Observable;
 import org.centenaire.util.observer.Observer;
 import org.centenaire.util.pubsub.Channel;

@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -29,7 +29,7 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 	/** 
 	 * Recover the 'TagLike' entity defined by the current instance.
 	 * 
-	 * @see org.centenaire.entityeditor.EntityEditor#getObject()
+	 * @see org.centenaire.entity.editor.EntityEditor#getObject()
 	 */
 	@Override
 	public TagLike getObject() {

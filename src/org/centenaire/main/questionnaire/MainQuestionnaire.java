@@ -24,7 +24,7 @@ import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
-import org.centenaire.util.EntityCombo;
+import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.util;
+package org.centenaire.entity.util;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,8 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entityeditor.EntityEditor;
-import org.centenaire.entityeditor.EntityEditorFactory;
+import org.centenaire.entity.editor.EntityEditor;
+import org.centenaire.entity.editor.EntityEditorFactory;
+import org.centenaire.util.GeneralController;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
@@ -162,20 +163,4 @@ public class UpdateEntityPanel<T> extends JPanel implements Subscriber{
 		}
 
 	}
-	
-//	/**
-//	 * A method to update the 'updatePanel'.
-//	 * 
-//	 * <p>This method is called by <it>gc</it> whenever the current entity
-//	 * changes.
-//	 */
-//	public void setUpdatePanel(T entity) {	
-//
-//		
-//		updatePanel.removeAll();
-//		updatePanel.add(((WithEditor<T>) entity).editionForm());
-//		// needed for the change to take effect
-//		updatePanel.validate();
-//	}
-	
 }

@@ -17,8 +17,8 @@ import org.centenaire.util.GeneralController;
  * <p>This implementation is designed to perform well
  * with GTable and ListTableModel.</p>
  * 
- * @see org.centenaire.util.GTable
- * @see org.centenaire.util.ListTableModel
+ * @see org.centenaire.entity.util.GTable
+ * @see org.centenaire.entity.util.ListTableModel
  */
 public class EntityTransferable<T> implements Transferable {
 	private LinkedList<T> data;

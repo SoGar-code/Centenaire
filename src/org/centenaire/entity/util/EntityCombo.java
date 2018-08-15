@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.centenaire.util;
+package org.centenaire.entity.util;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -16,6 +16,7 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.Event;
 import org.centenaire.main.questionnaire.QuestionFinancialSupport;
+import org.centenaire.util.GeneralController;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**

@@ -27,8 +27,8 @@ import org.centenaire.util.GeneralController;
  * 
  * @param <T> entity class associated to the TransferHandler.
  * 
- * @see org.centenaire.util.GTable
- * @see org.centenaire.util.ListTableModel
+ * @see org.centenaire.entity.util.GTable
+ * @see org.centenaire.entity.util.ListTableModel
  *
  */
 public class TargetHandler<T> extends TransferHandler {

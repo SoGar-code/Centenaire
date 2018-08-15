@@ -14,9 +14,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.util.EntityDialog;
 import org.centenaire.main.editwindow.EditionWindow;
 import org.centenaire.main.questionnaire.MainQuestionnaire;
-import org.centenaire.util.EntityDialog;
 import org.centenaire.util.GeneralController;
 
 

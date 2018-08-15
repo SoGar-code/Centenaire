@@ -13,8 +13,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
+import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.util.GeneralController;
-import org.centenaire.util.ListTableModel;
 
 /**
  * Custom TransferHandler class for GTable with a ListTableModel.
@@ -25,8 +25,8 @@ import org.centenaire.util.ListTableModel;
  * 
  * @param <T> entity class associated to the TransferHandler.
  * 
- * @see org.centenaire.util.GTable
- * @see org.centenaire.util.ListTableModel
+ * @see org.centenaire.entity.util.GTable
+ * @see org.centenaire.entity.util.ListTableModel
  *
  */
 public class SourceHandler<T> extends TransferHandler {

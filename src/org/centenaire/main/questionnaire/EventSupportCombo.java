@@ -13,7 +13,7 @@ import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Individual;
-import org.centenaire.util.EntityCombo;
+import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.pubsub.Subscriber;
 

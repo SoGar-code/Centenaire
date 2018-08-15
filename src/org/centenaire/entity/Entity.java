@@ -2,7 +2,7 @@ package org.centenaire.entity;
 
 import java.io.Serializable;
 
-import org.centenaire.util.ListTableModel;
+import org.centenaire.entity.util.ListTableModel;
 
 /**
  * Superclass of the POJO used for DAO

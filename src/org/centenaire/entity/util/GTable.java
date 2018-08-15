@@ -1,4 +1,4 @@
-package org.centenaire.util;
+package org.centenaire.entity.util;
 
 import java.util.LinkedList;
 
@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Tag;
 import org.centenaire.entity.TagLike;
+import org.centenaire.util.GeneralController;
 import org.centenaire.util.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.util.editorsRenderers.ButtonEditEditor;
 import org.centenaire.util.editorsRenderers.ButtonRenderer;
@@ -41,14 +42,7 @@ public class GTable extends JScrollPane{
 		super();
 		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//		table = new JTable(){
-//            public void changeSelection(final int row, final int column, boolean toggle, boolean extend)
-//            {
-//                super.changeSelection(row, column, toggle, extend);
-//                table.editCellAt(row, column);
-//                table.transferFocus();
-//            }
-//		};
+
 		table = new JTable();
 		table.setModel(model);
 		

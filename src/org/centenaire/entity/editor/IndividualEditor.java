@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Institution;
-import org.centenaire.util.EntityCombo;
+import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 
@@ -86,7 +86,7 @@ public class IndividualEditor extends EntityEditor<Individual> {
 	/** 
 	 * Recover the 'Individual' entity defined by the current instance.
 	 * 
-	 * @see org.centenaire.entityeditor.EntityEditor#getObject()
+	 * @see org.centenaire.entity.editor.EntityEditor#getObject()
 	 */
 	@Override
 	public Individual getObject() {

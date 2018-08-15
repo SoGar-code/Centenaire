@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -14,7 +14,7 @@ import org.centenaire.entity.Departement;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.EventType;
-import org.centenaire.util.EntityCombo;
+import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GDateField;
 import org.centenaire.util.GeneralController;
 
@@ -150,7 +150,7 @@ public class EventEditor extends EntityEditor<Event> {
 	/** 
 	 * Recover the 'Event' entity defined by the current instance.
 	 * 
-	 * @see org.centenaire.entityeditor.EntityEditor#getObject()
+	 * @see org.centenaire.entity.editor.EntityEditor#getObject()
 	 */
 	@Override
 	public Event getObject() {

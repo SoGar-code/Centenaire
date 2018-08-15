@@ -1,4 +1,4 @@
-package org.centenaire.entityeditor;
+package org.centenaire.entity.editor;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -11,7 +11,7 @@ import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.InstitutionType;
-import org.centenaire.util.EntityCombo;
+import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GeneralController;
 
 /**
@@ -103,7 +103,7 @@ public class InstitutionEditor extends EntityEditor<Institution> {
 	/** 
 	 * Recover the 'Institution' entity defined by the current instance.
 	 * 
-	 * @see org.centenaire.entityeditor.EntityEditor#getObject()
+	 * @see org.centenaire.entity.editor.EntityEditor#getObject()
 	 */
 	@Override
 	public Institution getObject() {
