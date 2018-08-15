@@ -64,7 +64,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Combo panel
 		// ============
 		JPanel comboPan = new JPanel();
-		JLabel respondentLab = new JLabel("Répondant : ");
+		JLabel respondentLab = new JLabel("Personne : ");
 		
 		// EntityCombo. NB: needs to subscribe to the entity channel!
 		entityCombo = new EntityCombo<Individual>(EntityEnum.INDIV.getValue());
@@ -156,7 +156,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.3 (initial implementation)
 		// ====================================
-		String question3String = "Publications du répondant";
+		String question3String = "Publications de la personne : ";
 		QuestionTemplate questionItem = new QuestionDrop("3", question3String);
 		content.add(questionItem);
 		
@@ -165,7 +165,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.4.a. (initial implementation)
 		// ====================================
-		String question4aString = "Colloques organisés par le répondant.";
+		String question4aString = "Colloques organisés par la personne : ";
 		QuestionTemplate questionOrgConf = new QuestionOrgConf("4.a", question4aString);
 		content.add(questionOrgConf);
 		
@@ -174,7 +174,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Questions I.4.b/c (initial implementation)
 		// ====================================
-		String question4bString = "Colloques auxquels le répondant a participé.";
+		String question4bString = "Colloques auxquels la personne a participé : ";
 		QuestionTemplate questionParticipationConf = new QuestionParticipationConf("4.b/c", question4bString);
 		content.add(questionParticipationConf);
 		
@@ -183,7 +183,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.5 
 		// ====================================
-		String question5String = "Activités numériques du répondant (productions).";
+		String question5String = "Activités numériques de la personne (productions) : ";
 		QuestionTemplate questionItemBis = new QuestionDrop("5", question5String);
 		content.add(questionItemBis);
 		
@@ -192,7 +192,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question I.6.a/b/c/d (initial implementation)
 		// ====================================
-		String question6String = "Thèses dirigées par le répondant";
+		String question6String = "Thèses dirigées par la personne : ";
 		QuestionTemplate questionTheses = new QuestionTheses("6.a/b/c/d", question6String);
 		content.add(questionTheses);
 		
@@ -240,7 +240,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question II.1 (initial implementation)
 		// ====================================
-		String questionII_1 = "Activités de vulgarisation du répondant";
+		String questionII_1 = "Activités de vulgarisation de la personne : ";
 		QuestionTemplate questionVulg = new QuestionDrop("1.a/b/c/d/e/f", questionII_1);
 		content.add(questionVulg);
 		
@@ -249,7 +249,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question II.2
 		// ===============
-		String questionII_2_a = "Activités d'expertise scientifique du répondant - Productions";
+		String questionII_2_a = "Activités d'expertise scientifique de la personne - Productions";
 		DropTable<Individual, Item> tableExpItem = new DropTable<Individual, Item>(
 				EntityEnum.INDIV.getValue(), 
 				EntityEnum.ITEM.getValue(), 
@@ -264,7 +264,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		questions.add(questionExpItem);
 		
 		
-		String questionII_2_b = "Activités d'expertise scientifique du répondant - Evénements";
+		String questionII_2_b = "Activités d'expertise scientifique de la personne - Evénements";
 		DropTable<Individual, Event> tableExpEvent = new DropTable<Individual, Event>(
 				EntityEnum.INDIV.getValue(), 
 				EntityEnum.EVENTS.getValue(), 
@@ -279,7 +279,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		questions.add(questionExpEvent);
 		
 		
-		String questionII_2_c = "Activités d'expertise scientifique du répondant - Institutions";
+		String questionII_2_c = "Activités d'expertise scientifique de la personne - Institutions";
 		DropTable<Individual, Institution> tableExpInstit = new DropTable<Individual, Institution>(
 				EntityEnum.INDIV.getValue(), 
 				EntityEnum.INSTIT.getValue(), 
@@ -316,7 +316,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "institutions non-scientifiques avez-vous été amené "
 				+ "à travailler le plus souvent et le plus étroitement ?"
 				+ "\n\nNB : dans le cadre de cette interface, ces institutions "
-				+ "doivent être renseignées dans le tableau des relations du répondant. "
+				+ "doivent être renseignées dans le tableau des relations de la personne. "
 				+ "Ici ne devraient apparaître (en texte libre) que des précisions à ce sujet.";
 		QuestionTemplate questionInstitNonSci = new QuestionFreeText("4", questionII_4) {
 			public void saveQuestion() {
