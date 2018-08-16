@@ -293,7 +293,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "institutions non-scientifiques avez-vous été amené "
 				+ "à travailler le plus souvent et le plus étroitement ?"
 				+ "\n\nNB : dans le cadre de cette interface, ces institutions "
-				+ "doivent être renseignées dans le tableau des relations de la personne. "
+				+ "devraient être renseignées dans le tableau des relations de la personne. "
 				+ "Ici ne devraient apparaître (en texte libre) que des précisions à ce sujet.";
 		QuestionTemplate questionInstitNonSci = new QuestionFreeText("4", questionII_4, 2);
 		content.add(questionInstitNonSci);

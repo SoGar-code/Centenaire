@@ -55,16 +55,13 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		
 		// Supported types of 'Entity':
 		EntityEnum[] entityEnumList = {
+				EntityEnum.TAG,
+				EntityEnum.DISCIPLINES,
 				EntityEnum.ITEMTYPE, 
 				EntityEnum.EVENTTYPE,
 				EntityEnum.INSTITTYPE,
-				EntityEnum.TAG,
-				EntityEnum.DISCIPLINES,
 				EntityEnum.INSTITSTATUS,
 				EntityEnum.LOCALISATIONTYPE,
-				EntityEnum.TAXCHRONO,
-				EntityEnum.TAXGEO,
-				EntityEnum.TAXTHEME,
 				EntityEnum.DEPT,
 				EntityEnum.COUNTRY
 				};

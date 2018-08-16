@@ -6,6 +6,7 @@ import java.awt.Dialog;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
+import org.centenaire.entity.EntityEnum;
 import org.centenaire.util.GeneralWindow;
 
 /**
@@ -40,11 +41,23 @@ public class EditionWindow extends GeneralWindow {
 		EventTab eventTab = new EventTab();
 		tabbedPane.addTab("Evénements", eventTab);
 		
-		// Add Event tab
+		// Add Institution tab
 		InstitutionTab institTab = new InstitutionTab();
 		tabbedPane.addTab("Institutions", institTab);
 		
-		// Final assembly into a tabbed panel.
+		// Add TaxChrono Tab
+		TaxTab taxChronoTab = new TaxTab(EntityEnum.TAXCHRONO.getValue());
+		tabbedPane.addTab("Chrono.", taxChronoTab);
+		
+		// Add TaxGeo Tab
+		TaxTab taxGeoTab = new TaxTab(EntityEnum.TAXGEO.getValue());
+		tabbedPane.addTab("Géo.", taxGeoTab);
+		
+		// Add TaxTheme Tab
+		TaxTab taxThemeTab = new TaxTab(EntityEnum.TAXTHEME.getValue());
+		tabbedPane.addTab("Thém.", taxThemeTab);
+		
+		// Add TagLike tab
 		TagLikeTab tagLikeTab = new TagLikeTab();
 		tabbedPane.addTab("Marqueurs", tagLikeTab);
 		

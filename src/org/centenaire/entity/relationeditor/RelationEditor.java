@@ -58,7 +58,7 @@ public abstract class RelationEditor<T extends Entity> extends JDialog {
 		
 		LOGGER.setLevel(Level.ALL);
 		
-		String msg = String.format("Relations de %s", entity.toString());
+		String msg = String.format("Relations de \"%s\"", entity.toString());
 		this.setTitle(msg);
 		
 		// Modality modified by 'ModalExclusionType' in Centenaire frame
