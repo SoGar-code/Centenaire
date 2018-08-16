@@ -141,7 +141,7 @@ public class EntityCombo<T> extends JComboBox<T> implements Subscriber{
 		LinkedList<T> listEntity = (LinkedList<T>) dao.findAll();
 		
 		// Create combo to select Entity
-		T[] entityVect = (T[]) listEntity.toArray();
+		Vector<T> entityVect = new Vector<T>(listEntity);
 		this.removeAllItems();
 		this.setModel(new DefaultComboBoxModel<T>(entityVect));
 		

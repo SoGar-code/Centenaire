@@ -144,6 +144,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.EVENTS.getValue(),
 				EntityEnum.ORG.getValue());
 	}
+	
+	@Override
+	public RelationDao<Event, Individual> getEventOrg() {
+		return new PostgreSQLRelationDao<Event, Individual>(
+				conn, 
+				"organizer", 
+				"event_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.ORG.getValue());
+	}
 
 	@Override
 	public RelationDao<Individual, Event> getParticipant() {
@@ -212,6 +223,17 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				EntityEnum.EVENTS.getValue(),
 				EntityEnum.EXPEVENT.getValue());
 	}
+	
+	@Override
+	public RelationDao<Event, Individual> getEventExp() {
+		return new PostgreSQLRelationDao<Event, Individual>(
+				conn, 
+				"expert_event", 
+				"event_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.EXPEVENT.getValue());
+	}
 
 	@Override
 	public RelationDao<Individual, Institution> getExpInstit() {
@@ -265,6 +287,39 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 				conn, 
 				"item_tax_theme_relations", 
 				"item_id",
+				"tax_theme_id",
+				EntityEnum.TAXTHEME.getValue(),
+				EntityEnum.ITEMTAXTHEME.getValue());
+	}
+
+	@Override
+	public RelationDao<Event, TaxChrono> getEventTaxChrono() {
+		return new PostgreSQLRelationDao<Event, TaxChrono>(
+				conn, 
+				"event_tax_chrono_relations", 
+				"event_id",
+				"tax_chrono_id",
+				EntityEnum.TAXCHRONO.getValue(),
+				EntityEnum.ITEMTAXCHRONO.getValue());
+	}
+
+	@Override
+	public RelationDao<Event, TaxGeo> getEventTaxGeo() {
+		return new PostgreSQLRelationDao<Event, TaxGeo>(
+				conn, 
+				"event_tax_geo_relations", 
+				"event_id",
+				"tax_geo_id",
+				EntityEnum.TAXGEO.getValue(),
+				EntityEnum.ITEMTAXGEO.getValue());
+	}
+
+	@Override
+	public RelationDao<Event, TaxTheme> getEventTaxTheme() {
+		return new PostgreSQLRelationDao<Event, TaxTheme>(
+				conn, 
+				"event_tax_theme_relations", 
+				"event_id",
 				"tax_theme_id",
 				EntityEnum.TAXTHEME.getValue(),
 				EntityEnum.ITEMTAXTHEME.getValue());

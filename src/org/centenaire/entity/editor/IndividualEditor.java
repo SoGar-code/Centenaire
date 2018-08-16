@@ -106,11 +106,16 @@ public class IndividualEditor extends EntityEditor<Individual> {
 	 */
 	@Override
 	public void setObject(Individual obj) {
-		this.setIndexField(obj.getIndex());
-		firstNameField.setText(obj.getFirst_name());
-		lastNameField.setText(obj.getLast_name());
-		birthYearField.setIntegerValue(obj.getBirth_year());
-		labCombo.setSelectedEntity(obj.getLab());
+		if (obj != null) {
+			this.setIndexField(obj.getIndex());
+			firstNameField.setText(obj.getFirst_name());
+			lastNameField.setText(obj.getLast_name());
+			birthYearField.setIntegerValue(obj.getBirth_year());
+			labCombo.setSelectedEntity(obj.getLab());
+		} else {
+			// if the object is null, simply reset.
+			this.reset();
+		}
 	}
 	
 	/**

@@ -51,9 +51,12 @@ public enum EntityEnum {
 	EXPINSTIT(30, "Expertise - institution"),
 	ITEMTAXCHRONO(31, "Taxinomie chrono - production"),
 	ITEMTAXGEO(32, "Taxinomie géo - production"),
-	ITEMTAXTHEME(33, "Taxinomie thématique - production");
+	ITEMTAXTHEME(33, "Taxinomie thématique - production"),
+	EVENTSTAXCHRONO(34, "Taxinomie chrono - production"),
+	EVENTSTAXGEO(35, "Taxinomie géo - production"),
+	EVENTSTAXTHEME(36, "Taxinomie thématique - production");
 		
-	// NB: max = 33 (see ITEMTAXTHEME)
+	// NB: max = 36 (see EVENTSTAXTHEME)
 	
 	private final int classIndex;
 	private final String name;

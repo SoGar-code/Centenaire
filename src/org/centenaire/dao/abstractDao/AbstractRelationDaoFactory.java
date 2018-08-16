@@ -47,6 +47,7 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Item, Individual> getItemDirection();
 	
 	public abstract RelationDao<Individual, Event> getOrg();
+	public abstract RelationDao<Event, Individual> getEventOrg();
 	
 	public abstract RelationDao<Individual, Event> getParticipant();
 	
@@ -60,6 +61,7 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Item, Individual> getItemExp();
 	
 	public abstract RelationDao<Individual, Event> getExpEvent();
+	public abstract RelationDao<Event, Individual> getEventExp();
 	
 	public abstract RelationDao<Individual, Institution> getExpInstit();
 
@@ -68,6 +70,12 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Item, TaxGeo> getItemTaxGeo();
 	
 	public abstract RelationDao<Item, TaxTheme> getItemTaxTheme();
+	
+	public abstract RelationDao<Event, TaxChrono> getEventTaxChrono();
+	
+	public abstract RelationDao<Event, TaxGeo> getEventTaxGeo();
+	
+	public abstract RelationDao<Event, TaxTheme> getEventTaxTheme();
 	
 	/**
 	 * To get a Relation Dao class indexed by an integer
@@ -119,6 +127,12 @@ public abstract class AbstractRelationDaoFactory {
 			return getItemTaxGeo();
 		} else if (i == EntityEnum.ITEMTAXTHEME.getValue()) {
 			return getItemTaxTheme();
+		} else if (i == EntityEnum.EVENTSTAXCHRONO.getValue()) {
+			return getEventTaxChrono();
+		} else if (i == EntityEnum.EVENTSTAXGEO.getValue()) {
+			return getEventTaxGeo();
+		} else if (i == EntityEnum.EVENTSTAXTHEME.getValue()) {
+			return getEventTaxTheme();
 		} else {
 			String msg = String.format(
 					"AbstractRelationDaoFactory.getRelationDao -- type '%s' not found!",
@@ -150,20 +164,12 @@ public abstract class AbstractRelationDaoFactory {
 			return getItemAuthor();
 		} else if (i == EntityEnum.DIRECTION.getValue()) {
 			return getItemDirection();
-//		} else if (i == EntityEnum.ORG.getValue()) {
-//			return getOrg();
-//		} else if (i == EntityEnum.PARTICIPANT.getValue()) {
-//			return getParticipant();
-//		} else if (i == EntityEnum.AFFILIATION.getValue()) {
-//			return getAffiliation();
-//		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
-//			return getInstitStatus();
-//		} else if (i == EntityEnum.LOCALISATION.getValue()) {
-//			return getFinancialSupport();
+		} else if (i == EntityEnum.ORG.getValue()) {
+			return getEventOrg();
 		} else if (i == EntityEnum.EXPITEM.getValue()) {
 			return getItemExp();
-//		} else if (i == EntityEnum.EXPEVENT.getValue()) {
-//			return getExpEvent();
+		} else if (i == EntityEnum.EXPEVENT.getValue()) {
+			return getEventExp();
 		} else {
 			String msg = String.format(
 					"AbstractRelationDaoFactory.getInvertedRelationDao -- type '%s' not found!",

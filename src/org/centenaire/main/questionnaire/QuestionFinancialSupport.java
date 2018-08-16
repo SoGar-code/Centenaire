@@ -73,7 +73,7 @@ public class QuestionFinancialSupport extends QuestionTemplate {
 		
 		comboPan.add(eventCombo);
 		
-		// Table of items
+		// Table of institutional support
 		dropTableEvent = new DropTable<Event, DoubleEntity<Institution, LocalType>>(
 				EntityEnum.EVENTS.getValue(),
 				EntityEnum.INSTIT.getValue(),

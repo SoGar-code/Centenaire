@@ -1,9 +1,13 @@
 package org.centenaire.dao.abstractDao;
 
+import java.util.logging.Logger;
+
 import org.centenaire.dao.Dao;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.util.EntityCombo;
 
 public abstract class AbstractIndividualDao extends Dao<Individual> {
+	protected final static Logger LOGGER = Logger.getLogger(AbstractIndividualDao.class.getName());
 	
 	/**
 	 * Set the content of the Q1 variable
@@ -94,6 +98,30 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	
 	public abstract boolean setSuccessfulTweet(Individual indiv, String successfulTweet);
 	
+	public boolean setFreeTextQuestion(Individual indiv, int questionIndex, String content) {
+		switch (questionIndex) {
+			case 0:
+				return setQ1(indiv, content);
+			case 1: 
+				return setQ2(indiv, content);
+			case 2:
+				return setQuestionInstitNonSci(indiv, content);
+			case 3: 
+				return setQuestionConcern(indiv, content);
+			case 4:
+				return setQuestionComittee(indiv, content);
+			case 5:
+				return setQuestionContribution(indiv, content);
+			case 6:
+				return setQuestionDev(indiv, content);
+			default:
+				String msg = String.format("In setFreeTextQuestion, "
+						+ "unknown questionIndex '%s'", questionIndex);
+				LOGGER.warning(msg);
+				return false;
+		}
+	}
+	
 	/**
 	 * Get the content of the Q1 variable
 	 * 
@@ -179,5 +207,29 @@ public abstract class AbstractIndividualDao extends Dao<Individual> {
 	public abstract float getTweetsPerWeek(Individual indiv);
 	
 	public abstract String getSuccessfulTweet(Individual indiv);
+	
+	public String getFreeTextQuestion(Individual indiv, int questionIndex) {
+		switch (questionIndex) {
+			case 0:
+				return getQ1(indiv);
+			case 1: 
+				return getQ2(indiv);
+			case 2:
+				return getQuestionInstitNonSci(indiv);
+			case 3: 
+				return getQuestionConcern(indiv);
+			case 4:
+				return getQuestionComittee(indiv);
+			case 5:
+				return getQuestionContribution(indiv);
+			case 6:
+				return getQuestionDev(indiv);
+			default:
+				String msg = String.format("In getFreeTextQuestion, "
+						+ "unknown questionIndex '%s'", questionIndex);
+				LOGGER.warning(msg);
+				return "";
+		}
+	}
 
 }

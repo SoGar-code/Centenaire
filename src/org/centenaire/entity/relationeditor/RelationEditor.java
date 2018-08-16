@@ -122,9 +122,12 @@ public abstract class RelationEditor<T extends Entity> extends JDialog {
 	}
 	
 	/**
-	 * Method to reset the RelationEditor to a neutral value.
+	 * Set the relations included in the editor.
+	 * 
+	 * <p>This method should actually be called only once,
+	 * when the editor is created, in order to populate the tables.</p>
 	 */
-	public abstract void reset();
+	public abstract boolean setRelations();
 	
 	/**
 	 * Save the relations included in the editor.
@@ -142,10 +145,19 @@ public abstract class RelationEditor<T extends Entity> extends JDialog {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Get the main panel of the RelationEditor.
+	 * 
+	 * @return main panel of the RelationEditor.
+	 */
 	public JPanel getMain() {
 		return main;
 	}
 
+	/**
+	 * Set the main panel of the RelationEditor.
+	 * 
+	 */
 	public void setMain(JPanel main) {
 		this.main = main;
 	}

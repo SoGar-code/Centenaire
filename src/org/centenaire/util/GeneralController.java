@@ -58,7 +58,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	 * 
 	 * @see org.centenaire.util.pubsub.Dispatcher
 	 */
-	private int nbChannels = 31;
+	private int nbChannels = 37;
 	
 	/**
 	 * List of channels to use for the Publisher-Subscriber pattern.

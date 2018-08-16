@@ -68,6 +68,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// EntityCombo. NB: needs to subscribe to the entity channel!
 		entityCombo = new EntityCombo<Individual>(EntityEnum.INDIV.getValue());
+		gc.getChannel(EntityEnum.INDIV.getValue()).addSubscriber(entityCombo);
 		
 		// no selected element
 		entityCombo.setSelectedIndex(-1);
@@ -113,19 +114,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "première guerre mondiale, quel est "
 				+ "le champ chronologique et géographique "
 				+ "de ces recherches ?";
-		QuestionTemplate q_I_1 = new QuestionFreeText("1", question1String) {
-			public void saveQuestion() {
-				String q1 = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQ1(indiv, q1);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String q1 = gc.getIndividualDao().getQ1(indiv);
-				this.setContent(q1);
-			}
-		};
+		QuestionTemplate q_I_1 = new QuestionFreeText("1", question1String, 0);
 		content.add(q_I_1);
 		
 		// add to the list of questions
@@ -136,19 +125,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		String question2String = "Vos recherches vous ont-elles "
 				+ "conduites à travailler sur des sources récemment "
 				+ "déposées ou rendues publiques ? Si oui, lesquelles ?";
-		QuestionTemplate q_I_2 = new QuestionFreeText("2", question2String) {
-			public void saveQuestion() {
-				String q2 = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQ2(indiv, q2);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String q2 = gc.getIndividualDao().getQ2(indiv);
-				this.setContent(q2);
-			}
-		};
+		QuestionTemplate q_I_2 = new QuestionFreeText("2", question2String, 1);
 		content.add(q_I_2);
 		
 		// add to the list of questions
@@ -318,19 +295,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "\n\nNB : dans le cadre de cette interface, ces institutions "
 				+ "doivent être renseignées dans le tableau des relations de la personne. "
 				+ "Ici ne devraient apparaître (en texte libre) que des précisions à ce sujet.";
-		QuestionTemplate questionInstitNonSci = new QuestionFreeText("4", questionII_4) {
-			public void saveQuestion() {
-				String qII4String = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQuestionInstitNonSci(indiv, qII4String);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String qII4String = gc.getIndividualDao().getQuestionInstitNonSci(indiv);
-				this.setContent(qII4String);
-			}
-		};
+		QuestionTemplate questionInstitNonSci = new QuestionFreeText("4", questionII_4, 2);
 		content.add(questionInstitNonSci);
 		
 		// Question II.5
@@ -356,19 +321,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		String questionIII_1 = "Dans vos échanges avec le public et les "
 				+ "différents acteurs non-scientifiques, quelles ont été "
 				+ "les questions, préoccupations etc. les plus récurrentes ?";
-		QuestionTemplate q_III_1 = new QuestionFreeText("1", questionIII_1) {
-			public void saveQuestion() {
-				String qIII1String = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQuestionConcern(indiv, qIII1String);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String qIII1String = gc.getIndividualDao().getQuestionConcern(indiv);
-				this.setContent(qIII1String);
-			}
-		};
+		QuestionTemplate q_III_1 = new QuestionFreeText("1", questionIII_1, 3);
 		content.add(q_III_1);
 		
 		// add to the list of questions
@@ -380,19 +333,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "dans les différents comités scientifiques dont "
 				+ "vous avez fait partie ? Vos conseils ont-ils été écoutés "
 				+ "et pris en compte ? Exemples concrets ?";
-		QuestionTemplate q_III_2 = new QuestionFreeText("2", questionIII_2) {
-			public void saveQuestion() {
-				String content = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQuestionComittee(indiv, content);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String content = gc.getIndividualDao().getQuestionComittee(indiv);
-				this.setContent(content);
-			}
-		};
+		QuestionTemplate q_III_2 = new QuestionFreeText("2", questionIII_2, 4);
 		content.add(q_III_2);
 		
 		// add to the list of questions
@@ -404,19 +345,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 				+ "de la Première Guerre mondiale que vous êtes, "
 				+ "qu’est-ce que le Centenaire a apporté "
 				+ "à notre compréhension de la guerre ?";
-		QuestionTemplate q_III_3 = new QuestionFreeText("3", questionIII_3) {
-			public void saveQuestion() {
-				String content = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQuestionContribution(indiv, content);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String content = gc.getIndividualDao().getQuestionContribution(indiv);
-				this.setContent(content);
-			}
-		};
+		QuestionTemplate q_III_3 = new QuestionFreeText("3", questionIII_3, 5);
 		content.add(q_III_3);
 		
 		// add to the list of questions
@@ -427,19 +356,7 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		String questionIII_4 = "Selon vous, comment va "
 				+ "se développer la recherche sur "
 				+ "la Première Guerre mondiale dans les dix ans à venir ?";
-		QuestionTemplate q_III_4 = new QuestionFreeText("4", questionIII_4) {
-			public void saveQuestion() {
-				String content = this.getContent();
-				Individual indiv = gc.getCurrentIndividual();
-				gc.getIndividualDao().setQuestionDev(indiv, content);
-			}
-			
-			public void setQuestion() {
-				Individual indiv = gc.getCurrentIndividual();
-				String content = gc.getIndividualDao().getQuestionDev(indiv);
-				this.setContent(content);
-			}
-		};
+		QuestionTemplate q_III_4 = new QuestionFreeText("4", questionIII_4, 6);
 		content.add(q_III_4);
 		
 		// add to the list of questions

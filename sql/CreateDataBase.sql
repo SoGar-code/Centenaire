@@ -255,3 +255,24 @@ CREATE TABLE item_tax_theme_relations(
   tax_theme_id integer REFERENCES tax_theme,
   PRIMARY KEY (item_id, tax_theme_id)
 );
+
+-- Event chronological taxonomy relation
+CREATE TABLE event_tax_chrono_relations(
+  event_id integer REFERENCES Events,
+  tax_chrono_id integer REFERENCES tax_chrono,
+  PRIMARY KEY (event_id, tax_chrono_id)
+);
+
+-- Event geographical taxonomy relation
+CREATE TABLE event_tax_geo_relations(
+  event_id integer REFERENCES Events,
+  tax_geo_id integer REFERENCES tax_theme,
+  PRIMARY KEY (event_id, tax_geo_id)
+);
+
+-- Event thematic taxonomy relation
+CREATE TABLE event_tax_theme_relations(
+  event_id integer REFERENCES Events,
+  tax_theme_id integer REFERENCES tax_theme,
+  PRIMARY KEY (event_id, tax_theme_id)
+);
