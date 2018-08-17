@@ -16,7 +16,7 @@ public class TagLikeEditor extends EntityEditor<TagLike> {
 	public TagLikeEditor() {
 		super();
 		
-		JLabel description = new JLabel("Name: ");
+		JLabel description = new JLabel("Nom : ");
 		
 		// Active text area...
 		nameField = new JTextField(20);

@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +22,7 @@ import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Tag;
 import org.centenaire.entity.TagLike;
+import org.centenaire.entity.typelike.TypeLike;
 import org.centenaire.entity.util.EntityDialog;
 import org.centenaire.entity.util.GTable;
 import org.centenaire.entity.util.ListTableModel;
@@ -30,12 +32,14 @@ import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
- * Class generating the tabs related to 'TagLike' Entity elements.
+ * Class generating the tabs related to 'Type' Entity elements.
  * 
  * <p>In the current design, it contains a tabbed pane itself!</p>
  *
  */
-public class TagLikeTab extends JPanel implements Subscriber{
+public class TypeLikeTab extends JPanel implements Subscriber{
+	protected final static Logger LOGGER = Logger.getLogger(TypeLikeTab.class.getName());
+	
 	GeneralController gc = GeneralController.getInstance();
 	ListTableModel entityListTableModel;
 	Dao<Entity> dao;
@@ -45,23 +49,18 @@ public class TagLikeTab extends JPanel implements Subscriber{
 	 * The constructor takes a parameter, since several Entity classes are similar.
 	 * 
 	 */
-	public TagLikeTab() {
+	public TypeLikeTab() {
 		super();
 		// Default TagLike entity
-		this.classIndex = EntityEnum.TAG.getValue();
+		this.classIndex = EntityEnum.ITEMTYPE.getValue();
 		
 		// Get dao
 		dao = (Dao<Entity>) gc.getDao(classIndex);
 		
 		// Supported types of 'Entity':
 		EntityEnum[] entityEnumList = {
-				EntityEnum.TAG,
-				EntityEnum.DISCIPLINES,
-				EntityEnum.INSTITTYPE,
-				EntityEnum.INSTITSTATUS,
-				EntityEnum.LOCALISATIONTYPE,
-				EntityEnum.DEPT,
-				EntityEnum.COUNTRY
+				EntityEnum.ITEMTYPE, 
+				EntityEnum.EVENTTYPE,
 				};
 		
 		// Creation of 'modifier' pane (CardLayout)
@@ -69,11 +68,11 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		CardLayout cl = new CardLayout();
 		JPanel modifyPan = new JPanel(cl);
 		
-		UpdateEntityPanel<TagLike> uep;
+		UpdateEntityPanel<TypeLike> uep;
 
 		for (EntityEnum entityEnum:entityEnumList) {
 			// Create uep for each suitable classIndex			
-			uep = new UpdateEntityPanel<TagLike>(entityEnum.getValue());
+			uep = new UpdateEntityPanel<TypeLike>(entityEnum.getValue());
 			
 			// Subscribe that uep to the suitable panel
 			gc.getChannel(entityEnum.getValue()).addSubscriber(uep);
@@ -108,7 +107,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 				} catch (ClassCastException except) {
 					String msg = "UpdateEntityPanel -- error when casting entity,\n"
 							+ "not updating the panel!";
-					System.out.println(msg);
+					LOGGER.warning(msg);
 				}
 			}
 		});
@@ -122,8 +121,8 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		
 		// starting from standard ListTableModel.
 		entityListTableModel = new ListTableModel(
-				new Class[] {String.class},
-				new String[] {"Intitulé"},
+				new Class[] {String.class, String.class},
+				new String[] {"Intitulé", "Catégorie"},
 				dao.findAll()
 				);
 		GTable entityList = new GTable(entityListTableModel);
@@ -131,7 +130,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		// Enable drag and define TransferHandler
 		JTable table = entityList.getTable();
 		table.setDragEnabled(true);
-		table.setTransferHandler(new SourceHandler<Tag>(EntityEnum.TAG.getValue()));
+		table.setTransferHandler(new SourceHandler<TypeLike>(EntityEnum.ITEMTYPE.getValue()));
 		
 		// Include different elements in JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -141,12 +140,11 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		
 		// *New entity* button
 		// ====================
-		JButton newEntity = new JButton("Nouvelle étiquette");
+		JButton newEntity = new JButton("Nouveau type");
 		
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				System.out.println("TagLikeTab.newEntity activated!");
 
 				EntityDialog<TagLike> ed = new EntityDialog<TagLike>(classIndex);
 				
@@ -156,7 +154,7 @@ public class TagLikeTab extends JPanel implements Subscriber{
 					
 				} catch (NullPointerException e) {
 					// edition was cancelled before completion...
-					System.out.println("Edition of the element cancelled.");
+					LOGGER.finer("Edition of the element cancelled.");
 				}
 				
 			}
@@ -167,8 +165,8 @@ public class TagLikeTab extends JPanel implements Subscriber{
 		bottomPan.add(newEntity);
 
 		// Setting all variable components to starting point
-		entityCombo.setSelectedItem(EntityEnum.TAG);
-		cl.show(modifyPan, EntityEnum.TAG.toString());
+		entityCombo.setSelectedItem(EntityEnum.ITEMTYPE);
+		cl.show(modifyPan, EntityEnum.ITEMTYPE.toString());
 		
 		// Final assembly
 		// ===============

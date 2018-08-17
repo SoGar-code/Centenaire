@@ -14,17 +14,17 @@ import org.centenaire.entity.Departement;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.InstitutionType;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
 import org.centenaire.entity.TaxChrono;
 import org.centenaire.entity.TaxGeo;
 import org.centenaire.entity.TaxTheme;
+import org.centenaire.entity.typelike.EventType;
+import org.centenaire.entity.typelike.ItemType;
 import org.postgresql.util.PSQLException;
 
 /**
@@ -80,12 +80,12 @@ public class PostgreSQLFactory extends AbstractDaoFactory {
 
 	@Override
 	public Dao<ItemType> getItemTypeDao() {
-		return new PostgreSQLTagLikeDao(conn, "item_type_relations", EntityEnum.ITEMTYPE.getValue());
+		return new PostgreSQLTypeLikeDao(conn, "item_type_relations", EntityEnum.ITEMTYPE.getValue());
 	}
 
 	@Override
 	public Dao<EventType> getEventTypeDao() {
-		return new PostgreSQLTagLikeDao(conn, "event_type_relations", EntityEnum.EVENTTYPE.getValue());
+		return new PostgreSQLTypeLikeDao(conn, "event_type_relations", EntityEnum.EVENTTYPE.getValue());
 	}
 
 	@Override

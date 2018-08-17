@@ -75,7 +75,8 @@ CREATE TABLE individuals(
 -- types de productions
 CREATE TABLE item_type_relations(
   id SERIAL PRIMARY KEY,
-  name text
+  name text,
+  category integer
 );
 
 -- Productions
@@ -89,7 +90,8 @@ CREATE TABLE items(
 
 CREATE TABLE event_type_relations(
   id SERIAL PRIMARY KEY,
-  name text
+  name text,
+  category integer
 );
 
 CREATE TABLE events(

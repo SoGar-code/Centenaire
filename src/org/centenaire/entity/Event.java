@@ -5,6 +5,8 @@ package org.centenaire.entity;
 
 import java.sql.Date;
 
+import org.centenaire.entity.typelike.EventType;
+
 /**
  * Implementation of the 'Event' Entity class.
  *

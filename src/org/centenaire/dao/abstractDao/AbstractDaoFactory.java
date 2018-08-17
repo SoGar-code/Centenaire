@@ -6,17 +6,17 @@ import org.centenaire.entity.Departement;
 import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
 import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.InstitutionType;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
 import org.centenaire.entity.LocalType;
 import org.centenaire.entity.Tag;
 import org.centenaire.entity.TaxChrono;
 import org.centenaire.entity.TaxGeo;
 import org.centenaire.entity.TaxTheme;
+import org.centenaire.entity.typelike.EventType;
+import org.centenaire.entity.typelike.ItemType;
 
 /**
  * Factory class for Dao classes

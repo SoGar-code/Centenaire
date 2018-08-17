@@ -61,6 +61,10 @@ public class EditionWindow extends GeneralWindow {
 		TagLikeTab tagLikeTab = new TagLikeTab();
 		tabbedPane.addTab("Marqueurs", tagLikeTab);
 		
+		// Add TagLike tab
+		TypeLikeTab typeLikeTab = new TypeLikeTab();
+		tabbedPane.addTab("Types", typeLikeTab);
+		
 		//======================
 		// Final assembly
 		//======================

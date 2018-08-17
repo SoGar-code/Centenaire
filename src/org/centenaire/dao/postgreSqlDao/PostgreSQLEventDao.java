@@ -15,8 +15,8 @@ import org.centenaire.entity.Departement;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
 import org.centenaire.entity.Individual;
+import org.centenaire.entity.typelike.EventType;
 import org.centenaire.util.GeneralController;
 
 /**

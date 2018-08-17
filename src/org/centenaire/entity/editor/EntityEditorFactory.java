@@ -52,9 +52,9 @@ public class EntityEditorFactory {
 		} else if (classIndex == EntityEnum.INSTIT.getValue()) {
 			return new InstitutionEditor();
 		} else if (classIndex == EntityEnum.ITEMTYPE.getValue()) {
-			return new TagLikeEditor();
+			return new TypeEditor();
 		} else if (classIndex == EntityEnum.EVENTTYPE.getValue()) {
-			return new TagLikeEditor();
+			return new TypeEditor();
 		} else if (classIndex == EntityEnum.INSTITTYPE.getValue()) {
 			return new TagLikeEditor();
 		} else if (classIndex == EntityEnum.TAG.getValue()) {

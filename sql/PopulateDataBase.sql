@@ -8,28 +8,28 @@
 SET client_encoding = 'Latin1';
 
 -- create types of items
-INSERT INTO item_type_relations(name) VALUES('Thèse');
-INSERT INTO item_type_relations(name) VALUES('HDR');
-INSERT INTO item_type_relations(name) VALUES('Mémoire de master');
-INSERT INTO item_type_relations(name) VALUES('Article');
-INSERT INTO item_type_relations(name) VALUES('Livre');
-INSERT INTO item_type_relations(name) VALUES('Numéro de revue');
-INSERT INTO item_type_relations(name) VALUES('Chapitre de livre');
-INSERT INTO item_type_relations(name) VALUES('Edition de sources');
-INSERT INTO item_type_relations(name) VALUES('Article de presse');
-INSERT INTO item_type_relations(name) VALUES('Blog');
-INSERT INTO item_type_relations(name) VALUES('MOOC');
-INSERT INTO item_type_relations(name) VALUES('Carnet de recherche (en ligne)');
-INSERT INTO item_type_relations(name) VALUES('Autre activité numérique');
-INSERT INTO item_type_relations(name) VALUES('Documentaire (gd public)');
+INSERT INTO item_type_relations(name, category) VALUES('Thèse', 0);
+INSERT INTO item_type_relations(name, category) VALUES('HDR', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Mémoire de master', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Article', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Livre', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Numéro de revue', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Chapitre de livre', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Edition de sources', 0);
+INSERT INTO item_type_relations(name, category) VALUES('Article de presse', 2);
+INSERT INTO item_type_relations(name, category) VALUES('Blog', 1);
+INSERT INTO item_type_relations(name, category) VALUES('MOOC', 1);
+INSERT INTO item_type_relations(name, category) VALUES('Carnet de recherche (en ligne)', 1);
+INSERT INTO item_type_relations(name, category) VALUES('Autre activité numérique', 1);
+INSERT INTO item_type_relations(name, category) VALUES('Documentaire (gd public)', 2);
 
 -- create types of events
-INSERT INTO event_type_relations(name) VALUES('Débat grand public');
-INSERT INTO event_type_relations(name) VALUES('Séminaire');
-INSERT INTO event_type_relations(name) VALUES('Colloque');
-INSERT INTO event_type_relations(name) VALUES('Conférence grand public');
-INSERT INTO event_type_relations(name) VALUES('Intervention radio');
-INSERT INTO event_type_relations(name) VALUES('Intervention TV');
+INSERT INTO event_type_relations(name, category) VALUES('Débat grand public', 2);
+INSERT INTO event_type_relations(name, category) VALUES('Séminaire', 0);
+INSERT INTO event_type_relations(name, category) VALUES('Colloque', 0);
+INSERT INTO event_type_relations(name, category) VALUES('Conférence grand public', 2);
+INSERT INTO event_type_relations(name, category) VALUES('Intervention radio', 2);
+INSERT INTO event_type_relations(name, category) VALUES('Intervention TV', 2);
 
 -- create types of institutions
 INSERT INTO institution_type_relations(name) VALUES('Université');

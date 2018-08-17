@@ -13,7 +13,7 @@ import org.centenaire.entity.Country;
 import org.centenaire.entity.Departement;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
+import org.centenaire.entity.typelike.EventType;
 import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GDateField;
 import org.centenaire.util.GeneralController;

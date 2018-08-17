@@ -5,6 +5,8 @@ package org.centenaire.entity;
 
 import java.sql.Date;
 
+import org.centenaire.entity.typelike.ItemType;
+
 /**
  * Implementation of 'Item' Entity class.
  *

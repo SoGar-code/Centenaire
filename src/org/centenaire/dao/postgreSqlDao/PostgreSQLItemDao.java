@@ -13,9 +13,9 @@ import org.centenaire.dao.Dao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.EventType;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
+import org.centenaire.entity.typelike.EventType;
+import org.centenaire.entity.typelike.ItemType;
 import org.centenaire.util.GeneralController;
 
 /**

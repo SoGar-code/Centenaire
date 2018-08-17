@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.ItemType;
+import org.centenaire.entity.typelike.ItemType;
 import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GDateField;
 import org.centenaire.util.GeneralController;

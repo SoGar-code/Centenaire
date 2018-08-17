@@ -10,13 +10,7 @@ package org.centenaire.entity;
 public class TagLikeFactory {
 
 	public static TagLike newElement(int index, String name, int classIndex) {
-		if (classIndex == EntityEnum.ITEMTYPE.getValue()) {
-			ItemType tl = new ItemType(index, name);
-			return tl;
-		} else if (classIndex == EntityEnum.EVENTTYPE.getValue()) {
-			EventType tl = new EventType(index, name);
-			return tl;
-		} else if (classIndex == EntityEnum.INSTITTYPE.getValue()) {
+		if (classIndex == EntityEnum.INSTITTYPE.getValue()) {
 			InstitutionType tl = new InstitutionType(index, name);
 			return tl;
 		} else if (classIndex == EntityEnum.TAG.getValue()) {
