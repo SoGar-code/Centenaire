@@ -114,6 +114,7 @@ public class PostgreSQLEventDao extends Dao<Event> {
 			state.setInt(8, obj.getEventType().getIndex());
 			state.setInt(9, obj.getIndex());
 			
+			int nb_rows = state.executeUpdate();
 			state.close();
 			
 			// Notify the Dispatcher on a suitable channel.

@@ -104,6 +104,9 @@ public class PostgreSQLInstitutionDao extends Dao<Institution> {
 			state.setInt(4, obj.getCountry().getIndex());
 			state.setInt(5, obj.getInstitType().getIndex());
 			state.setInt(6, obj.getIndex());
+			
+			// Run the query
+			state.executeUpdate();
 
 			state.close();
 			

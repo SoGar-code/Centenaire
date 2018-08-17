@@ -91,25 +91,69 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 	}
 	
 	@Override
-	public RelationDao<Individual, Item> getAuthor() {
+	public RelationDao<Individual, Item> getSciAuthor() {
 		return new PostgreSQLRelationDao<Individual, Item>(
 				conn, 
-				"author", 
+				"sci_author", 
 				"indiv_id",
 				"item_id",
 				EntityEnum.ITEM.getValue(),
-				EntityEnum.ITEMTAG.getValue());
+				EntityEnum.SCIAUTHOR.getValue());
 	}
 	
 	@Override
-	public RelationDao<Item, Individual> getItemAuthor() {
+	public RelationDao<Item, Individual> getItemSciAuthor() {
 		return new PostgreSQLRelationDao<Item, Individual>(
 				conn, 
-				"author", 
+				"sci_author", 
 				"item_id",
 				"indiv_id",
 				EntityEnum.INDIV.getValue(),
-				EntityEnum.ITEMTAG.getValue());
+				EntityEnum.SCIAUTHOR.getValue());
+	}
+	
+	@Override
+	public RelationDao<Individual, Item> getOutreachAuthor() {
+		return new PostgreSQLRelationDao<Individual, Item>(
+				conn, 
+				"outreach_author", 
+				"indiv_id",
+				"item_id",
+				EntityEnum.ITEM.getValue(),
+				EntityEnum.OUTREACHAUTHOR.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, Individual> getItemOutreachAuthor() {
+		return new PostgreSQLRelationDao<Item, Individual>(
+				conn, 
+				"outreach_author", 
+				"item_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.OUTREACHAUTHOR.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Item> getDigAuthor() {
+		return new PostgreSQLRelationDao<Individual, Item>(
+				conn, 
+				"dig_author", 
+				"indiv_id",
+				"item_id",
+				EntityEnum.ITEM.getValue(),
+				EntityEnum.DIGAUTHOR.getValue());
+	}
+
+	@Override
+	public RelationDao<Item, Individual> getItemDigAuthor() {
+		return new PostgreSQLRelationDao<Item, Individual>(
+				conn, 
+				"dig_author", 
+				"item_id",
+				"indiv_id",
+				EntityEnum.INDIV.getValue(),
+				EntityEnum.DIGAUTHOR.getValue());
 	}
 
 	@Override
@@ -157,14 +201,36 @@ public class PostgreSQLRelationFactory extends AbstractRelationDaoFactory {
 	}
 
 	@Override
-	public RelationDao<Individual, Event> getParticipant() {
+	public RelationDao<Individual, Event> getSciParticipant() {
 		return new PostgreSQLRelationDao<Individual, Event>(
 				conn, 
-				"participant", 
+				"sci_participant", 
 				"indiv_id",
 				"event_id",
 				EntityEnum.EVENTS.getValue(),
-				EntityEnum.PARTICIPANT.getValue());
+				EntityEnum.SCIPARTICIPANT.getValue());
+	}
+	
+	@Override
+	public RelationDao<Individual, Event> getOutreachParticipantG() {
+		return new PostgreSQLRelationDao<Individual, Event>(
+				conn, 
+				"outreach_participant_g", 
+				"indiv_id",
+				"event_id",
+				EntityEnum.EVENTS.getValue(),
+				EntityEnum.OUTREACHPARTICIPANTG.getValue());
+	}
+
+	@Override
+	public RelationDao<Individual, Event> getOutreachParticipantConf() {
+		return new PostgreSQLRelationDao<Individual, Event>(
+				conn, 
+				"outreach_participant_conf", 
+				"indiv_id",
+				"event_id",
+				EntityEnum.EVENTS.getValue(),
+				EntityEnum.OUTREACHPARTICIPANTCONF.getValue());
 	}
 
 	@Override

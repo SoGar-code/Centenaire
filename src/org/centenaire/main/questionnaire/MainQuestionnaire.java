@@ -134,11 +134,18 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Question I.3 (initial implementation)
 		// ====================================
 		String question3String = "Publications de la personne : ";
-		QuestionTemplate questionItem = new QuestionDrop("3", question3String);
-		content.add(questionItem);
+		DropTable<Individual, Item> tableSciItem = new DropTable<Individual, Item>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.ITEM.getValue(), 
+				EntityEnum.SCIAUTHOR.getValue(), 
+				new Class[] {String.class, String.class, Date.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Retirer"}
+				);
+		QuestionTemplate questionSciItem = new QuestionDrop("3", question3String, tableSciItem);
+		content.add(questionSciItem);
 		
 		// add to the list of questions
-		questions.add(questionItem);
+		questions.add(questionSciItem);
 		
 		// Question I.4.a. (initial implementation)
 		// ====================================
@@ -152,20 +159,27 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		// Questions I.4.b/c (initial implementation)
 		// ====================================
 		String question4bString = "Colloques auxquels la personne a participé : ";
-		QuestionTemplate questionParticipationConf = new QuestionParticipationConf("4.b/c", question4bString);
-		content.add(questionParticipationConf);
+		QuestionTemplate questionParticipationSciConf = new QuestionParticipationSciConf("4.b/c", question4bString);
+		content.add(questionParticipationSciConf);
 		
 		// add to the list of questions
-		questions.add(questionParticipationConf);
+		questions.add(questionParticipationSciConf);
 		
 		// Question I.5 
 		// ====================================
 		String question5String = "Activités numériques de la personne (productions) : ";
-		QuestionTemplate questionItemBis = new QuestionDrop("5", question5String);
-		content.add(questionItemBis);
+		DropTable<Individual, Item> tableDigItem = new DropTable<Individual, Item>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.ITEM.getValue(), 
+				EntityEnum.DIGAUTHOR.getValue(), 
+				new Class[] {String.class, String.class, Date.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Retirer"}
+				);
+		QuestionTemplate questionDigItem = new QuestionDrop("5", question5String, tableDigItem);
+		content.add(questionDigItem);
 		
 		// add to the list of questions
-		questions.add(questionItemBis);
+		questions.add(questionDigItem);
 		
 		// Question I.6.a/b/c/d (initial implementation)
 		// ====================================
@@ -217,12 +231,36 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question II.1 (initial implementation)
 		// ====================================
-		String questionII_1 = "Activités de vulgarisation de la personne : ";
-		QuestionTemplate questionVulg = new QuestionDrop("1.a/b/c/d/e/f", questionII_1);
-		content.add(questionVulg);
+		String questionII_1_ab = "Activités de vulgarisation de la personne (participation événements) : ";
+		DropTable<Individual, Event> tableOutreachEventG = new DropTable<Individual, Event>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.EVENTS.getValue(), 
+				EntityEnum.OUTREACHPARTICIPANTG.getValue(), 
+				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
+				);
+		QuestionTemplate questionOutreachParticipantG = new QuestionDrop("1.a/b", questionII_1_ab, tableOutreachEventG);
+		content.add(questionOutreachParticipantG);
 		
 		// add to the list of questions
-		questions.add(questionVulg);
+		questions.add(questionOutreachParticipantG);
+		
+		
+		String questionII_1_cdf = "Activités de vulgarisation de la personne (auteur productions) : "
+				+ "\n\nNB: dans le cadre de cette interface, les activités d'expertises sont regroupées "
+				+ "dans la question II.2 ci-dessous.";
+		DropTable<Individual, Event> tableOutreachAuthor = new DropTable<Individual, Event>(
+				EntityEnum.INDIV.getValue(), 
+				EntityEnum.ITEM.getValue(), 
+				EntityEnum.OUTREACHAUTHOR.getValue(), 
+				new Class[] {String.class, String.class, Date.class, Delete.class},
+				new String[] {"Titre", "Type", "Date de début", "Retirer"}
+				);
+		QuestionTemplate questionOutreachAuthor = new QuestionDrop("1.c/d/f", questionII_1_cdf, tableOutreachAuthor);
+		content.add(questionOutreachAuthor);
+		
+		// add to the list of questions
+		questions.add(questionOutreachAuthor);
 		
 		// Question II.2
 		// ===============
@@ -272,16 +310,16 @@ public class MainQuestionnaire extends JFrame implements Subscriber{
 		
 		// Question II.3
 		// ==============
-		String questionII_3_a = "Conférences, tables-rondes, débats grand-publics "
+		String questionII_3_ab = "Conférences, tables-rondes, débats grand-publics "
 				+ "auxquelles vous avez été invité en France";
 		DropTable<Individual, Event> tableGdPublicParticipation = new DropTable<Individual, Event>(
 				EntityEnum.INDIV.getValue(), 
 				EntityEnum.EVENTS.getValue(), 
-				EntityEnum.PARTICIPANT.getValue(), 
+				EntityEnum.OUTREACHPARTICIPANTCONF.getValue(), 
 				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
 				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
 				);
-		QuestionTemplate questionGdPublicParticipation = new QuestionDrop("3.a", questionII_3_a, tableGdPublicParticipation);
+		QuestionTemplate questionGdPublicParticipation = new QuestionDrop("3.a/b", questionII_3_ab, tableGdPublicParticipation);
 		content.add(questionGdPublicParticipation);
 		
 		// add to the list of questions

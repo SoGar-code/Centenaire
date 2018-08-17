@@ -101,6 +101,9 @@ public class PostgreSQLItemDao extends Dao<Item> {
 			state.setDate(3, obj.getEndDate());
 			state.setInt(4, obj.getItemType().getIndex());
 			state.setInt(5, obj.getIndex());
+			
+			// Run the query
+			state.executeUpdate();
 
 			state.close();
 			

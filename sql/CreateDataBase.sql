@@ -1,4 +1,4 @@
--- PostgreSQL database dump
+﻿-- PostgreSQL database dump
 -- to create the database in project Centenaire
 -- Latin1 encoding
 
@@ -152,7 +152,19 @@ CREATE TABLE event_tag_relations(
  PRIMARY KEY (event_id, tag_id)
 );
 
-CREATE TABLE author(
+CREATE TABLE sci_author(
+  indiv_id integer REFERENCES Individuals, --FK
+  item_id integer REFERENCES Items, --FK
+  PRIMARY KEY (indiv_id, item_id)
+);
+
+CREATE TABLE outreach_author(
+  indiv_id integer REFERENCES Individuals, --FK
+  item_id integer REFERENCES Items, --FK
+  PRIMARY KEY (indiv_id, item_id)
+);
+
+CREATE TABLE dig_author(
   indiv_id integer REFERENCES Individuals, --FK
   item_id integer REFERENCES Items, --FK
   PRIMARY KEY (indiv_id, item_id)
@@ -170,7 +182,19 @@ CREATE TABLE organizer(
   PRIMARY KEY (event_id, indiv_id)
 );
 
-CREATE TABLE participant(
+CREATE TABLE sci_participant(
+  event_id integer REFERENCES Events,
+  indiv_id integer REFERENCES Individuals,
+  PRIMARY KEY (event_id, indiv_id)
+);
+
+CREATE TABLE outreach_participant_g(
+  event_id integer REFERENCES Events,
+  indiv_id integer REFERENCES Individuals,
+  PRIMARY KEY (event_id, indiv_id)
+);
+
+CREATE TABLE outreach_participant_conf(
   event_id integer REFERENCES Events,
   indiv_id integer REFERENCES Individuals,
   PRIMARY KEY (event_id, indiv_id)

@@ -13,10 +13,10 @@ import org.centenaire.util.dragndrop.DropListTableModel;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;
 
-public class QuestionParticipationConf extends QuestionTemplate {
+public class QuestionParticipationSciConf extends QuestionTemplate {
 	private DropTable<Individual, Event> dropTableEvent;
 	
-	public QuestionParticipationConf(String numbering, String questionString){
+	public QuestionParticipationSciConf(String numbering, String questionString){
 		super(numbering);
 
 		this.setQuestionLab(questionString);
@@ -27,7 +27,7 @@ public class QuestionParticipationConf extends QuestionTemplate {
 		dropTableEvent = new DropTable<Individual, Event>(
 				EntityEnum.INDIV.getValue(),
 				EntityEnum.EVENTS.getValue(),
-				EntityEnum.PARTICIPANT.getValue(),
+				EntityEnum.SCIPARTICIPANT.getValue(),
 				new Class[] {String.class, String.class, Date.class, String.class, Delete.class},
 				new String[] {"Titre", "Type", "Date de début", "Pays", "Retirer"}
 				);

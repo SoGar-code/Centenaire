@@ -41,10 +41,14 @@ public enum EntityEnum {
 	INDIVTAG(15, "Mot-clef personnel"),
 	ITEMTAG(16, "Mot-clef production"),
 	EVENTTAG(17, "Mot-clef événement"),
-	AUTHOR(18, "Auteur"),
+	SCIAUTHOR(18, "Auteur (scientifique)"),
+	OUTREACHAUTHOR(37, "Auteur (vulgarisation)"),
+	DIGAUTHOR(38, "Auteur (numérique)"),
 	DIRECTION(19, "Direction"),
 	ORG(20, "Organisation"),
-	PARTICIPANT(21, "Participant"),
+	SCIPARTICIPANT(21, "Participant (scientifique)"),
+	OUTREACHPARTICIPANTG(39, "Participant (vulg., gén.)"),
+	OUTREACHPARTICIPANTCONF(40, "Participant (vulg., conf.)"),
 	AFFILIATION(22, "Affiliation"),
 	EXPITEM(28, "Expertise - production"),
 	EXPEVENT(29, "Expertise - événement"),
@@ -56,7 +60,7 @@ public enum EntityEnum {
 	EVENTSTAXGEO(35, "Taxinomie géo - production"),
 	EVENTSTAXTHEME(36, "Taxinomie thématique - production");
 		
-	// NB: max = 36 (see EVENTSTAXTHEME)
+	// NB: max = 40 (see OUTREACHPARTICIPANTCONF)
 	
 	private final int classIndex;
 	private final String name;

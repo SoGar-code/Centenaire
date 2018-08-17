@@ -41,7 +41,7 @@ public class ItemRelationEditor extends RelationEditor<Item> {
 		main.setLayout(new GridLayout(4,2));
 		
 		// Author table
-		RelationDao<Item, Individual> invAuthorDao = (RelationDao<Item, Individual>) gc.getInvertedRelationDao(EntityEnum.AUTHOR.getValue());
+		RelationDao<Item, Individual> invAuthorDao = (RelationDao<Item, Individual>) gc.getInvertedRelationDao(EntityEnum.SCIAUTHOR.getValue());
 		DropTable<Item, Individual> tableAuthor = new DropTable(
 				EntityEnum.INDIV.getValue(),
 				new Class[] {String.class, String.class, Delete.class},

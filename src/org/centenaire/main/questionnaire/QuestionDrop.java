@@ -17,34 +17,6 @@ public class QuestionDrop extends QuestionTemplate {
 	private DropTable dropTable;
 	
 	/**
-	 * Original constructor, with predefined 'dropTable' (about items).
-	 * 
-	 * @param numbering
-	 *				string providing the numbering of the question
-	 * @param questionString
-	 * 				string providing the content of the question itself.
-	 */
-	public QuestionDrop(String numbering, String questionString){
-		super(numbering);
-
-		this.setQuestionLab(questionString);
-		
-		JPanel main = this.getMain();
-
-		// Table of items
-		dropTable = new DropTable<Individual, Item>(
-				EntityEnum.INDIV.getValue(),
-				EntityEnum.ITEM.getValue(),
-				EntityEnum.AUTHOR.getValue(),
-				new Class[] {String.class, String.class, Date.class, Delete.class},
-				new String[] {"Titre", "Type", "Date de début", "Retirer"}
-				);
-		
-		main.add(dropTable);
-		
-	}
-	
-	/**
 	 * Constructor requesting a 'dropTable'.
 	 * 
 	 * @param numbering

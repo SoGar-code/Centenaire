@@ -40,8 +40,14 @@ public abstract class AbstractRelationDaoFactory {
 	
 	public abstract RelationDao<Event, Tag> getEventTag();
 	
-	public abstract RelationDao<Individual, Item> getAuthor();
-	public abstract RelationDao<Item, Individual> getItemAuthor();
+	public abstract RelationDao<Individual, Item> getSciAuthor();
+	public abstract RelationDao<Item, Individual> getItemSciAuthor();
+	
+	public abstract RelationDao<Individual, Item> getOutreachAuthor();
+	public abstract RelationDao<Item, Individual> getItemOutreachAuthor();
+	
+	public abstract RelationDao<Individual, Item> getDigAuthor();
+	public abstract RelationDao<Item, Individual> getItemDigAuthor();
 	
 	public abstract RelationDao<Individual, Item> getDirection();
 	public abstract RelationDao<Item, Individual> getItemDirection();
@@ -49,7 +55,11 @@ public abstract class AbstractRelationDaoFactory {
 	public abstract RelationDao<Individual, Event> getOrg();
 	public abstract RelationDao<Event, Individual> getEventOrg();
 	
-	public abstract RelationDao<Individual, Event> getParticipant();
+	public abstract RelationDao<Individual, Event> getSciParticipant();
+	
+	public abstract RelationDao<Individual, Event> getOutreachParticipantG();
+
+	public abstract RelationDao<Individual, Event> getOutreachParticipantConf();
 	
 	public abstract RelationDao<Item, Institution> getAffiliation();
 	
@@ -101,14 +111,22 @@ public abstract class AbstractRelationDaoFactory {
 			return getItemTag();
 		} else if (i == EntityEnum.EVENTTAG.getValue()) {
 			return getEventTag();
-		} else if (i == EntityEnum.AUTHOR.getValue()) {
-			return getAuthor();
+		} else if (i == EntityEnum.SCIAUTHOR.getValue()) {
+			return getSciAuthor();
+		} else if (i == EntityEnum.OUTREACHAUTHOR.getValue()) {
+			return getOutreachAuthor();
+		} else if (i == EntityEnum.DIGAUTHOR.getValue()) {
+			return getDigAuthor();
 		} else if (i == EntityEnum.DIRECTION.getValue()) {
 			return getDirection();
 		} else if (i == EntityEnum.ORG.getValue()) {
 			return getOrg();
-		} else if (i == EntityEnum.PARTICIPANT.getValue()) {
-			return getParticipant();
+		} else if (i == EntityEnum.SCIPARTICIPANT.getValue()) {
+			return getSciParticipant();
+		} else if (i == EntityEnum.OUTREACHPARTICIPANTG.getValue()) {
+			return getOutreachParticipantG();
+		} else if (i == EntityEnum.OUTREACHPARTICIPANTCONF.getValue()) {
+			return getOutreachParticipantConf();
 		} else if (i == EntityEnum.AFFILIATION.getValue()) {
 			return getAffiliation();
 		} else if (i == EntityEnum.INDIVINSTIT.getValue()) {
@@ -160,8 +178,12 @@ public abstract class AbstractRelationDaoFactory {
 					+ "the abstract Entity class! So no DAO...";
 			System.out.println(msg);
 			return null;
-		} else if (i == EntityEnum.AUTHOR.getValue()) {
-			return getItemAuthor();
+		} else if (i == EntityEnum.SCIAUTHOR.getValue()) {
+			return getItemSciAuthor();
+		} else if (i == EntityEnum.OUTREACHAUTHOR.getValue()) {
+			return getItemOutreachAuthor();
+		} else if (i == EntityEnum.DIGAUTHOR.getValue()) {
+			return getItemDigAuthor();
 		} else if (i == EntityEnum.DIRECTION.getValue()) {
 			return getItemDirection();
 		} else if (i == EntityEnum.ORG.getValue()) {
