@@ -4,7 +4,7 @@
 package org.centenaire.entity.typelike;
 
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.taglike.TagLike;
 
 /**
  * Implementation of 'EventType' Entity class

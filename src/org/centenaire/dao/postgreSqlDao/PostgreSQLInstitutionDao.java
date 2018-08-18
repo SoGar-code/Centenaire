@@ -10,12 +10,12 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entity.Country;
-import org.centenaire.entity.Departement;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.InstitutionType;
+import org.centenaire.entity.taglike.Country;
+import org.centenaire.entity.taglike.Departement;
+import org.centenaire.entity.taglike.InstitutionType;
 import org.centenaire.util.GeneralController;
 
 /**

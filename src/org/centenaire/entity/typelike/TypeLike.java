@@ -93,7 +93,7 @@ public class TypeLike extends Entity {
 			EventType tl = new EventType(index, name, category);
 			return tl;
 		} else {
-			String msg = String.format("Type.newElement -- Type classIndex '%s' not found!", classIndex);
+			String msg = String.format("TypeLike.newElement -- Type classIndex '%s' not found!", classIndex);
 			LOGGER.warning(msg);
 			return null;
 		}

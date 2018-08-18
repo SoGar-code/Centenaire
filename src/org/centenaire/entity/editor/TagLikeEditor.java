@@ -3,7 +3,7 @@ package org.centenaire.entity.editor;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.taglike.TagLike;
 
 /**
  * Class providing the editor form for TagLike. 

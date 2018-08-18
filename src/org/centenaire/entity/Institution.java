@@ -3,6 +3,10 @@
  */
 package org.centenaire.entity;
 
+import org.centenaire.entity.taglike.Country;
+import org.centenaire.entity.taglike.Departement;
+import org.centenaire.entity.taglike.InstitutionType;
+
 /**
  * Implementation of 'Institution' Entity class.
  *

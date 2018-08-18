@@ -12,7 +12,7 @@ import org.centenaire.entity.DoubleEntity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.LocalType;
+import org.centenaire.entity.taglike.LocalType;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.dragndrop.TargetHandlerDouble;
 import org.centenaire.util.editorsRenderers.Delete;

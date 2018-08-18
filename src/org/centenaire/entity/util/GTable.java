@@ -9,8 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import org.centenaire.entity.Individual;
-import org.centenaire.entity.Tag;
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.taglike.Tag;
+import org.centenaire.entity.taglike.TagLike;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.editorsRenderers.ButtonDeleteEditor;
 import org.centenaire.util.editorsRenderers.ButtonEditEditor;

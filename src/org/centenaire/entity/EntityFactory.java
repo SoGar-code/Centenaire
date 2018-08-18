@@ -1,5 +1,7 @@
 package org.centenaire.entity;
 
+import org.centenaire.entity.taglike.Tag;
+
 /**
  * Factory class for Entity
  * 

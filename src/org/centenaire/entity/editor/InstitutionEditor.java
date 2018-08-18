@@ -5,12 +5,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.centenaire.entity.Country;
-import org.centenaire.entity.Departement;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.InstitutionType;
+import org.centenaire.entity.taglike.Country;
+import org.centenaire.entity.taglike.Departement;
+import org.centenaire.entity.taglike.InstitutionType;
 import org.centenaire.entity.util.EntityCombo;
 import org.centenaire.util.GeneralController;
 

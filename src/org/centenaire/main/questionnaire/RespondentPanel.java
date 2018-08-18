@@ -18,15 +18,15 @@ import javax.swing.JPanel;
 
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractIndividualDao;
-import org.centenaire.entity.Discipline;
 import org.centenaire.entity.DoubleEntity;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
-import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.Tag;
 import org.centenaire.entity.editor.IndividualEditor;
+import org.centenaire.entity.taglike.Discipline;
+import org.centenaire.entity.taglike.InstitStatus;
+import org.centenaire.entity.taglike.Tag;
 import org.centenaire.util.GIntegerField;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.DropListTableModel;

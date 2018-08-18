@@ -17,10 +17,11 @@ import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Individual;
 import org.centenaire.entity.Institution;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.Tag;
-import org.centenaire.entity.TaxChrono;
-import org.centenaire.entity.TaxGeo;
-import org.centenaire.entity.TaxTheme;
+import org.centenaire.entity.taglike.Tag;
+import org.centenaire.entity.taglike.TaxChrono;
+import org.centenaire.entity.taglike.TaxGeo;
+import org.centenaire.entity.taglike.TaxTheme;
+import org.centenaire.entity.typelike.CatEnum;
 import org.centenaire.util.dragndrop.DropTable;
 import org.centenaire.util.editorsRenderers.Delete;
 
@@ -41,7 +42,12 @@ public class ItemRelationEditor extends RelationEditor<Item> {
 		main.setLayout(new GridLayout(4,2));
 		
 		// Author table
-		RelationDao<Item, Individual> invAuthorDao = (RelationDao<Item, Individual>) gc.getInvertedRelationDao(EntityEnum.SCIAUTHOR.getValue());
+		// =============
+		
+		// Depending on object category, choose different 'author' relation
+		EntityEnum authorRelation = getAuthorRelation(this.getObject());
+		
+		RelationDao<Item, Individual> invAuthorDao = (RelationDao<Item, Individual>) gc.getInvertedRelationDao(authorRelation.getValue());
 		DropTable<Item, Individual> tableAuthor = new DropTable(
 				EntityEnum.INDIV.getValue(),
 				new Class[] {String.class, String.class, Delete.class},
@@ -176,6 +182,28 @@ public class ItemRelationEditor extends RelationEditor<Item> {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Depending on the category of the Item, choose suitable AuthorRelation.
+	 * 
+	 * @param currentItem
+	 * 				the current object
+	 * @return EntityEnum providing the suitable AuthorRelation.
+	 */
+	public EntityEnum getAuthorRelation(Item currentItem) throws IndexOutOfBoundsException{
+		CatEnum category = currentItem.getItemType().getCategory();
+		
+		if (category == CatEnum.SCI) {
+			return EntityEnum.SCIAUTHOR;
+		} else if (category == CatEnum.DIG) {
+			return EntityEnum.DIGAUTHOR;
+		} else if (category == CatEnum.OUTREACH) {
+			return EntityEnum.OUTREACHAUTHOR;
+		} else {
+			String msg = String.format("Unknown category '%s'", category.toString());
+			throw new IndexOutOfBoundsException(msg);
+		}
 	}
 
 }

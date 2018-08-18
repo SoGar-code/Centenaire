@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
-import org.centenaire.entity.InstitStatus;
-import org.centenaire.entity.LocalType;
+import org.centenaire.entity.taglike.InstitStatus;
+import org.centenaire.entity.taglike.LocalType;
 import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.util.editorsRenderers.Delete;
 

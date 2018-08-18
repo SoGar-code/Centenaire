@@ -19,7 +19,7 @@ import org.centenaire.dao.postgreSqlDao.PostgreSQLFactory;
 import org.centenaire.dao.postgreSqlDao.PostgreSQLRelationFactory;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.Individual;
-import org.centenaire.entity.Tag;
+import org.centenaire.entity.taglike.Tag;
 import org.centenaire.entity.util.GTable;
 import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.util.observer.Observable;

@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.centenaire.entity;
+package org.centenaire.entity.taglike;
+
+import org.centenaire.entity.EntityEnum;
 
 /**
  * Implementation of 'thematic taxonomy' Entity class.

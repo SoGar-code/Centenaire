@@ -5,6 +5,8 @@ package org.centenaire.entity;
 
 import java.sql.Date;
 
+import org.centenaire.entity.taglike.Country;
+import org.centenaire.entity.taglike.Departement;
 import org.centenaire.entity.typelike.EventType;
 
 /**

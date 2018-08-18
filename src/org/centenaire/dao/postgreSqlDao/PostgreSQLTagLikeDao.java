@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.abstractDao.AbstractTagLikeDao;
-import org.centenaire.entity.TagLike;
-import org.centenaire.entity.TagLikeFactory;
+import org.centenaire.entity.taglike.TagLike;
+import org.centenaire.entity.taglike.TagLikeFactory;
 
 /**
  * DAO for a PostgreSQL database, relative to "TagLike" Entity.

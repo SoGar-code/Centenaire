@@ -1,20 +1,20 @@
 package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entity.Country;
-import org.centenaire.entity.Departement;
-import org.centenaire.entity.Discipline;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
-import org.centenaire.entity.InstitStatus;
 import org.centenaire.entity.Institution;
-import org.centenaire.entity.InstitutionType;
 import org.centenaire.entity.Item;
-import org.centenaire.entity.LocalType;
-import org.centenaire.entity.Tag;
-import org.centenaire.entity.TaxChrono;
-import org.centenaire.entity.TaxGeo;
-import org.centenaire.entity.TaxTheme;
+import org.centenaire.entity.taglike.Country;
+import org.centenaire.entity.taglike.Departement;
+import org.centenaire.entity.taglike.Discipline;
+import org.centenaire.entity.taglike.InstitStatus;
+import org.centenaire.entity.taglike.InstitutionType;
+import org.centenaire.entity.taglike.LocalType;
+import org.centenaire.entity.taglike.Tag;
+import org.centenaire.entity.taglike.TaxChrono;
+import org.centenaire.entity.taglike.TaxGeo;
+import org.centenaire.entity.taglike.TaxTheme;
 import org.centenaire.entity.typelike.EventType;
 import org.centenaire.entity.typelike.ItemType;
 

@@ -1,7 +1,7 @@
 package org.centenaire.dao.abstractDao;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entity.TagLike;
+import org.centenaire.entity.taglike.TagLike;
 
 public abstract class AbstractTagLikeDao<T> extends Dao<T> {
 	

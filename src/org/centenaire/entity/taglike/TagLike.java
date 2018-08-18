@@ -1,4 +1,6 @@
-package org.centenaire.entity;
+package org.centenaire.entity.taglike;
+
+import org.centenaire.entity.Entity;
 
 /**
  * POJO for the different entities which behave like a tag.
