@@ -3,6 +3,7 @@ package org.centenaire.util;
 import java.awt.datatransfer.DataFlavor;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -184,7 +185,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	}
 
 	// Action corresponding to the listener of the "Save/update" button
-	public void saveTable(LinkedList<Entity> currentData){
+	public void saveTable(List<Entity> currentData){
 		// Saves modified data
 		int i = 0;
 		for (Entity obj : currentData){
@@ -254,7 +255,7 @@ public class GeneralController implements Observable, ChangeListener, Dispatcher
 	}
 
 	@Override
-	public void updateObservable(LinkedList<Entity> currentData) {
+	public void updateObservable(List<Entity> currentData) {
 		for (Observer obs: listObserver){
 			obs.updateObserver(currentData);
 		}

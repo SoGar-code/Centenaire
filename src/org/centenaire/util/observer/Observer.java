@@ -1,6 +1,6 @@
 package org.centenaire.util.observer;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import org.centenaire.entity.Entity;
 
@@ -10,5 +10,5 @@ import org.centenaire.entity.Entity;
 public interface Observer {
 
 	
-	public void updateObserver(LinkedList<Entity> currentData);
+	public void updateObserver(List<Entity> currentData);
 }

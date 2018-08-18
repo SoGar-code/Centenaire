@@ -15,14 +15,10 @@ import org.centenaire.dao.Dao;
 import org.centenaire.dao.abstractDao.AbstractItemDao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Event;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.typelike.CatEnum;
-import org.centenaire.entity.typelike.EventType;
 import org.centenaire.entity.typelike.ItemType;
 import org.centenaire.util.GeneralController;
-
-import gestionBilicence.edition.Semester;
 
 /**
  * DAO for a PostgreSQL database, relative to 'Individual' Entity.
@@ -249,8 +245,8 @@ public class PostgreSQLItemDao extends AbstractItemDao {
 			}
 			Array catArray = conn.createArrayOf("INTEGER",listInt);
 			
-			String query="SELECT items.id, title, start_date, end_date, category FROM items, item_type_relations "
-					+ "WHERE type = item_type_relations.id AND category = ANY(?) ORDER BY start_date";
+			String query="SELECT items.id, title, start_date, end_date, type, category FROM items, item_type_relations "
+					+ "WHERE items.type = item_type_relations.id AND category = ANY(?) ORDER BY start_date";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setArray(1, catArray);
 			

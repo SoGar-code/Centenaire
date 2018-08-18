@@ -8,7 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -280,7 +280,7 @@ public class RespondentPanel extends JPanel implements Subscriber{
 	
 	public void printDataState() {
 		DropListTableModel model = (DropListTableModel) dropTableInstitStatus.getModel(); 
-		LinkedList<Entity> data = model.getData();
+		List<Entity> data = model.getData();
 		String msg0 = "[";
 		for (Entity row: data) {
 			msg0 += row.toString()+",";

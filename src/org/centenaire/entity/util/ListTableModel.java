@@ -23,13 +23,13 @@ import org.centenaire.util.observer.Observer;
  */
 public class ListTableModel extends AbstractTableModel implements Observer{
 
-	protected LinkedList<Entity> data;
+	protected List<Entity> data;
 
 	protected Class[] listClass;
 	protected String[] title;
 	protected GeneralController gc = GeneralController.getInstance();
 
-	public ListTableModel(Class[] listClass, String[]  title, LinkedList<Entity> data){
+	public ListTableModel(Class[] listClass, String[]  title, List<Entity> data){
 		super();
 		this.data=data;
 		this.listClass=listClass;
@@ -70,7 +70,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 		data.get(row).setEntry(col, value);
 	}
 
-	public LinkedList<Entity> getData(){
+	public List<Entity> getData(){
 		return this.data;
 	}
 
@@ -80,7 +80,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	 * @param data
 	 * 			the new data to include in the table.
 	 */
-	public void setData(LinkedList<Entity> data) {
+	public void setData(List<Entity> data) {
 		this.data = data;
 		this.fireTableDataChanged();
 	}
@@ -94,7 +94,7 @@ public class ListTableModel extends AbstractTableModel implements Observer{
 	 * @param currentData
 	 * 				the current content of the list.
 	 */
-	public void updateObserver(LinkedList<Entity> currentData){
+	public void updateObserver(List<Entity> currentData){
 		this.setData(currentData);
 	}
 

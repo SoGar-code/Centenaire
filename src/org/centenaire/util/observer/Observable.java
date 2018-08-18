@@ -1,6 +1,6 @@
 package org.centenaire.util.observer;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import org.centenaire.entity.Entity;
 
@@ -11,7 +11,7 @@ public interface Observable{
 
 	public void addObserver(Observer obs);
 	
-	public void updateObservable(LinkedList<Entity> currentData);
+	public void updateObservable(List<Entity> currentData);
 	
 	// the method deleteObserver is not needed in our case
 }
