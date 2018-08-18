@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import org.centenaire.dao.Dao;
 import org.centenaire.dao.RelationDao;
 import org.centenaire.entity.Entity;
+import org.centenaire.entity.EntityEnum;
 
 /**
  * Relation DAO for a PostgreSQL database.
@@ -27,7 +28,7 @@ import org.centenaire.entity.Entity;
  * @see org.centenaire.util.pubsub.Publisher
  */
 public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends RelationDao<T, U> {
-	protected String databaseName;
+	protected String tableName;
 	protected String variableTName;
 	protected String variableUName;
 	protected int classIndexU;
@@ -42,7 +43,7 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 	 * @param conn
 	 * 				the connection to use as support.
 	 * @param databaseName
-	 * 				name of the database to use (generic class).
+	 * 				name of the table to use (generic class).
 	 * @param variableTName
 	 * 				name used for the index of objects of type T in the database.
 	 * @param variableUName
@@ -62,11 +63,13 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 			int classIndex){
 		super();
 		this.conn = conn;
-		this.databaseName = databaseName;
+		this.tableName = databaseName;
 		this.variableTName = variableTName;
 		this.variableUName = variableUName;	
 		this.classIndexU = classIndexU;
 		this.classIndex = classIndex;
+		
+		
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		try{
 			String query=String.format(
 					"INSERT INTO %s(%s, %s) VALUES(?, ?)", 
-					this.databaseName,
+					this.tableName,
 					this.variableTName,
 					this.variableUName
 					);
@@ -124,7 +127,7 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		try{
 			String query=String.format(
 					"DELETE FROM %s WHERE (%s, %s) = (?, ?)", 
-					this.databaseName,
+					this.tableName,
 					this.variableTName,
 					this.variableUName
 					);
@@ -155,11 +158,10 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		List<U> data = new LinkedList<U>();
 		try{
 			String query=String.format(
-					"SELECT %s FROM %s WHERE %s = ? ORDER BY %s", 
+					getFormatString(classIndexU), 
 					this.variableUName,
-					this.databaseName,
-					this.variableTName,
-					this.variableUName
+					this.tableName,
+					this.variableTName
 					);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setInt(1, objT.getIndex());
@@ -200,7 +202,7 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 		try{
 			String query=String.format(
 					"DELETE FROM %s WHERE %s = ?", 
-					this.databaseName,
+					this.tableName,
 					this.variableTName
 					);
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -223,4 +225,33 @@ public class PostgreSQLRelationDao<T extends Entity, U extends Entity> extends R
 			return false;
 		}
 	};
+	
+	/**
+	 * Provide the format string to use in the request 'FindAll'.
+	 * 
+	 * <p>Concretely, this format string can be used to specify 
+	 * the requested ordering for the 'Entity' instances returned
+	 * by the method 'findAll'. It depends on the type of objects
+	 * that should be retrieved by 'findAll'.</p>
+	 * 
+	 * <p>Constraint on these format strings: they should be ready 
+	 * for use in a 'String.format(...)' whose arguments are (in that
+	 * order): </p>
+	 * <ul>
+	 * 		<li>variableUName,</li>
+	 *		<li>tableName,</li>
+	 *		<li>variableTName.</li>
+	 * </ul>
+	 * 
+	 * @return formatQuery, suitable format string.
+	 */
+	public String getFormatString(int classIndexU) {
+		if (classIndexU == EntityEnum.ITEM.getValue()) {
+			String formatQuery = "SELECT %1$s, type, title FROM %2$s, items "
+					+ "WHERE %3$s = ? AND %1$s = items.id ORDER BY type, title ";
+			return formatQuery;
+		} else {
+			return "SELECT %1$s FROM %2$s WHERE %3$s = ? ORDER BY %1$s";
+		}
+	}
 }

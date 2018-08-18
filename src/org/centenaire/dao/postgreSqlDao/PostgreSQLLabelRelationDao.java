@@ -89,7 +89,7 @@ public class PostgreSQLLabelRelationDao<T extends Entity, U extends Entity, V ex
 		try{
 			String query=String.format(
 					"INSERT INTO %s(%s, %s, %s) VALUES(?, ?, ?)", 
-					this.databaseName,
+					this.tableName,
 					this.variableTName,
 					this.variableUName,
 					this.variableVName
@@ -130,7 +130,7 @@ public class PostgreSQLLabelRelationDao<T extends Entity, U extends Entity, V ex
 					"SELECT %s, %s FROM %s WHERE %s = ? ORDER BY %s", 
 					this.variableUName,
 					this.variableVName,
-					this.databaseName,
+					this.tableName,
 					this.variableTName,
 					this.variableUName
 					);

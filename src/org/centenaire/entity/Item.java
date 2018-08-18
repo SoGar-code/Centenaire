@@ -90,7 +90,7 @@ public class Item extends Entity {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.centenaire.entity.Entity#setEntry(int, java.lang.Object)
 	 */
 	@Override

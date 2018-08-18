@@ -11,6 +11,7 @@ import org.centenaire.entity.Entity;
 import org.centenaire.entity.taglike.InstitStatus;
 import org.centenaire.entity.taglike.LocalType;
 import org.centenaire.entity.util.ListTableModel;
+import org.centenaire.util.Converters;
 import org.centenaire.util.editorsRenderers.Delete;
 
 /**
@@ -146,6 +147,8 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 	 * </ul>
 	 * To evaluate the currently existing relations, the attribute 'relationDao' is used.
 	 * </p>
+	 * 
+	 * <p>In order to obtain a suitably ordered list, we rely on the database and reload the list.</p>
 	 */
 	public void saveContent(T currentEntity) {
 		// Recover the current content of the model
@@ -158,6 +161,12 @@ public class DropListTableModel<T extends Entity, U extends Entity> extends List
 		for (Entity entity: entityList) {
 			relationDao.create(currentEntity, (U) entity);
 		}
+		
+		// Recover the list of relations (after re-ordering by the SQL database)
+		List<U> rawData = relationDao.findAll(currentEntity);
+		
+		// Set the ordered list as new content.
+		this.setData(Converters.convertListType(rawData));
 	}
 	
 	public RelationDao<T, U> getRelationDao() {

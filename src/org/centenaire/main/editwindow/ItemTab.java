@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +29,7 @@ import org.centenaire.entity.util.EntityDialog;
 import org.centenaire.entity.util.GTable;
 import org.centenaire.entity.util.ListTableModel;
 import org.centenaire.entity.util.UpdateEntityPanel;
+import org.centenaire.util.Converters;
 import org.centenaire.util.GeneralController;
 import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
@@ -71,7 +71,7 @@ public class ItemTab extends JPanel implements Subscriber{
 			currentCat.add(category);
 			
 			List<Item> rawCurrentData = dao.findAll(currentCat);
-			List<Entity> currentData = this.convertListType(rawCurrentData);
+			List<Entity> currentData = Converters.convertListType(rawCurrentData);
 			
 			ListTableModel catTableModel = new ListTableModel(
 					new Class[] {String.class, String.class, Date.class},
@@ -186,7 +186,7 @@ public class ItemTab extends JPanel implements Subscriber{
 			
 			// Recover associated data
 			List<Item> rawCurrentData = dao.findAll(currentCat);
-			List<Entity> currentData = this.convertListType(rawCurrentData);
+			List<Entity> currentData = Converters.convertListType(rawCurrentData);
 			
 			// Get current tableModel
 			ListTableModel tableModel = tableModels.get(cardIndex);
@@ -196,12 +196,6 @@ public class ItemTab extends JPanel implements Subscriber{
 		}
 	}
 	
-	public List<Entity> convertListType(List<Item> rawList){
-		List<Entity> currentData = rawList.stream()
-				.map(element->(Entity) element)
-                .collect(Collectors.toList());
-		
-		return currentData;
-	}
+
 
 }

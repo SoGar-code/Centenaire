@@ -194,7 +194,7 @@ public class PostgreSQLItemDao extends AbstractItemDao {
 	public LinkedList<Item> findAll() {
 		LinkedList<Item> data = new LinkedList<Item>();
 		try{
-			String query="SELECT id, title, start_date, end_date, type FROM items ORDER BY start_date";
+			String query="SELECT id, title, start_date, end_date, type FROM items ORDER BY type, title";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();
 			

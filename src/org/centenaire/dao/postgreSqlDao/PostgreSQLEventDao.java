@@ -280,7 +280,7 @@ public class PostgreSQLEventDao extends AbstractEventDao {
 			// Generate query
 			String query="SELECT events.id, full_name, short_name, place, id_dept, id_country, start_date, end_date, type, category"
 					+ " FROM events, event_type_relations WHERE events.type = event_type_relations.id AND category = ANY(?)"
-					+ " ORDER BY start_date";
+					+ " ORDER BY type, short_name";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			state.setArray(1, catArray);
 			ResultSet res = state.executeQuery();

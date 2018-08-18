@@ -13,7 +13,7 @@ import org.centenaire.entity.typelike.EventType;
  * Implementation of the 'Event' Entity class.
  *
  */
-public class Event extends Entity {
+public class Event extends Entity implements Comparable<Event>{
 	private String full_name;
 	private String short_name;
 	private String place;
@@ -183,5 +183,30 @@ public class Event extends Entity {
 	
 	public String toString() {
 		return this.short_name;
+	}
+
+	/**
+	 * Method required to implement the 'Comparable<Event>' interface.
+	 * 
+	 * <p>From Java documentation: compares this object with the specified object for order. 
+	 * Returns a negative integer, zero, or a positive integer as this object is 
+	 * less than, equal to, or greater than the specified object.</p> 
+	 * 
+	 * <p>In our specific implementation, the ordering is done according to 'type' and 'short name', 
+	 * in that order.</p>
+	 * 
+	 * @see java.lang.Comparable
+	 */
+	@Override
+	public int compareTo(Event o) {
+		// Start by comparing Event types
+		int index0 = (this.getEventType().getClassIndex()) - (o.getEventType().getClassIndex());
+		
+		if (index0 != 0)
+			return index0;
+		else {
+			// if this is not enough, compare titles.
+			return (this.getShortName()).compareTo(o.getShortName());
+		}
 	}
 }
