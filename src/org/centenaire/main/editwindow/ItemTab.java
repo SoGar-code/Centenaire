@@ -24,7 +24,6 @@ import javax.swing.JTable;
 import org.centenaire.dao.abstractDao.AbstractItemDao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
-import org.centenaire.entity.Event;
 import org.centenaire.entity.Item;
 import org.centenaire.entity.typelike.CatEnum;
 import org.centenaire.entity.util.EntityDialog;
@@ -36,7 +35,7 @@ import org.centenaire.util.dragndrop.SourceHandler;
 import org.centenaire.util.pubsub.Subscriber;
 
 /**
- * Class generating the tab related to the 'Event' Entity.
+ * Class generating the tab related to the 'Item' Entity.
  * 
  * <p>In the current design, it contains a tabbed panel itself!</p>
  *
@@ -71,7 +70,7 @@ public class ItemTab extends JPanel implements Subscriber{
 			List<CatEnum> currentCat = new LinkedList<CatEnum>();
 			currentCat.add(category);
 			
-			LinkedList<Item> rawCurrentData = dao.findAll(currentCat);
+			List<Item> rawCurrentData = dao.findAll(currentCat);
 			List<Entity> currentData = this.convertListType(rawCurrentData);
 			
 			ListTableModel catTableModel = new ListTableModel(
@@ -93,7 +92,7 @@ public class ItemTab extends JPanel implements Subscriber{
 		
 		// Creation of 'modifier' pane
 		//===================================================
-		UpdateEntityPanel<Event> uep = new UpdateEntityPanel<Event>(EntityEnum.ITEM.getValue());
+		UpdateEntityPanel<Item> uep = new UpdateEntityPanel<Item>(EntityEnum.ITEM.getValue());
 		// uep subscribes to suitable channel 
 		gc.getChannel(EntityEnum.ITEM.getValue()).addSubscriber(uep);
 		
@@ -137,7 +136,7 @@ public class ItemTab extends JPanel implements Subscriber{
 			public void actionPerformed(ActionEvent arg0){
 				LOGGER.finest("ItemTab.newEntity activated!");
 
-				EntityDialog<Event> ed = new EntityDialog<Event>(EntityEnum.ITEM.getValue());
+				EntityDialog<Item> ed = new EntityDialog<Item>(EntityEnum.ITEM.getValue());
 				
 				// Open the dialog (where new event is created)...
 				try {
@@ -186,7 +185,7 @@ public class ItemTab extends JPanel implements Subscriber{
 			currentCat.add(category);
 			
 			// Recover associated data
-			LinkedList<Item> rawCurrentData = dao.findAll(currentCat);
+			List<Item> rawCurrentData = dao.findAll(currentCat);
 			List<Entity> currentData = this.convertListType(rawCurrentData);
 			
 			// Get current tableModel

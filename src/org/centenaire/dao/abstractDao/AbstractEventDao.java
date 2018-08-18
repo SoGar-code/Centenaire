@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.centenaire.dao.Dao;
-import org.centenaire.entity.Item;
+import org.centenaire.entity.Event;
 import org.centenaire.entity.typelike.CatEnum;
 
-public abstract class AbstractItemDao extends Dao<Item> {
-	protected final static Logger LOGGER = Logger.getLogger(AbstractItemDao.class.getName());
+public abstract class AbstractEventDao extends Dao<Event> {
+	protected final static Logger LOGGER = Logger.getLogger(AbstractEventDao.class.getName());
 	
 	/**
 	 * Recover all Items in DB with category in a prescribed list.
@@ -16,5 +16,5 @@ public abstract class AbstractItemDao extends Dao<Item> {
 	 * @param categories
 	 * 				list of categories whose elements we should recover.
 	 */
-	abstract public List<Item> findAll(List<CatEnum> categories);
+	abstract public List<Event> findAll(List<CatEnum> categories);
 }
