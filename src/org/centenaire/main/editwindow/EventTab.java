@@ -82,7 +82,7 @@ public class EventTab extends JPanel implements Subscriber{
 		catEnumBase.add(secondList);
 		
 		// Names to use in the combo
-		String[] comboNames = {"Scientifique (et al.)", "Vulgarisation"};
+		String[] comboNames = {"Scientifique (élargi)", "Vulgarisation"};
 		
 		// Creation of listPan
 		//=====================

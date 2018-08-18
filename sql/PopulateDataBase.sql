@@ -21,7 +21,7 @@ INSERT INTO item_type_relations(name, category) VALUES('Blog', 1);
 INSERT INTO item_type_relations(name, category) VALUES('MOOC', 1);
 INSERT INTO item_type_relations(name, category) VALUES('Carnet de recherche (en ligne)', 1);
 INSERT INTO item_type_relations(name, category) VALUES('Autre activité numérique', 1);
-INSERT INTO item_type_relations(name, category) VALUES('Documentaire (gd public)', 2);
+INSERT INTO item_type_relations(name, category) VALUES('Documentaire (grand public)', 2);
 
 -- create types of events
 INSERT INTO event_type_relations(name, category) VALUES('Débat grand public', 2);
