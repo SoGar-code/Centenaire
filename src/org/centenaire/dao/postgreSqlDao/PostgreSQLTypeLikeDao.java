@@ -197,7 +197,7 @@ public class PostgreSQLTypeLikeDao<T extends TypeLike> extends Dao<T> {
 	public LinkedList<T> findAll() {
 		LinkedList<T> data = new LinkedList<T>();
 		try{
-			String query=String.format("SELECT id, name, category FROM %s ORDER BY id", this.databaseName);
+			String query=String.format("SELECT id, name, category FROM %s ORDER BY category, id", this.databaseName);
 			
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet res = state.executeQuery();

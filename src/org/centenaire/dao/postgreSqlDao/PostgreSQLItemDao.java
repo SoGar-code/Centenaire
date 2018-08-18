@@ -1,22 +1,28 @@
 package org.centenaire.dao.postgreSqlDao;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import org.centenaire.dao.Dao;
+import org.centenaire.dao.abstractDao.AbstractItemDao;
 import org.centenaire.entity.Entity;
 import org.centenaire.entity.EntityEnum;
 import org.centenaire.entity.Event;
 import org.centenaire.entity.Item;
+import org.centenaire.entity.typelike.CatEnum;
 import org.centenaire.entity.typelike.EventType;
 import org.centenaire.entity.typelike.ItemType;
 import org.centenaire.util.GeneralController;
+
+import gestionBilicence.edition.Semester;
 
 /**
  * DAO for a PostgreSQL database, relative to 'Individual' Entity.
@@ -27,7 +33,7 @@ import org.centenaire.util.GeneralController;
  * @see org.centenaire.entity.Entity
  * @see org.centenaire.util.pubsub.Publisher
  */
-public class PostgreSQLItemDao extends Dao<Item> {
+public class PostgreSQLItemDao extends AbstractItemDao {
 	
 	public PostgreSQLItemDao(Connection conn){
 		super();
@@ -194,6 +200,61 @@ public class PostgreSQLItemDao extends Dao<Item> {
 		try{
 			String query="SELECT id, title, start_date, end_date, type FROM items ORDER BY start_date";
 			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet res = state.executeQuery();
+			
+			// All you need to recover the EventType
+			GeneralController gc = GeneralController.getInstance();
+			Dao<Entity> daoItemType = (Dao<Entity>) gc.getDao(EntityEnum.ITEMTYPE.getValue());
+			
+			while(res.next()){
+				ItemType itemType = (ItemType) daoItemType.find(res.getInt("type"));
+				
+				// Create a suitable Item
+				Item item = new Item(res.getInt("id"),
+										 res.getString("title"),
+										 itemType,
+										 res.getDate("start_date"),
+										 res.getDate("end_date")
+										 );
+				data.add(item);
+			}
+			System.out.println("PostgreSQLItemDao.findAll(): found "+data.size()+" lines.");
+			res.close();
+			state.close();
+			return data;
+		} catch (SQLException e){
+			JOptionPane jop = new JOptionPane();
+			jop.showMessageDialog(null, e.getMessage(),"PostgreSQLItemDao.findAll -- ERROR!",JOptionPane.ERROR_MESSAGE);
+			return null;
+		} catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Recover all Items in DB with category in a prescribed list.
+	 */
+	@Override
+	public LinkedList<Item> findAll(List<CatEnum> categories) {
+		LinkedList<Item> data = new LinkedList<Item>();
+		try{
+			// Create array encoding the categories
+			int nb = categories.size();
+			Object[] listInt = new Object[nb];
+			int i = 0;
+			for (CatEnum category:categories){
+				listInt[i] = category.getValue();
+				i++;
+			}
+			Array catArray = conn.createArrayOf("INTEGER",listInt);
+			
+			String query="SELECT items.id, title, start_date, end_date, category FROM items, item_type_relations "
+					+ "WHERE type = item_type_relations.id AND category = ANY(?) ORDER BY start_date";
+			PreparedStatement state = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			state.setArray(1, catArray);
+			
+			// Run query
 			ResultSet res = state.executeQuery();
 			
 			// All you need to recover the EventType
