@@ -157,7 +157,7 @@ public class EventTab extends JPanel implements Subscriber{
 		
 		// *New entity* button
 		// ====================
-		JButton newEntity = new JButton("Nouvelle production");
+		JButton newEntity = new JButton("Nouvel événement");
 		
 		// associated action
 		newEntity.addActionListener(new ActionListener(){
